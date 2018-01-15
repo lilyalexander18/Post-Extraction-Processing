@@ -69,15 +69,15 @@
 ***********************
 
 * Costs data sheet
-	import excel using STI_12.2017.xlsx, firstrow sh("Cost data") clear
-	
+	import excel using GHCC_STI_updated_12122017_MMD.xlsx, firstrow sh("Cost data") cellrange(A4) case(l) clear
+	drop if id == ""
 		*Save for working later
 		save temp_dta/costs.dta,replace	
 		clear
 		
 * Study Attributes data sheet	
-	import excel STI_12.2017.xlsx, firstrow sh("Study attributes")
-	
+	import excel using GHCC_STI_updated_12122017_MMD.xlsx, firstrow sh("Study attributes") cellrange(A4) case(l) clear
+	drop if id == ""
 		*Save for working later
 		save temp_dta/study_attributes.dta,replace	
 		clear
@@ -116,8 +116,8 @@
 	* First merge in study-attributes data for the currency_year variable
 	merge m:1 id using temp_dta/study_attributes.dta
 		drop if _merge!=3
-		drop extractor_initials-discount_rate_RS
-		drop currency_yr_RS-_merge
+		drop extractor_initials-discount_rate_rs
+		drop currency_yr_rs-_merge
 			* No need to destring numerics
 
 			* START WITH: Inflation to 2016 dollars using the CPI
@@ -199,6 +199,9 @@
 			***********************
 				*Encode and create categorical
 				replace ar_broad = lower(ar_broad)
+				replace ar_broad = "recurring_goods" if ar_broad == "recurring goods" 
+				replace ar_broad = "recurring_services" if ar_broad == "recurring services" 
+				
 				encode ar_broad, generate(ar_broad1) label(ar_broad)
 				move ar_broad1 ar_broad
 				*drop input_broad_cat
@@ -239,10 +242,10 @@
 			replace ar_narrow="indirect" if ar_narrow=="indirect costs"
 			replace ar_narrow="inpatient" if ar_narrow=="inpatient service"
 			replace ar_narrow="intangible" if ar_narrow=="intangible costs"
-			replace ar_narrow="lab consumables" if ar_narrow=="laboratory consumables"
-			replace ar_narrow="lab equip" if ar_narrow=="laboratory equipment"
-			replace ar_narrow="lab personnel" if ar_narrow=="laboratory personnel"
-			replace ar_narrow="lab test" if ar_narrow=="laboratory test"
+			replace ar_narrow="lab_consumables" if ar_narrow=="laboratory consumables"
+			replace ar_narrow="lab_equip" if ar_narrow=="laboratory equipment"
+			replace ar_narrow="lab_personnel" if ar_narrow=="laboratory personnel"
+			replace ar_narrow="lab_test" if ar_narrow=="laboratory test"
 			replace ar_narrow="maint_and_util" if ar_narrow=="maintenance and utilities"
 			replace ar_narrow="mgmt" if ar_narrow=="management"
 			replace ar_narrow="mconsult" if ar_narrow=="medical consultation"
@@ -261,6 +264,8 @@
 			// Tell drew to add these two rows to his code 
 			replace ar_narrow="clinical_consum" if ar_narrow=="clinical consumables"
 			replace ar_narrow="consum" if ar_narrow=="consumables"
+			replace ar_narrow="full_costing_total" if ar_narrow == "full costing total"
+			
 			
 			******************************
 
@@ -425,6 +430,7 @@ use temp_dta/costs.dta
 			replace si_narrow="key_drugs" if si_narrow=="supplies (key drugs)"
 			replace si_narrow="nonmed_int_supplies" if si_narrow=="supplies (non-medical/non-intervention or unspecified)"
 			replace si_narrow="other" if si_narrow=="other recurrent"
+			replace si_narrow="unit_cost_total" if si_narrow == "unit cost total"
 					* Not making changes to the TB categories now b/c not applicable yet and we may adapt these categories first
 
 	// Create locals for standardized input categories 
@@ -501,10 +507,11 @@ use temp_dta/costs.dta
 					rename unique* *
 					
 					*STILL NEED TO REORDER VARS
+				/*
 				foreach i of local si_broad {
 					move `i' cap_medical_equip
 				}
-				
+				*/
 			* Apply all mean_costs to these variables with missing obs for all 	
 				foreach i of local si_all {
 					replace `i'=mean_cost if `i'!=.
@@ -774,7 +781,7 @@ use temp_dta/costs.dta
 			* should try grabbing all variables that have the "RS" ending somehow, instead of managing individual vars
 			label define rs 1 "explicit" 2 "inferred" 3 "n/a"
 			*set trace on
-			foreach i of varlist *_RS {
+			foreach i of varlist *_rs {
 			replace `i' = lower(`i')
 			replace `i' = "1" if `i'== "explicit"
 			replace `i' = "2" if `i'== "inferred"
@@ -1003,7 +1010,17 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 						*
 			*2. Now collapse all of the categorical variables just by total
 				drop ar_capital-a_uns_unspecified 
-				keep if ar_narrow1=="full costing total" | ar_narrow1=="partial costing"
+				
+			
+			*3. Check if there is a total unit cost per study extracted; if not, keep partial cost 
+				bysort unit_cost: gen total = 1 if ar_narrow1 == "full_costing_total"
+				bysort unit_cost: egen sum_total = total(total) 
+				
+				
+				keep if ar_narrow1=="full_costing_total" | ar_narrow1=="partial_costing" | sum_total == 0 
+				
+				drop sum_total total 
+	
 					save temp_dta/c_categoricals.dta,replace
 					merge m:1 unit_cost using temp_dta/costs_temp.dta
 							drop if _merge!=3
@@ -1047,6 +1064,89 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 			* Save version before importing GDPPC data:
 			save final_dta/wide_file.dta, replace
 			
+			
+			
+			
+** Cross-validation of costs **
+
+	use final_dta/wide_file.dta, clear 
+
+	* 1. Check that broad standard input categories sum to mean cost 
+	****************************************************************
+	egen check = rowtotal(si_recurrent si_personnel si_capital)
+	replace check = si_combined if check == 0
+	gen diff = check - mean_cost
+	gen flag = 1 if diff > 0.05
+	
+	count if flag == 1
+	di in red `r(N)'
+	
+	drop diff check flag 
+
+	
+	* 2. Check that narrow standard input categories sum to broad categories
+	************************************************************************
+	
+	local prefix "rec per mix com cap" 
+		
+	preserve 
+	
+	foreach var of local prefix { 
+		egen sum_`var' = rowtotal(si_`var'_*)
+		drop si_`var'_*
+		gen diff_`var' = sum_`var' - si_`var'
+		gen flag_`var' = 1 if diff_`var' > 0.05 & diff_`var' !=. 
+	
+	}
+	restore 
+	
+	* 3. Check that broad activity categories sum to mean cost 
+	**********************************************************
+	
+	egen check = rowtotal(a_primary_sd_unspec a_primary_sd a_operational_unspec a_operational)
+	replace check = a_mixed if check == 0 
+	gen diff = check - mean_cost
+	gen flag = 1 if diff > 0.05
+	
+	count if flag == 1 
+	di in red `r(N)' 
+	
+	drop diff check flag 
+	
+	* 4. Check that narrow activity categories sum to broad categories
+	******************************************************************
+	
+	local prefix "uns prisd opeunspec ope mix" 
+	
+	//preserve 
+	
+	foreach var of local prefix { 
+		egen sum_`var' = rowtotal(a_`var'_*) 
+		
+	}
+	
+	gen diff_uns = sum_uns - a_unspecified 
+	gen flag_uns = 1 if diff_uns > 0.05 & diff_uns != . 
+	
+	gen diff_prisd = sum_prisd - a_primary_sd if a_primary_sd !=. 
+	replace diff_prisd = sum_prisd - a_primary_sd_unspec if a_primary_sd_unspec != . 
+	gen flag_prisd = 1 if diff_uns > 0.05 & diff_uns != . 
+	
+	gen diff_opeunspec = sum_opeunspec - a_operational_unspec 
+	gen flag_opeunspec = 1 if diff_opeunspec > 0.05 & diff_opeunspec != . 
+	
+	gen diff_ope = sum_ope - a_operational 
+	gen flag_ope = 1 if diff_ope > 0.05 & diff_ope != . 
+	
+	gen diff_mix = sum_mix - a_mixed 
+	gen flag_mix = 1 if diff_mix > 0.05 & diff_mix != . 
+	
+	
+	
+	
+	
+	/*
+		
 			* Finally, import GDPPC data for each study.
 			********************************************
 				* Underlying dataset can be found at https://data.worldbank.org/indicator/NY.GDP.PCAP.CD
@@ -1057,6 +1157,8 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 				* Presumably formatting for this file shouldnt change year-to-year, but possible 
 				* ...so check that import and file manipulation commands below work. 
 		
+
+		/*
 			
 			clear
 
