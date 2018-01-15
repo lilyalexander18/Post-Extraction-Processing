@@ -1118,7 +1118,7 @@ use temp_dta/costs.dta
 				* place file in path along with data extraction template
 				* Presumably formatting for this file shouldnt change year-to-year, but possible 
 				* ...so check that import and file manipulation commands below work. 
-	STOP	
+		
 		
 			clear
 
@@ -1232,8 +1232,11 @@ use temp_dta/costs.dta
 			save ART/final_dta/wide_file.dta, replace						
 
 			
-				
-				
+	*** Finally, also add in the line that saves a copy of ART to the GitHub folder for Lily to see it			
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/ART/"
+	save ART_wide_file.dta, replace
+			
+			
 				
 ** STOP HERE			
 			
