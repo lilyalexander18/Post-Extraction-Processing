@@ -179,16 +179,99 @@ import excel extraction_templates/GHCC_Data_Extraction_ART_v23_23-Oct-2017, firs
 			replace	cpi_old=108.695722	if currency_yr==	2015
 				* replace all costs to reflect CPI adjustment
 				replace	mean_cost=mean_cost*(cpi_current/cpi_old)		
-				
 					drop cpi_current cpi_old
 				
 				* This will have to be modified for any pre 1990 studies. 
+	/*		
+			* NEXT: Inflation to 2017 dollars using Implicit Deflator Indices
+			*****************************************************************
+			* Data available from the Bureau of Economic Analysis. Start by visiting:
+			* https://bea.gov/faq/index.cfm?faq_id=513 , click the 'NIPA Table 1.1.9' link
+			* Next, manipulate data by cliking the "Modify" Icon, select years 1990 to 2017
+			* (or whatever is latest year), Annual series, and refresh table. Then export
+			* the table to xls or csv. The file we've created is titled implicitdeflator.xls,
+			* Raw data for both the GNP and GDP deflator indices is in the first tab "sheet0",
+			* We have manually created code for transforming data using both the GDP and GNI 
+			* and placed these in the GDP Deflator Code and GNP Deflator Code tabs.
+			* File currently located in the directory folder: GHCC/external_data/
+			*****************************************************************
 			
-			* NEXT: Inflation to 2016 dollars using GDP Deflator Index
+				* GDP Price Deflator
+				********************
+				gen gdp_current = 111.416				
+				gen gdp_old=.				
+					replace gdp_old= 	66.773	if currency_yr==	1990
+					replace gdp_old= 	68.996	if currency_yr==	1991
+					replace gdp_old= 	70.569	if currency_yr==	1992
+					replace gdp_old= 	72.248	if currency_yr==	1993
+					replace gdp_old= 	73.785	if currency_yr==	1994
+					replace gdp_old= 	75.324	if currency_yr==	1995
+					replace gdp_old= 	76.699	if currency_yr==	1996
+					replace gdp_old= 	78.012	if currency_yr==	1997
+					replace gdp_old= 	78.859	if currency_yr==	1998
+					replace gdp_old= 	80.065	if currency_yr==	1999
+					replace gdp_old= 	81.887	if currency_yr==	2000
+					replace gdp_old= 	83.754	if currency_yr==	2001
+					replace gdp_old= 	85.039	if currency_yr==	2002
+					replace gdp_old= 	86.735	if currency_yr==	2003
+					replace gdp_old= 	89.12	if currency_yr==	2004
+					replace gdp_old= 	91.988	if currency_yr==	2005
+					replace gdp_old= 	94.814	if currency_yr==	2006
+					replace gdp_old= 	97.337	if currency_yr==	2007
+					replace gdp_old= 	99.246	if currency_yr==	2008
+					replace gdp_old= 	100	if currency_yr==	2009
+					replace gdp_old= 	101.221	if currency_yr==	2010
+					replace gdp_old= 	103.311	if currency_yr==	2011
+					replace gdp_old= 	105.214	if currency_yr==	2012
+					replace gdp_old= 	106.913	if currency_yr==	2013
+					replace gdp_old= 	108.832	if currency_yr==	2014
+					replace gdp_old= 	110.012	if currency_yr==	2015
+								
+						replace mean_cost=mean_cost*(gdp_current/gdp_old)		
+							drop gdp_current gdp_old	
+				
+				
+				* GNP Price Deflator
+				********************
+				gen gnp_current = 111.509			
+				gen gnp_old=.			
+					replace gnp_old= 	66.732	if currency_yr==	1990
+					replace gnp_old= 	68.966	if currency_yr==	1991
+					replace gnp_old= 	70.536	if currency_yr==	1992
+					replace gnp_old= 	72.212	if currency_yr==	1993
+					replace gnp_old= 	73.747	if currency_yr==	1994
+					replace gnp_old= 	75.292	if currency_yr==	1995
+					replace gnp_old= 	76.669	if currency_yr==	1996
+					replace gnp_old= 	77.982	if currency_yr==	1997
+					replace gnp_old= 	78.831	if currency_yr==	1998
+					replace gnp_old= 	80.042	if currency_yr==	1999
+					replace gnp_old= 	81.862	if currency_yr==	2000
+					replace gnp_old= 	83.728	if currency_yr==	2001
+					replace gnp_old= 	85.014	if currency_yr==	2002
+					replace gnp_old= 	86.711	if currency_yr==	2003
+					replace gnp_old= 	89.095	if currency_yr==	2004
+					replace gnp_old= 	91.965	if currency_yr==	2005
+					replace gnp_old= 	94.791	if currency_yr==	2006
+					replace gnp_old= 	97.318	if currency_yr==	2007
+					replace gnp_old= 	99.239	if currency_yr==	2008
+					replace gnp_old= 	100	if currency_yr==	2009
+					replace gnp_old= 	101.333	if currency_yr==	2010
+					replace gnp_old= 	103.435	if currency_yr==	2011
+					replace gnp_old= 	105.338	if currency_yr==	2012
+					replace gnp_old= 	107.038	if currency_yr==	2013
+					replace gnp_old= 	108.948	if currency_yr==	2014
+					replace gnp_old= 	110.109	if currency_yr==	2015
+								
+						replace mean_cost=mean_cost*(gnp_current/gnp_old)		
+							drop gnp_current gnp_old	
+		
+			
+				* OR SHOULD WE BE USING THIS DATA?
 				* data here: https://www.imf.org/external/pubs/ft/weo/2016/01/weodata/download.aspx
 			
+		*/ 	
 			
-			* All can easily be updated for 2017 dollars later.
+			* All can easily be updated to 2017 dollars later.
 			
 			
 		*Save for working later
