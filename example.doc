@@ -1,0 +1,37 @@
+{\rtf1\fs24
+\trowd\trgaph75\trleft-75\intbl\trqc\clbrdrt\brdrs\cellx3888\clbrdrt\brdrs\cellx4464\clbrdrt\brdrs\cellx5472\clbrdrt\brdrs\cellx6336\clbrdrt\brdrs\cellx7344\clbrdrt\brdrs\cellx8352
+\ql \cell\qc (1)\cell\qc (2)\cell\qc (3)\cell\qc (4)\cell\qc (5)\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx3888\cellx4464\cellx5472\cellx6336\cellx7344\cellx8352
+\trowd\trgaph75\trleft-75\trqc\clbrdrb\brdrs\cellx3888\clbrdrb\brdrs\cellx4464\clbrdrb\brdrs\cellx5472\clbrdrb\brdrs\cellx6336\clbrdrb\brdrs\cellx7344\clbrdrb\brdrs\cellx8352
+\ql VARIABLES\cell\qc N\cell\qc mean\cell\qc sd\cell\qc min\cell\qc max\cell\row
+\trowd\trgaph75\trleft-75\trqc\cellx3888\cellx4464\cellx5472\cellx6336\cellx7344\cellx8352
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+\ql ref_year\cell\qc 47\cell\qc 2,006\cell\qc 6.747\cell\qc 1,997\cell\qc 2,015\cell\row
+\ql period_portrayed\cell\qc 47\cell\qc 18.04\cell\qc 11.52\cell\qc 5\cell\qc 30\cell\row
+\ql neonates\cell\qc 47\cell\qc 0\cell\qc 0\cell\qc 0\cell\qc 0\cell\row
+\ql currency_yr\cell\qc 47\cell\qc 2,003\cell\qc 6.998\cell\qc 1,993\cell\qc 2,012\cell\row
+\ql current_x_rate\cell\qc 35\cell\qc 2,320\cell\qc 2,485\cell\qc 2.140\cell\qc 5,220\cell\row
+\ql discount_rate\cell\qc 29\cell\qc 0.0300\cell\qc 0\cell\qc 0.0300\cell\qc 0.0300\cell\row
+\ql mean_cost\cell\qc 47\cell\qc 38.30\cell\qc 51.55\cell\qc 0.648\cell\qc 183.7\cell\row
+\ql si_capital\cell\qc 2\cell\qc 9.110\cell\qc 7.039\cell\qc 4.133\cell\qc 14.09\cell\row
+\ql si_personnel\cell\qc 5\cell\qc 14.09\cell\qc 11.32\cell\qc 1.282\cell\qc 31.08\cell\row
+\ql si_recurrent\cell\qc 17\cell\qc 7.550\cell\qc 4.204\cell\qc 2.801\cell\qc 17.90\cell\row
+\ql si_cap_medical_equip\cell\qc 1\cell\qc 0.388\cell\qc \cell\qc 0.388\cell\qc 0.388\cell\row
+\ql si_cap_nonmed_equip\cell\qc 1\cell\qc 2.779\cell\qc \cell\qc 2.779\cell\qc 2.779\cell\row
+\ql si_cap_other\cell\qc 2\cell\qc 2.467\cell\qc 1.173\cell\qc 1.637\cell\qc 3.296\cell\row
+\ql si_per_mixed_unspec\cell\qc 4\cell\qc 17.29\cell\qc 10.12\cell\qc 9.496\cell\qc 31.08\cell\row
+\ql si_per_support\cell\qc 1\cell\qc 1.282\cell\qc \cell\qc 1.282\cell\qc 1.282\cell\row
+\ql si_rec_building_space\cell\qc 4\cell\qc 1.579\cell\qc 0.564\cell\qc 1.006\cell\qc 2.305\cell\row
+\ql si_rec_med_int_supplies\cell\qc 2\cell\qc 6.536\cell\qc 4.282\cell\qc 3.508\cell\qc 9.564\cell\row
+\ql si_rec_nonmed_int_supplies\cell\qc 2\cell\qc 1.118\cell\qc 1.343\cell\qc 0.169\cell\qc 2.068\cell\row
+\ql a_operational\cell\qc 17\cell\qc 11.15\cell\qc 12.90\cell\qc 2.801\cell\qc 58.74\cell\row
+\ql a_primary_sd\cell\qc 1\cell\qc 4.823\cell\qc \cell\qc 4.823\cell\qc 4.823\cell\row
+\ql a_ope_bldg_equip\cell\qc 2\cell\qc 6.021\cell\qc 8.300\cell\qc 0.152\cell\qc 11.89\cell\row
+\ql a_ope_supervision\cell\qc 1\cell\qc 0.860\cell\qc \cell\qc 0.860\cell\qc 0.860\cell\row
+\ql a_ope_training\cell\qc 1\cell\qc 2.514\cell\qc \cell\qc 2.514\cell\qc 2.514\cell\row
+\ql a_ope_transportation\cell\qc 2\cell\qc 2.931\cell\qc 0.672\cell\qc 2.456\cell\qc 3.406\cell\row
+\ql a_ope_unspecified\cell\qc 16\cell\qc 10.41\cell\qc 9.546\cell\qc 2.801\cell\qc 42.71\cell\row
+\ql a_prisd_unspecified\cell\qc 4\cell\qc 2.379\cell\qc 0.884\cell\qc 1.738\cell\qc 3.676\cell\row
+\trowd\trgaph75\trleft-75\trqc\trbrdrb\brdrs\clbrdrb\brdrs\cellx3888\clbrdrb\brdrs\cellx4464\clbrdrb\brdrs\cellx5472\clbrdrb\brdrs\cellx6336\clbrdrb\brdrs\cellx7344\clbrdrb\brdrs\cellx8352
+\ql \cell\qc \cell\qc \cell\qc \cell\qc \cell\qc \cell\row
+}
