@@ -2,12 +2,12 @@
 * Data Cleaning and Transformation Do File
 * Global Health Costing Consortium (GHCC)
 * 
-* Date created: December 4, 2017
+* Date created: 11 February 2018
 *
-* Lily Alexander, MPH Student, University of Washington
-* lalexan1@uw.edu
-* Drew Cameron, PhD Student, UC Berkeley
+* Drew Cameron - UC Berkeley
 * drew.cameron@berkeley.edu
+* Lily Alexander - University of Washington
+* lalexan1@uw.edu
 ******************************************************
 
 ********************************************************************************
@@ -81,14 +81,18 @@
 	* import excel ART_12.2017.xlsx, firstrow sh("Cost data") clear
 
 ** drew's import:
-import excel extraction_templates/GHCC_Data_Extraction_ART_v23_23-Oct-2017, firstrow sh("Cost data") cellrange(A4) case(l)
-	
+import excel extraction_templates/GHCC_Data_Extraction_ART_v24_7-Feb-2018, firstrow sh("Cost data") cellrange(A4) case(l)
+
+		*Fix costs immediately to be numeric
+		replace mean_cost=median_cost if mean_cost=="NR"
+		destring mean_cost, replace
+
 		*Save for working later
 		save temp_dta/costs.dta,replace	
 		clear
 		
 * Study Attributes data sheet	
-	import excel extraction_templates/GHCC_Data_Extraction_ART_v23_23-Oct-2017, firstrow sh("Study attributes") cellrange(A4) case(l) clear
+	import excel extraction_templates/GHCC_Data_Extraction_ART_v24_7-Feb-2018, firstrow sh("Study attributes") cellrange(A4) case(l) clear
 	
 		*Save for working later
 		save temp_dta/study_attributes.dta,replace	
@@ -115,9 +119,9 @@ import excel extraction_templates/GHCC_Data_Extraction_ART_v23_23-Oct-2017, firs
 		drop _
 		rename unit_cost1 unit_cost
 		
-	* Replace mean cost as median cost for one study in ART for now: 
-		replace mean_cost=median_cost if strpos(id, "hiv102") > 0
-		destring mean_cost,replace
+	* Replace mean cost as median cost for one study in ART (did this for 2 studies earlier): 
+		*replace mean_cost=median_cost if strpos(id, "hiv102") > 0
+		*destring mean_cost,replace
 		
 	*Save for working later
 		save temp_dta/costs.dta,replace	
@@ -140,6 +144,95 @@ import excel extraction_templates/GHCC_Data_Extraction_ART_v23_23-Oct-2017, firs
 			* No need to destring numerics - will deal with rest of data later.
 
 
+			 
+			
+			* Inflation to 2017 dollars using Implicit Deflator Indices
+			*****************************************************************
+			* Data available from the Bureau of Economic Analysis. Start by visiting:
+			* https://bea.gov/faq/index.cfm?faq_id=513 , click the 'NIPA Table 1.1.9' link
+			* Next, manipulate data by cliking the "Modify" Icon, select years 1990 to 2017
+			* (or whatever is latest year), Annual series, and refresh table. Then export
+			* the table to xls or csv. The file we've created is titled implicitdeflator.xls,
+			* Raw data for both the GNP and GDP deflator indices is in the first tab "sheet0",
+			* We have manually created code for transforming data using both the GDP and GNI 
+			* and placed these in the GDP Deflator Code and GNP Deflator Code tabs.
+			* File currently located in the directory folder: GHCC/external_data/
+			*****************************************************************
+			
+				* GDP Price Deflator
+				********************
+				gen gdp_current = 111.416				
+				gen gdp_old=.				
+					replace gdp_old= 	66.773	if currency_yr==	1990
+					replace gdp_old= 	68.996	if currency_yr==	1991
+					replace gdp_old= 	70.569	if currency_yr==	1992
+					replace gdp_old= 	72.248	if currency_yr==	1993
+					replace gdp_old= 	73.785	if currency_yr==	1994
+					replace gdp_old= 	75.324	if currency_yr==	1995
+					replace gdp_old= 	76.699	if currency_yr==	1996
+					replace gdp_old= 	78.012	if currency_yr==	1997
+					replace gdp_old= 	78.859	if currency_yr==	1998
+					replace gdp_old= 	80.065	if currency_yr==	1999
+					replace gdp_old= 	81.887	if currency_yr==	2000
+					replace gdp_old= 	83.754	if currency_yr==	2001
+					replace gdp_old= 	85.039	if currency_yr==	2002
+					replace gdp_old= 	86.735	if currency_yr==	2003
+					replace gdp_old= 	89.12	if currency_yr==	2004
+					replace gdp_old= 	91.988	if currency_yr==	2005
+					replace gdp_old= 	94.814	if currency_yr==	2006
+					replace gdp_old= 	97.337	if currency_yr==	2007
+					replace gdp_old= 	99.246	if currency_yr==	2008
+					replace gdp_old= 	100		if currency_yr==	2009
+					replace gdp_old= 	101.221	if currency_yr==	2010
+					replace gdp_old= 	103.311	if currency_yr==	2011
+					replace gdp_old= 	105.214	if currency_yr==	2012
+					replace gdp_old= 	106.913	if currency_yr==	2013
+					replace gdp_old= 	108.832	if currency_yr==	2014
+					replace gdp_old= 	110.012	if currency_yr==	2015
+								
+						replace mean_cost=mean_cost*(gdp_current/gdp_old)		
+							drop gdp_current gdp_old	
+		/*		
+				
+				* vs. GNP Price Deflator (which we're not using)
+				************************************************
+				gen gnp_current = 111.509			
+				gen gnp_old=.			
+					replace gnp_old= 	66.732	if currency_yr==	1990
+					replace gnp_old= 	68.966	if currency_yr==	1991
+					replace gnp_old= 	70.536	if currency_yr==	1992
+					replace gnp_old= 	72.212	if currency_yr==	1993
+					replace gnp_old= 	73.747	if currency_yr==	1994
+					replace gnp_old= 	75.292	if currency_yr==	1995
+					replace gnp_old= 	76.669	if currency_yr==	1996
+					replace gnp_old= 	77.982	if currency_yr==	1997
+					replace gnp_old= 	78.831	if currency_yr==	1998
+					replace gnp_old= 	80.042	if currency_yr==	1999
+					replace gnp_old= 	81.862	if currency_yr==	2000
+					replace gnp_old= 	83.728	if currency_yr==	2001
+					replace gnp_old= 	85.014	if currency_yr==	2002
+					replace gnp_old= 	86.711	if currency_yr==	2003
+					replace gnp_old= 	89.095	if currency_yr==	2004
+					replace gnp_old= 	91.965	if currency_yr==	2005
+					replace gnp_old= 	94.791	if currency_yr==	2006
+					replace gnp_old= 	97.318	if currency_yr==	2007
+					replace gnp_old= 	99.239	if currency_yr==	2008
+					replace gnp_old= 	100	if currency_yr==	2009
+					replace gnp_old= 	101.333	if currency_yr==	2010
+					replace gnp_old= 	103.435	if currency_yr==	2011
+					replace gnp_old= 	105.338	if currency_yr==	2012
+					replace gnp_old= 	107.038	if currency_yr==	2013
+					replace gnp_old= 	108.948	if currency_yr==	2014
+					replace gnp_old= 	110.109	if currency_yr==	2015
+								
+						replace mean_cost=mean_cost*(gnp_current/gnp_old)		
+							drop gnp_current gnp_old	
+		
+			
+				* OR SHOULD WE BE USING THIS DATA?
+				* data here: https://www.imf.org/external/pubs/ft/weo/2016/01/weodata/download.aspx
+			
+			
 			* START WITH: Inflation to 2016 dollars using the CPI
 			*******************************************************************
 			** (To find this data, visit the World Bank at the following URL:
@@ -181,97 +274,16 @@ import excel extraction_templates/GHCC_Data_Extraction_ART_v23_23-Oct-2017, firs
 				replace	mean_cost=mean_cost*(cpi_current/cpi_old)		
 					drop cpi_current cpi_old
 				
-				* This will have to be modified for any pre 1990 studies. 
-	/*		
-			* NEXT: Inflation to 2017 dollars using Implicit Deflator Indices
-			*****************************************************************
-			* Data available from the Bureau of Economic Analysis. Start by visiting:
-			* https://bea.gov/faq/index.cfm?faq_id=513 , click the 'NIPA Table 1.1.9' link
-			* Next, manipulate data by cliking the "Modify" Icon, select years 1990 to 2017
-			* (or whatever is latest year), Annual series, and refresh table. Then export
-			* the table to xls or csv. The file we've created is titled implicitdeflator.xls,
-			* Raw data for both the GNP and GDP deflator indices is in the first tab "sheet0",
-			* We have manually created code for transforming data using both the GDP and GNI 
-			* and placed these in the GDP Deflator Code and GNP Deflator Code tabs.
-			* File currently located in the directory folder: GHCC/external_data/
-			*****************************************************************
+				* This will have to be modified for any pre 1990 studies.
 			
-				* GDP Price Deflator
-				********************
-				gen gdp_current = 111.416				
-				gen gdp_old=.				
-					replace gdp_old= 	66.773	if currency_yr==	1990
-					replace gdp_old= 	68.996	if currency_yr==	1991
-					replace gdp_old= 	70.569	if currency_yr==	1992
-					replace gdp_old= 	72.248	if currency_yr==	1993
-					replace gdp_old= 	73.785	if currency_yr==	1994
-					replace gdp_old= 	75.324	if currency_yr==	1995
-					replace gdp_old= 	76.699	if currency_yr==	1996
-					replace gdp_old= 	78.012	if currency_yr==	1997
-					replace gdp_old= 	78.859	if currency_yr==	1998
-					replace gdp_old= 	80.065	if currency_yr==	1999
-					replace gdp_old= 	81.887	if currency_yr==	2000
-					replace gdp_old= 	83.754	if currency_yr==	2001
-					replace gdp_old= 	85.039	if currency_yr==	2002
-					replace gdp_old= 	86.735	if currency_yr==	2003
-					replace gdp_old= 	89.12	if currency_yr==	2004
-					replace gdp_old= 	91.988	if currency_yr==	2005
-					replace gdp_old= 	94.814	if currency_yr==	2006
-					replace gdp_old= 	97.337	if currency_yr==	2007
-					replace gdp_old= 	99.246	if currency_yr==	2008
-					replace gdp_old= 	100	if currency_yr==	2009
-					replace gdp_old= 	101.221	if currency_yr==	2010
-					replace gdp_old= 	103.311	if currency_yr==	2011
-					replace gdp_old= 	105.214	if currency_yr==	2012
-					replace gdp_old= 	106.913	if currency_yr==	2013
-					replace gdp_old= 	108.832	if currency_yr==	2014
-					replace gdp_old= 	110.012	if currency_yr==	2015
-								
-						replace mean_cost=mean_cost*(gdp_current/gdp_old)		
-							drop gdp_current gdp_old	
-				
-				
-				* GNP Price Deflator
-				********************
-				gen gnp_current = 111.509			
-				gen gnp_old=.			
-					replace gnp_old= 	66.732	if currency_yr==	1990
-					replace gnp_old= 	68.966	if currency_yr==	1991
-					replace gnp_old= 	70.536	if currency_yr==	1992
-					replace gnp_old= 	72.212	if currency_yr==	1993
-					replace gnp_old= 	73.747	if currency_yr==	1994
-					replace gnp_old= 	75.292	if currency_yr==	1995
-					replace gnp_old= 	76.669	if currency_yr==	1996
-					replace gnp_old= 	77.982	if currency_yr==	1997
-					replace gnp_old= 	78.831	if currency_yr==	1998
-					replace gnp_old= 	80.042	if currency_yr==	1999
-					replace gnp_old= 	81.862	if currency_yr==	2000
-					replace gnp_old= 	83.728	if currency_yr==	2001
-					replace gnp_old= 	85.014	if currency_yr==	2002
-					replace gnp_old= 	86.711	if currency_yr==	2003
-					replace gnp_old= 	89.095	if currency_yr==	2004
-					replace gnp_old= 	91.965	if currency_yr==	2005
-					replace gnp_old= 	94.791	if currency_yr==	2006
-					replace gnp_old= 	97.318	if currency_yr==	2007
-					replace gnp_old= 	99.239	if currency_yr==	2008
-					replace gnp_old= 	100	if currency_yr==	2009
-					replace gnp_old= 	101.333	if currency_yr==	2010
-					replace gnp_old= 	103.435	if currency_yr==	2011
-					replace gnp_old= 	105.338	if currency_yr==	2012
-					replace gnp_old= 	107.038	if currency_yr==	2013
-					replace gnp_old= 	108.948	if currency_yr==	2014
-					replace gnp_old= 	110.109	if currency_yr==	2015
-								
-						replace mean_cost=mean_cost*(gnp_current/gnp_old)		
-							drop gnp_current gnp_old	
-		
 			
-				* OR SHOULD WE BE USING THIS DATA?
-				* data here: https://www.imf.org/external/pubs/ft/weo/2016/01/weodata/download.aspx
+			
+			
+			* All can easily be updated to 2017 dollars later.
 			
 		*/ 	
 			
-			* All can easily be updated to 2017 dollars later.
+			
 			
 			
 		*Save for working later
@@ -432,7 +444,7 @@ import excel extraction_templates/GHCC_Data_Extraction_ART_v23_23-Oct-2017, firs
 					rename v_`k' `name'
 				} 
 					drop narrow
-*!*					*drop _
+					drop _
 				*clean up
 				foreach i of varlist cap_start_up-tot_partial_costing {
 					replace `i'=. if `i'==0
@@ -771,7 +783,7 @@ use temp_dta/costs.dta
 *******************************
 			
 		* Encode categorical variables for long version
-			foreach i of varlist disease intervention cost_level trade_status fixed_variable cost_incurred_by period core_input output_unit_reported output_unit output_unit2 integrated_generic unit_obs empirical_modeled resource_id resource_valuation price_sources full_subsidized adjustment_method data_collection recall_period output_methods data_timing inflation inflation_method amortization currency_iso currency_name {
+			foreach i of varlist disease intervention cost_level fixed_variable cost_incurred_by period output_unit_reported output_unit output_unit2 integrated_generic empirical_modeled resource_id resource_valuation price_sources full_subsidized adjustment_method data_collection recall_period output_methods data_timing inflation inflation_method amortization currency_iso currency_name {
 			*replace `i' = lower(`i')
 			encode `i', gen(`i'_1) label(`i')
 			move `i'_1 `i'
@@ -856,14 +868,16 @@ use temp_dta/costs.dta
 
 
 		* DROP NR for following Variables for encoding:
-			foreach i of varlist   id_tech int_services costing_purpose_cat timing country_sampling geo_sampling_incountry site_sampling px_sampling sample_size_derived controls econ_costing omitted_costs asd_costs list_asd_costs research_costs unrelated_costs overhead_costs volunteer_time family_time currency_x ownership id_modality{
+			foreach i of varlist id_tech costing_purpose_cat timing country_sampling geo_sampling_incountry site_sampling px_sampling sample_size_derived controls econ_costing omitted_costs asd_costs list_asd_costs research_costs unrelated_costs overhead_costs volunteer_time family_time currency_x ownership {
 				replace `i'="" if `i'=="NR" | `i'=="nr"
 			}
 
 			* Generate a new country string variable so you can merge in other information later:
 			gen country_alt=country
 			
-			foreach i of varlist extractor_initials article_dataset study_type econ_perspective_report econ_perspective_actual research_costs unrelated_costs overhead incremental_costing int_services econ_costing real_world country geo_sampling_incountry country_sampling site_sampling px_sampling sample_size_derived timing exclusions personnel_dt iso_code currency_x traded volunteer_time family_time px_time aggregation subgroup scale scale_up seasonality sensitivity_analysis limitations coi ownership pop_sex id_class id_type id_int id_modality id_modality_detail px_costs_measured cat_cost costing_purpose_cat asd_costs pop_density int_description time_unit consistency controls pop_couples cd4_med tb_rx_resistance id_phase id_tech{
+			replace id_phase = "initiation" if id_phase=="Initiation"
+			
+			foreach i of varlist extractor_initials article_dataset study_type econ_perspective_report econ_perspective_actual research_costs unrelated_costs overhead econ_costing real_world country geo_sampling_incountry country_sampling site_sampling px_sampling sample_size_derived timing exclusions personnel_dt iso_code currency_x traded volunteer_time family_time px_time aggregation subgroup scale scale_up seasonality sensitivity_analysis limitations coi ownership pop_sex id_class id_type id_int px_costs_measured cat_cost costing_purpose_cat asd_costs pop_density int_description time_unit consistency controls pop_couples cd4_med tb_rx_resistance id_phase id_tech personnel_dt_rs{
 			*replace `i' = lower(`i')
 			replace `i'="." if `i'=="NR"
 			encode `i', gen(`i'_1) label(`i')
@@ -891,7 +905,7 @@ use temp_dta/costs.dta
 			label define rs 1 "explicit" 2 "inferred" 3 "n/a"
 			
 			*set trace on
-			foreach i of varlist costing_purpose_rs period_portrayed_rs research_costs_rs unrelated_costs_rs overhead_rs omitted_costs_rs incremental_costing_rs geo_incountry_rs econ_costing_rs geo_sampling_incountry_rs country_sampling_rs site_sampling_rs px_sampling_rs timing_rs discount_rate_rs currency_yr_rs currency_x_rs currency_period_rs volunteer_time_rs family_time_rs px_time_rs aggregationrs management_rs ownership_rs pop_sex_rs pop_ses_rs pop_education_rs pop_description_rs year_intro_rs coverage_rs qual_indicator_rs breakdown_input_rs breakdown_activity_rs breakdown_funder_rs px_costs_measured_rs cat_cost_rs asd_costs_rs real_world_rs personnel_dt_rs pop_age_rs {
+			foreach i of varlist costing_purpose_rs period_portrayed_rs research_costs_rs unrelated_costs_rs overhead_rs omitted_costs_rs geo_incountry_rs econ_costing_rs geo_sampling_incountry_rs country_sampling_rs site_sampling_rs px_sampling_rs timing_rs discount_rate_rs currency_yr_rs currency_x_rs currency_period_rs volunteer_time_rs family_time_rs px_time_rs aggregationrs management_rs ownership_rs pop_sex_rs pop_ses_rs pop_education_rs year_intro_rs coverage_rs qual_indicator_rs breakdown_input_rs breakdown_activity_rs breakdown_funder_rs px_costs_measured_rs cat_cost_rs asd_costs_rs real_world_rs pop_age_rs id_pop_clin_rs id_pop_dem_rs {
 			replace `i' = lower(`i')
 			replace `i' = "1" if `i'== "explicit"
 			replace `i' = "2" if `i'== "inferred"
@@ -919,7 +933,8 @@ use temp_dta/costs.dta
 			
 			label values start_year non_standard
 			label values end_year non_standard
-			label values year_intro non_standard
+			*Something is not working with this - now non numeric...?
+			*label values year_intro non_standard
 			
 			*Months
 			foreach i of varlist start_month end_month{
@@ -1028,9 +1043,10 @@ use temp_dta/costs.dta
 				rename v_2 ft_intclinics
 				rename v_3 ft_hospitals
 				rename v_4 ft_unspecified_hc
-				rename v_5 ft_other
+				rename v_5 ft_comm_based
+				rename v_6 ft_other
 					// note, specific to ART, not appropriate for other intervention types
-				
+			
 			* And binaries for faclity_category
 			tab facility_cat, gen(v_)
 				rename v_1 health_post
@@ -1151,11 +1167,11 @@ use temp_dta/costs.dta
 				
 				*Create Global variables for ease of reordering
 				global ar_broad ar_capital ar_facility ar_overhead ar_patient_costs ar_personnel ar_recurring_goods ar_recurring_services
-				global ar_narrow ar_cap_start_up ar_cap_unspecified ar_cap_vehicles ar_fac_rental ar_fac_utilities ar_ove_unspecified ar_patcosts_accommodation ar_patcosts_carer_costs ar_patcosts_direct_medical ar_patcosts_food_service ar_patcosts_intangible ar_patcosts_patient_transport ar_patcosts_time_loss ar_per_admin_support ar_per_clinical_officer ar_per_counselors ar_per_lab_personnel ar_per_mgmt ar_per_nurses ar_per_pharmacy ar_per_physicians ar_per_service_delivery ar_per_unspecified ar_recgoods_clinical_consum ar_recgoods_consumables ar_recgoods_fuel ar_recgoods_key_drugs ar_recgoods_lab_consumables ar_recgoods_nonkey_drugs ar_recgoods_unspecified ar_recservices_equip_maint ar_recservices_food_support ar_recservices_hct ar_recservices_inpatient ar_recservices_lab_test ar_recservices_mconsult ar_recservices_medical_imaging ar_recservices_nonkey_drugs ar_recservices_storage ar_recservices_supply_chain ar_recservices_training ar_recservices_transport ar_recservices_unspecified ar_sub_subtotal ar_tot_full_costing_total ar_tot_partial_costing
+				global ar_narrow ar_cap_start_up ar_cap_unspecified ar_cap_vehicles ar_fac_rental ar_fac_utilities ar_ove_unspecified ar_patcosts_accommodation ar_patcosts_carer_costs ar_patcosts_direct_medical ar_patcosts_food_service ar_patcosts_intangible ar_patcosts_patient_transport ar_patcosts_time_loss ar_per_admin_support ar_per_clinical_officer ar_per_counselors ar_per_lab_personnel ar_per_mgmt ar_per_nurses ar_per_pharmacy ar_per_physicians ar_per_service_delivery ar_per_unspecified ar_recgoods_clinical_consum ar_recgoods_fuel ar_recgoods_key_drugs ar_recgoods_lab_consumables ar_recgoods_nonkey_drugs ar_recgoods_unspecified ar_recservices_equip_maint ar_recservices_food_support ar_recservices_hct ar_recservices_inpatient ar_recservices_lab_test ar_recservices_mconsult ar_recservices_medical_imaging ar_recservices_nonkey_drugs ar_recservices_storage ar_recservices_supply_chain ar_recservices_training ar_recservices_transport ar_recservices_unspecified ar_sub_subtotal ar_tot_full_costing_total ar_tot_partial_costing
 				global si_broad si_capital si_combined si_mixed si_pdm si_pdn si_personnel si_pia si_pmx si_recurrent
-				global si_narrow si_cap_other si_cap_vehicles si_com_combined si_com_unit_cost_total si_mix_building_space si_mix_mixed si_pdm_pat_fees si_pdn__patient__transport si_per_mixed_unspec si_per_service_delivery si_per_support si_pia_pat_productivity si_pmx_pat_mixed si_rec_building_space si_rec_key_drugs si_rec_med_int_supplies si_rec_nonmed_int_supplies si_rec_other
+				global si_narrow si_cap_other si_cap_vehicles si_com_combined si_com_unit_cost_total si_mix_mixed si_pdm_pat_fees si_pdn__patient__transport si_per_mixed_unspec si_per_service_delivery si_per_support si_pia_pat_productivity si_pmx_pat_mixed si_rec_building_space si_rec_key_drugs si_rec_med_int_supplies si_rec_nonmed_int_supplies si_rec_other
 				global a_broad a_ancillary a_combo a_mixed a_operational a_primary_sd a_secondary_sd a_unspecified
-				global a_narrow a_anc_adherence_retention a_anc_lab_services a_anc_unspecified a_com_combo a_mix_mixed a_ope_bldg_equip a_ope_logistics a_ope_program_mgmt a_ope_supervision a_ope_training a_ope_transportation a_ope_unspecified a_prisd_arv_delivery a_prisd_lab_monitoring a_prisd_lab_services a_prisd_unspecified a_secsd_unspecified a_uns_unspecified
+				global a_narrow a_anc_adherence_retention a_anc_lab_services a_anc_unspecified a_com_combo a_mix_mixed a_ope_bldg_equip a_ope_logistics a_ope_program_mgmt a_ope_supervision a_ope_training a_ope_transportation a_ope_unspecified a_prisd_arv_delivery a_prisd_lab_monitoring a_prisd_unspecified a_secsd_unspecified a_uns_unspecified
 				global output output_pmonth output_pyear output_pyear2 output_pmonth2 output1k_mo output1k_yr output1k_yr2 output1k_mo2	
 				
 				* reorder for ease of finding (Using Globals)
@@ -1269,41 +1285,70 @@ use temp_dta/costs.dta
 				rename year currency_yr
 				rename recipient_country country_alt
 				
-		* Inflate to 2016 dollars using the CPI
-			gen	cpi_current=110.0670089		
-			gen	cpi_old	=.		
-			replace	cpi_old=78.97072076	if currency_yr==	2000
-			replace	cpi_old=81.20256846	if currency_yr==	2001
-			replace	cpi_old=82.49046688	if currency_yr==	2002
-			replace	cpi_old=84.36307882	if currency_yr==	2003
-			replace	cpi_old=86.62167812	if currency_yr==	2004
-			replace	cpi_old=89.56053237	if currency_yr==	2005
-			replace	cpi_old=92.44970508	if currency_yr==	2006
-			replace	cpi_old=95.08699238	if currency_yr==	2007
-			replace	cpi_old=98.73747739	if currency_yr==	2008
-			replace	cpi_old=98.38641997	if currency_yr==	2009
-			replace	cpi_old=100	if currency_yr==	2010
-			replace	cpi_old=103.1568416	if currency_yr==	2011
-			replace	cpi_old=105.2915045	if currency_yr==	2012
-			replace	cpi_old=106.8338489	if currency_yr==	2013
-			replace	cpi_old=108.5669321	if currency_yr==	2014
-			replace	cpi_old=108.695722	if currency_yr==	2015
-				* replace all costs to reflect CPI adjustment
-				replace	global_fund_amt=global_fund_amt*(cpi_current/cpi_old)
-				replace pepfar_amt=pepfar_amt*(cpi_current/cpi_old)
-				
-				drop cpi_current cpi_old
-				collapse (sum) pepfar_amt global_fund_amt (max) pepfar global_fund, by(country_alt currency_yr)
-				
-				save ART/temp_dta/pepfar_gf_data.dta, replace
-				clear
-				use ART/final_dta/wide_file.dta
-				
-				merge m:1 country_alt currency_yr using "ART/temp_dta/pepfar_gf_data.dta"
-					drop if _merge==2
+		* Inflate to 2016 dollars using the GDP Price Deflator		
+		gen gdp_current = 111.416				
+				gen gdp_old=.				
+					replace gdp_old= 	66.773	if currency_yr==	1990
+					replace gdp_old= 	68.996	if currency_yr==	1991
+					replace gdp_old= 	70.569	if currency_yr==	1992
+					replace gdp_old= 	72.248	if currency_yr==	1993
+					replace gdp_old= 	73.785	if currency_yr==	1994
+					replace gdp_old= 	75.324	if currency_yr==	1995
+					replace gdp_old= 	76.699	if currency_yr==	1996
+					replace gdp_old= 	78.012	if currency_yr==	1997
+					replace gdp_old= 	78.859	if currency_yr==	1998
+					replace gdp_old= 	80.065	if currency_yr==	1999
+					replace gdp_old= 	81.887	if currency_yr==	2000
+					replace gdp_old= 	83.754	if currency_yr==	2001
+					replace gdp_old= 	85.039	if currency_yr==	2002
+					replace gdp_old= 	86.735	if currency_yr==	2003
+					replace gdp_old= 	89.12	if currency_yr==	2004
+					replace gdp_old= 	91.988	if currency_yr==	2005
+					replace gdp_old= 	94.814	if currency_yr==	2006
+					replace gdp_old= 	97.337	if currency_yr==	2007
+					replace gdp_old= 	99.246	if currency_yr==	2008
+					replace gdp_old= 	100		if currency_yr==	2009
+					replace gdp_old= 	101.221	if currency_yr==	2010
+					replace gdp_old= 	103.311	if currency_yr==	2011
+					replace gdp_old= 	105.214	if currency_yr==	2012
+					replace gdp_old= 	106.913	if currency_yr==	2013
+					replace gdp_old= 	108.832	if currency_yr==	2014
+					replace gdp_old= 	110.012	if currency_yr==	2015
+								
+					replace global_fund_amt=global_fund_amt*(gdp_current/gdp_old)		
+					replace pepfar_amt=pepfar_amt*(gdp_current/gdp_old)	
+						drop gdp_current gdp_old	
+					collapse (sum) pepfar_amt global_fund_amt (max) pepfar global_fund, by(country_alt currency_yr)
+					
+					save ART/temp_dta/pepfar_gf_data.dta, replace
+					clear
+					use ART/final_dta/wide_file.dta
+					
+					merge m:1 country_alt currency_yr using "ART/temp_dta/pepfar_gf_data.dta"
+						drop if _merge==2
 *!*					* There are problems here because two studies have multiple countries (hiv114 and hiv104); another hiv110 has several observations that are probably only partial drug costs
 
-					* Will need to check for other missing values by looking at data that didnt merge from master. 
+			
+		* FINALLY need to make sure that all fields from id_modality-id_pop_dem_std  are encoded properly:
+				
+				
+			
+				*Encode the following variables:
+				foreach i of varlist id_modality id_pop_clin_std id_pop_dem id_pop_dem_std health_system community_awareness screening_diagnoses arv_regimen method treatment_phase counseling_content demand_generation{
+					replace `i'=lower(`i')
+					replace `i'="" if `i'=="NR"
+					replace `i'="" if `i'=="N/A"
+					encode `i', gen(`i'_1) label(`i')
+						drop `i'
+					rename `i'_1 `i' 
+					}
+					
+				
+				*** WILL NEED TO DO SOMETHING WITH THESE OR JUST LEAVE THEM STRING:
+				* id_pop_clin id_activities id_tech treatment referrals visits staff_type clinical_monitoring supportive_care
+				
+				
+				* Will need to check for other missing values by looking at data that didnt merge from master. 
 					STOP
 					*Based on patterns, I assume:
 						*FOR ALL 3 STUDIES NEED TO MAKE EDUCATED ASSESSMENT OF PEPFAR & GF STATUS
