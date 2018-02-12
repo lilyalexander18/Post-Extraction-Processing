@@ -1,9 +1,9 @@
 ******************************************************
-* Data Cleaning and Transformation Do File for STI Management 
+* Data Cleaning and Transformation Do File for Inpatient Care
 * Global Health Costing Consortium (GHCC)
-* December 2017
+* January 2018
 * 
-* Latest update date: 25 October 2017
+* Latest update date: 17 January 2018
 *
 * Lily Alexander, MPH Student, Univ of Washington
 * lilyalexander18@gmail.com; lalexan1@uw.edu
@@ -46,6 +46,7 @@
 
 
 
+
 	*** Still Need to incorporate
 	******************************
 	* strim (to trim off extra spaces from excel for pre-encoded fields)
@@ -62,20 +63,20 @@
 	set more off
 	set mem 2g
 
-	cd "C:/Users/Lily Alexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/post_extraction_processing/STI"
+	cd "C:/Users/Lily Alexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/post_extraction_processing/Inpatient_care"
 
 * 1: Load in both data files (change title of excel file as appropriate)
 ***********************
 
 * Costs data sheet
-	import excel using GHCC_STI_updated_12122017_MMD.xlsx, firstrow sh("Cost data") cellrange(A4) case(l) clear
+	import excel using GHCC_TAC_Inpatient_Care_v2_20-Dec-2017.xlsx, firstrow sh("Cost data") cellrange(A4) case(l) clear
 	drop if id == ""
 		*Save for working later
 		save temp_dta/costs.dta,replace	
 		clear
 		
 * Study Attributes data sheet	
-	import excel using GHCC_STI_updated_12122017_MMD.xlsx, firstrow sh("Study attributes") cellrange(A4) case(l) clear
+	import excel using GHCC_TAC_Inpatient_Care_v2_20-Dec-2017.xlsx, firstrow sh("Study attributes") cellrange(A4) case(l) clear
 	drop if id == ""
 		*Save for working later
 		save temp_dta/study_attributes.dta,replace	
@@ -168,10 +169,10 @@
 *!******* THIS TO BE REMOVED AFTER BEN FIXES EVERYTHING
 	* Replace miscategorized "mixed" values for totals in si_ and a_ categories
 	foreach i of varlist si_narrow si_broad {
-		replace `i'="Combined" if (`i'=="Mixed" | `i' == "mixed") & ar_broad=="Total"
+		replace `i'="Combined" if `i'=="Mixed" & ar_broad=="Total"
 	}
 	foreach i of varlist a_narrow a_broad {
-		replace `i'="combo" if (`i'=="Mixed" | `i' == "mixed") & ar_broad=="Total"
+		replace `i'="combo" if `i'=="Mixed" & ar_broad=="Total"
 	}
 
 	* Get rid of any sub-category costs in the costing sheet (theyre screwing things up)
@@ -269,14 +270,13 @@
 			******************************
 
 			// Create locals for broad and narrow cost component variables that will be referenced throughout 
-			local cat_all "capital facility overhead personnel recurring_goods recurring_services subtotal total vehicles cap_building cap_unspecified cap_vehicles fac_maint_and_util fac_maintenance fac_rental ove_unspecified per_unspecified recgoods_clinical_consum recgoods_consum recgoods_key_drugs recgoods_unspecified recservices_lab_test recservices_maintenance recservices_training recservices_transport sub_subtotal tot_full_costing_total veh_maint_and_util"
+			local cat_all "recurring_goods recurring_services total recgoods_key_drugs recservices_lab_test recservices_mconsult tot_full_costing_total"
 
-			local cat_broad "capital facility overhead personnel recurring_goods recurring_services subtotal total vehicles"
+			local cat_broad "recurring_goods recurring_services total"
 
-			local cat_narrow "cap_building cap_unspecified cap_vehicles fac_maint_and_util fac_maintenance fac_rental ove_unspecified per_unspecified recgoods_clinical_consum recgoods_consum recgoods_key_drugs recgoods_unspecified recservices_lab_test recservices_maintenance recservices_training recservices_transport sub_subtotal tot_full_costing_total veh_maint_and_util"
-
-
-			tostring capital-vehicles, replace
+			local cat_narrow "recgoods_key_drugs recservices_lab_test recservices_mconsult tot_full_costing_total"
+			
+			tostring recurring_goods-total, replace
 
 				foreach i of local cat_broad {
 					replace `i'="" if `i'=="0"
@@ -433,10 +433,10 @@ use temp_dta/costs.dta
 					* Not making changes to the TB categories now b/c not applicable yet and we may adapt these categories first
 
 	// Create locals for standardized input categories 
-		local si_all "capital combined mixed personnel recurrent cap_building_space cap_medical_equip cap_nonmed_equip cap_other cap_vehicles com_unit_cost_total mix_mixed per_mixed_unspec per_support rec_building_space rec_key_drugs rec_med_int_supplies rec_nonmed_int_supplies rec_other"
-		local si_broad "capital combined mixed personnel recurrent"
-		local si_narrow "cap_building_space cap_medical_equip cap_nonmed_equip cap_other cap_vehicles com_unit_cost_total mix_mixed per_mixed_unspec per_support rec_building_space rec_key_drugs rec_med_int_supplies rec_nonmed_int_supplies rec_other"
-			
+		local si_all "combined mixed recurrent com_unit_cost_total mix_mixed rec_key_drugs rec_med_int_supplies" 
+		local si_broad "combined mixed recurrent"
+		local si_narrow "com_unit_cost_total mix_mixed rec_key_drugs rec_med_int_supplies"
+		
 			foreach i of local si_broad {
 				tostring `i', replace 
 			}
@@ -595,11 +595,10 @@ use temp_dta/costs.dta
 
 	// Create locals for activity categories 
 
-		local a_all "mixed operational operational_unspec primary_sd primary_sd_unspec unspecified com_combo mix_mixed ope_bldg_equip ope_mass_education ope_supervision ope_training ope_transportation ope_unspecified opeunspec_unspecified prisd_lab_services prisd_unspecified uns_unspecified"
-		local a_broad "mixed operational operational_unspec primary_sd primary_sd_unspec unspecified"
-		local a_narrow "com_combo mix_mixed ope_bldg_equip ope_mass_education ope_supervision ope_training ope_transportation ope_unspecified opeunspec_unspecified prisd_lab_services prisd_unspecified uns_unspecified"
-			
-	
+		local a_all "ancillary combo primary_sd secondary_sd anc_lab_services com_combo prisd_arv_delivery prisd_lab_monitoring prisd_unspecified secsd_unspecified"
+		local a_broad "ancillary combo primary_sd secondary_sd" 
+		local a_narrow "anc_lab_services com_combo prisd_arv_delivery prisd_lab_monitoring prisd_unspecified secsd_unspecified" 
+		
 			foreach i of local a_broad {
 
 					tostring `i', replace 
@@ -688,7 +687,7 @@ use temp_dta/costs.dta
 *******************************
 			
 		* Encode categorical variables for long version
-			foreach i of varlist disease intervention cost_level trade_status fixed_variable cost_incurred_by period core_input output_unit_reported output_unit output_unit2 integrated_generic unit_obs empirical_modeled resource_id resource_valuation price_sources full_subsidized adjustment_method data_collection recall_period output_methods data_timing inflation inflation_method amortization currency_iso currency_name {
+			foreach i of varlist disease intervention trade_status fixed_variable output_unit_reported output_unit output_unit2 integrated_generic unit_obs resource_id resource_valuation price_sources full_subsidized inflation currency_iso currency_name {
 			*replace `i' = lower(`i')
 			encode `i', gen(`i'_1) label(`i')
 			move `i'_1 `i'
@@ -705,7 +704,7 @@ use temp_dta/costs.dta
 		* Encode reporting standards variables for long version
 			*set trace on
 			label define rs 1 "explicit" 2 "inferred" 3 "n/a" 4 "nr"
-			foreach i of varlist *_rs{
+			foreach i of varlist pot_distortions_rs cost_source_rs cost_allocation_method_rs resource_id_rs resource_valuation_rs price_sources_rs inputq_source_rs full_subsidized_rs inflation_rs currency_rs {
 			replace `i' = lower(`i')
 			replace `i' = "1" if `i'== "explicit"
 			replace `i' = "2" if `i'== "inferred"
@@ -718,9 +717,9 @@ use temp_dta/costs.dta
 
 			
 		* Numeric variables to recode NR to missing and destring to numeric
-			foreach i of varlist lower_ci upper_ci std_dev median_cost lower_iqr upper_iqr input_price input_quantity program_level_cost output_quantity time_period_mo{
-			replace `i' = lower(`i')
-			replace `i'="." if `i'=="nr" | `i'=="n/a"
+			foreach i of varlist lower_ci upper_ci std_dev median_cost lower_iqr upper_iqr input_price input_quantity{
+			replace `i' = lower(`i') 
+			replace `i'="." if (`i'=="nr" | `i'=="n/a") 
 			destring `i', replace
 			}
 		*
@@ -753,8 +752,9 @@ use temp_dta/costs.dta
 			* Generate a new country string variable so you can merge in other information later:
 			gen country_alt=country
 			
-			foreach i of varlist extractor_initials article_dataset study_type econ_perspective_report econ_perspective_actual research_costs unrelated_costs overhead incremental_costing int_services econ_costing real_world country geo_sampling_incountry country_sampling site_sampling px_sampling sample_size_derived timing exclusions personnel_dt iso_code currency_x traded volunteer_time family_time px_time aggregation subgroup scale scale_up seasonality sensitivity_analysis limitations coi ownership pop_sex id_class id_type  id_modality id_modality_detail px_costs_measured cat_cost costing_purpose_cat asd_costs pop_density int_description time_unit consistency controls pop_couples cd4_med tb_rx_resistance id_phase id_tech* {
-			*replace `i' = lower(`i')
+			foreach i of varlist extractor_initials article_dataset study_type econ_perspective_report econ_perspective_actual research_costs unrelated_costs overhead incremental_costing int_services econ_costing real_world country geo_sampling_incountry country_sampling site_sampling px_sampling sample_size_derived timing exclusions personnel_dt iso_code currency_x traded volunteer_time family_time px_time aggregation subgroup scale scale_up seasonality sensitivity_analysis limitations coi ownership pop_sex id_class id_type  id_modality px_costs_measured cat_cost costing_purpose_cat asd_costs pop_density int_description time_unit consistency controls pop_couples cd4_med tb_rx_resistance id_phase id_tech* {
+			di "`i'"
+			tostring `i', replace
 			replace `i'="." if `i'=="NR"
 			encode `i', gen(`i'_1) label(`i')
 			move `i'_1 `i'
@@ -781,12 +781,14 @@ use temp_dta/costs.dta
 			label define rs 1 "explicit" 2 "inferred" 3 "n/a"
 			*set trace on
 			foreach i of varlist *_rs {
+			tostring `i', replace 
 			replace `i' = lower(`i')
 			replace `i' = "1" if `i'== "explicit"
 			replace `i' = "2" if `i'== "inferred"
 			replace `i' = "3" if `i'== "n/a"
 			replace `i' = "" if `i'== "nr"
 			replace `i' = "" if `i'== "none"
+			replace `i' = "" if `i' == "."
 			destring `i', replace
 				label values `i' rs
 			}
@@ -832,7 +834,7 @@ use temp_dta/costs.dta
 			destring current_x_rate, replace
 			
 		* number of sites
-			replace no_sites="." if no_sites=="N/A" | no_sites=="NR"
+			//replace no_sites="." if no_sites=="N/A" | no_sites=="NR"
 			destring no_sites, replace
 		
 		
@@ -896,18 +898,13 @@ use temp_dta/costs.dta
 				
 			* And binaries for facility_type
 			tab fac_type, gen(v_)
-				rename v_1 ft_clinics
-				rename v_2 ft_intclinics
-				rename v_3 ft_unspecified_hc
+				rename v_1 ft_hospitals
 				
 					// note not appropriate for other intervention types
 				
 			* And binaries for faclity_category
 			tab facility_cat, gen(v_)
-				rename v_1 health_center
-				rename v_2 hospital_clinic
-				rename v_3 mixed_healthfac
-				rename v_4 unspecified_healthfac
+				rename v_1 primary_hospital 
 				
 				
 				** Try adding both to the models to see how it might differ.
@@ -933,7 +930,7 @@ use temp_dta/costs.dta
 	
 	clear
 	use temp_dta/costs.dta
-		drop ar_cap_building-a_unspecified
+		drop ar_recgoods_key_drugs-a_secondary_sd
 	merge m:1 id using temp_dta/study_attributes.dta
 		order extractor_initials-consistency_rmk
 		order id
@@ -952,30 +949,30 @@ use temp_dta/costs.dta
 	* First set up the desired order of the collapsed cost variable with markers
 			*Broad as reported costs
 				gen broad_asreported=.
-				move broad_asreported ar_capital
+				move broad_asreported ar_recurring_goods
 			*Narrow as reported costs
 				gen narrow_asreported=.
-				move narrow_asreported ar_cap_building
+				move narrow_asreported ar_recgoods_key_drugs
 			
 			*Broad Standardized Input costs
 				gen broad_stdinput=.
-				move broad_stdinput si_capital
+				move broad_stdinput si_combined
+				
 			* Narrow Standardized Input costs
 				gen narrow_stdinput=.
-				move narrow_stdinput si_cap_medical_equip
+				move narrow_stdinput si_com_unit_cost_total
 			
 				
 			*Broad Activity Costs
 				gen broad_activity=.
-				move broad_activity a_mixed
+				move broad_activity a_ancillary
 		
 			* Narrow Activity costs
 				gen narrow_activity=.
-				move narrow_activity a_com_combo
+				move narrow_activity a_anc_lab_services
 			
 	
-order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_personnel ar_recurring_goods ar_recurring_services ar_subtotal ar_total ar_vehicles narrow_asreported ar_cap_building-ar_veh_maint_and_util broad_stdinput si_capital si_combined si_mixed si_personnel si_recurrent narrow_stdinput si_cap_building_space si_cap_medical_equip-si_rec_other broad_activity a_mixed a_operational a_operational_unspec a_primary_sd a_primary_sd_unspec a_unspecified narrow_activity a_com_combo-a_uns_unspecified
-
+order id-cpi_old broad_asreported ar_recurring_goods ar_recurring_services ar_total narrow_asreported ar_recgoods_key_drugs ar_recservices_lab_test ar_recservices_mconsult ar_tot_full_costing_total broad_stdinput si_combined si_mixed si_recurrent narrow_stdinput si_com_unit_cost_total si_mix_mixed si_rec_key_drugs si_rec_med_int_supplies broad_activity a_ancillary a_combo a_primary_sd a_secondary_sd narrow_activity a_anc_lab_services a_com_combo a_prisd_arv_delivery a_prisd_lab_monitoring a_prisd_unspecified a_secsd_unspecified
 
 			save temp_dta/costs.dta, replace
 
@@ -994,7 +991,7 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 					clear
 					use temp_dta/costs.dta
 				*set trace on
-				foreach i of varlist ar_capital-a_uns_unspecified {
+				foreach i of varlist ar_recgoods_key_drugs-a_secondary_sd {
 					di in red "`i'"
 						bysort unit_cost (`i') : gen miss = mi(`i'[1])
 						collapse (sum) `i' (min) miss, by (unit_cost)
@@ -1008,7 +1005,7 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 						}
 						*
 			*2. Now collapse all of the categorical variables just by total
-				drop ar_capital-a_uns_unspecified 
+				drop ar_recgoods_key_drugs-a_secondary_sd
 				
 			
 			*3. Check if there is a total unit cost per study extracted; if not, keep partial cost 
@@ -1064,14 +1061,16 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 			save final_dta/wide_file.dta, replace
 			
 			
+		
 			
 			
 ** Cross-validation of costs **
 
-	
+	use final_dta/wide_file.dta, clear 
+
 	* 1. Check that broad standard input categories sum to mean cost 
 	****************************************************************
-	egen check = rowtotal(si_recurrent si_personnel si_capital)
+	egen check = rowtotal(si_recurrent si_mixed)
 	replace check = si_combined if check == 0
 	gen diff = check - mean_cost
 	gen flag = 1 if diff > 0.05
@@ -1085,7 +1084,7 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 	* 2. Check that narrow standard input categories sum to broad categories
 	************************************************************************
 	
-	local prefix "rec per mix com cap" 
+	local prefix "rec mix com" 
 		
 	preserve 
 	
@@ -1096,13 +1095,13 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 		gen flag_`var' = 1 if diff_`var' > 0.05 & diff_`var' !=. 
 	
 	}
-	restore
+	restore 
 	
 	* 3. Check that broad activity categories sum to mean cost 
 	**********************************************************
 	
-	egen check = rowtotal(a_primary_sd_unspec a_primary_sd a_operational_unspec a_operational)
-	replace check = a_mixed if check == 0 
+	egen check = rowtotal(a_secondary_sd a_primary_sd a_ancillary)
+	replace check = a_combo if check == 0 
 	gen diff = check - mean_cost
 	gen flag = 1 if diff > 0.05
 	
@@ -1114,7 +1113,7 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 	* 4. Check that narrow activity categories sum to broad categories
 	******************************************************************
 	
-	local prefix "uns prisd opeunspec ope mix" 
+	local prefix "anc com prisd secsd" 
 	
 	//preserve 
 	
@@ -1123,28 +1122,17 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 		
 	}
 	
-	gen diff_uns = sum_uns - a_unspecified 
-	gen flag_uns = 1 if diff_uns > 0.05 & diff_uns != . 
+	gen diff_anc = sum_anc - a_ancillary
+	gen flag_anc = 1 if diff_anc > 0.05 & diff_anc != . 
 	
-	gen diff_prisd = sum_prisd - a_primary_sd if a_primary_sd !=. 
-	replace diff_prisd = sum_prisd - a_primary_sd_unspec if a_primary_sd_unspec != . 
-	gen flag_prisd = 1 if diff_uns > 0.05 & diff_uns != . 
+	gen diff_com = sum_com - a_combo if a_combo != . 
+	gen flag_com = 1 if diff_com > 0.05 & diff_com != . 
 	
-	gen diff_opeunspec = sum_opeunspec - a_operational_unspec 
-	gen flag_opeunspec = 1 if diff_opeunspec > 0.05 & diff_opeunspec != . 
+	gen diff_prisd = sum_prisd - a_primary_sd
+	gen flag_prisd = 1 if diff_prisd > 0.05 & diff_prisd != . 
 	
-	gen diff_ope = sum_ope - a_operational 
-	gen flag_ope = 1 if diff_ope > 0.05 & diff_ope != . 
-	
-	gen diff_mix = sum_mix - a_mixed 
-	gen flag_mix = 1 if diff_mix > 0.05 & diff_mix != . 
-
-
-
-	save STI_clean_wide_file.dta, replace
-
-	
-	
+	gen diff_secsd = sum_secsd - a_secondary_sd
+	gen flag_secsd = 1 if diff_secsd > 0.05 & diff_secsd != . 
 	
 	
 	
@@ -1274,6 +1262,13 @@ order id_old-cpi_old broad_asreported ar_capital ar_facility ar_overhead ar_pers
 				
 				
 ** STOP HERE			
+			
+			
+			
+			
+			
+			
+			
 			
 			
 			
