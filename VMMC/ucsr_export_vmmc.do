@@ -20,8 +20,12 @@
 
 set more off 
 	clear
-	cd "C:/Users/Lily Alexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/VMMC"
-		use VMMC_wide_file_Feb2018.dta
+	*Drew's Path:
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/VMMC/"
+	use VMMC_wide_file.dta, replace	
+	*Lily's Path:
+	* cd "C:/Users/Lily Alexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/VMMC"
+	* 	use VMMC_wide_file_Feb2018.dta
 
 
 **********************************		
@@ -260,7 +264,7 @@ set more off
 		label var si_rec_med_int_supplies "Recurring: Medical Supplies (excluding drugs) (SI)"
 		label var si_rec_nonmed_int_supplies "Recurring: Non-medical Supplies (SI)"
 		label var si_rec_building_space "Recurring: Building Space (SI)"
-		rename rec_other si_rec_other 
+		* rename rec_other si_rec_other 
 		label var si_rec_other "Recurring: Other (SI)"
 		
 		// Capital 
@@ -402,12 +406,15 @@ foreach var of local strvars {
 }
 
 
-/*
+
 * Finally, export!
 **************************
 save VMMC_clean_wide_file_Feb2018.dta, replace
 
-//export excel study-a_secsd_hct using UCSR_exports/UCSR_export_full.xlsx, first(varl) missing(".") replace       
+* Drew's Path
+export excel using UCSR_export_full.xlsx, first(varl) missing(".") replace
+* Lily's Path
+* export excel using UCSR_exports/UCSR_export_full.xlsx, first(varl) missing(".") replace       
 
 /*
 
