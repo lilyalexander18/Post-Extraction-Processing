@@ -116,7 +116,7 @@ set more off
 		*Bibliographic variables
 		************************
 		label var lead_author "Lead Author"
-		label var ref_author "Reference Authors"
+		*label var ref_author "Reference Authors"
 		label var ref_year "Reference Year"
 		label var title "Title"
 		label var journal_etc "Journal"
@@ -306,7 +306,7 @@ set more off
 		* Create the missing columns 
 		******************************
 		
-		gen si_rec_key_drugs = . 
+		*gen si_rec_key_drugs = . 
 		label var si_rec_key_drugs "Recurring: Supplies (key drugs) (SI)" 
 		
 		gen si_cap_build = . 
@@ -375,7 +375,7 @@ replace currency_iso = strupper(currency_iso)
 ** Order variables 
 **************************************************************************		
 
-order disease collapsed lead_author ref_year output_unit2 flags ref_author ref_year title journal_etc url /// 
+order disease collapsed lead_author ref_year output_unit2 flags ref_year title journal_etc url /// 
 iso_name location no_sites pop_density ownership platform facility_cat id_class id_int int_description_long /// 
 clinical_monitoring demand_generation counseling_content staff_type supportive_care visits referrals method id_tech /// 
 treatment_phase arv_regimen treatment screening_diagnoses community_awareness id_activities /// 
