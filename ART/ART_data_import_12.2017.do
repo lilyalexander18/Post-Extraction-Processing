@@ -1154,10 +1154,11 @@ use temp_dta/costs.dta
 								clear
 						use temp_dta/costs.dta
 						}
-						*
+					
+					*
 			*2. Now collapse all of the categorical variables just by total
 				drop ar_capital-a_uns_unspecified
-				keep if ar_narrow1=="full costing total" | ar_narrow1=="partial costing"
+				keep if si_narrow1=="unit cost total"
 					save temp_dta/c_categoricals.dta,replace
 					merge m:1 unit_cost using temp_dta/costs_temp.dta
 							drop if _merge!=3
@@ -1348,17 +1349,10 @@ use temp_dta/costs.dta
 				* id_pop_clin id_activities id_tech treatment referrals visits staff_type clinical_monitoring supportive_care
 				
 				
-				* Will need to check for other missing values by looking at data that didnt merge from master. 
-					STOP
-					*Based on patterns, I assume:
-						*FOR ALL 3 STUDIES NEED TO MAKE EDUCATED ASSESSMENT OF PEPFAR & GF STATUS
+					
 						
-						
-						drop _merge
-						drop country_alt
-						
-			save ART/final_dta/wide_file.dta, replace						
-
+			save ART/final_dta/ART_wide_file.dta, replace						
+STOP
 			
 	*** Finally, also add in the line that saves a copy of ART to the GitHub folder for Lily to see it			
 	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/ART/"
