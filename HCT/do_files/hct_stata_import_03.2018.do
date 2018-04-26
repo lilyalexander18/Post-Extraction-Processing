@@ -146,9 +146,9 @@
 	*GDP Deflator
 	 run do_files/inflation_methods/inflation_hct_gdp.do
 		
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/ART"
+	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
 	save temp_dta/costs.dta,replace	
-*/
+
 
 		
 		use temp_dta/costs.dta, clear
