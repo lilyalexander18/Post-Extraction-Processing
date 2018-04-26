@@ -1,0 +1,1798 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. * ----------------------------
+. * load/install packages
+. * ----------------------------
+. 
+. /* 
+> If needed, install necessary packages to compile notebook document (e.g., html, docx, pdf)
+> these packages include: markdoc, kethcup, weaver, synlight, and statax
+> note: if get any error messages, follow on-screen instructions in Stata console to 
+> complete correct installation
+> 
+> * once install following packages once, do not need to re-install; 
+> * here, commented out
+> */
+. *packages for MarkDoc
+. *ssc install Markdoc
+. *ssc install weaver
+. *ssc install synlight
+. *ssc install statax
+. *markdocpandoc // installs pandoc
+. *packages for analysis and presentation of results
+. *ssc install estout, replace
+. *ssc install outreg
+. *ssc install pandoc
+. *ssc install coefplot 
+. 
+. *-----------------------
+. *-----------------------
+. 
+. 
+. /* Template: 
+> MI 20170122: 
+> comments from Stata do-file will not appear in final markdoc.
+> The text included in this do-file will only appear if it
+> is blocked between a forward slash '/' and 3 asterisks '***', as done below
+> immediately before start of latex syntax.
+> */
+.         
+. 
+. /***
+> 
+> \documentclass{c -(}article{c )-}
+> 
+> \usepackage{c -(}graphicx{c )-}  % this is a package for inserting graphics
+> \usepackage{c -(}hyperref{c )-}
+> \hypersetup{c -(}
+>     colorlinks=true,
+>     linkcolor=blue,
+>     filecolor=blue,      
+>     urlcolor=blue
+>         {c )-}
+>         
+> \usepackage{c -(}geometry{c )-}   % useful package for formatting document
+> \geometry{c -(}
+>         letterpaper,
+>         total={c -(}6.5in, 9in{c )-},
+>         left=1in,
+>         right=1in,
+>         top=1in,
+>         bottom=1in
+>         {c )-}
+> 
+> \begin{c -(}document{c )-}
+> 
+> \title{c -(}Data Validation Exercise before Entry into UCSR{c )-}
+> \author{c -(}
+>   Lily Alexander
+>   {c )-}
+> 
+>  \date{c -(}
+>   \bigskip
+>   \today
+>   {c )-}
+> 
+> \maketitle
+>         
+> \begin{c -(}abstract{c )-}
+> \textbf{c -(}Summary{c )-}. This is a document to validate and check variables before they are integrated into the UCSR.
+> \end{c -(}abstract{c )-}
+> 
+> \section{c -(}High-level codebook for all variables{c )-}
+> 
+> \begin{c -(}verbatim{c )-}
+> ***/
+. 
+. /* ------------------------
+> load dataset
+> ---------------------------
+> */
+. 
+. /**/ use prep_clean_wide_file_Mar2018.dta, clear 
+{txt}
+{com}. 
+. 
+. /* ------------------------
+> codebook generation
+> ---------------------------
+> */
+. /**/ codebook 
+
+{txt}{hline}
+{res}disease{right:Disease}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"HIV"
+
+{txt}{hline}
+{res}collapsed{right:Collapsed}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str2
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"No"
+
+{txt}{hline}
+{res}lead_author{right:Lead Author}
+{txt}{hline}
+
+{col 19}type:  string ({res}str7{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Ying, R"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}ref_year{right:Reference Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}2015{txt},{res}2015{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}2015
+
+{txt}{hline}
+{res}output_unit2{right:Output unit}
+{txt}{hline}
+
+{col 19}type:  string ({res}str20{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Cost Per Couple-Year"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}title{right:Title}
+{txt}{hline}
+
+{col 19}type:  string ({res}str143{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Cost-effectiveness of pre-exposure
+{col 33}prophylaxis targeted to high-risk
+{col 33}serodiscordant couples as a bridge to
+{col 33}sustained ART use in Kampala, Uganda"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}journal_etc{right:Journal}
+{txt}{hline}
+
+{col 19}type:  string ({res}str41{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"J Int AIDS Soc. 2015; 18(4Suppl 3):
+{col 33}20013"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}url{right:URL}
+{txt}{hline}
+
+{col 19}type:  string ({res}str56{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"<https://www.ncbi.nlm.nih.gov/pmc/artic
+{col 33}les/PMC4509901/>."
+
+{txt}{hline}
+{res}iso_name{right:Country}
+{txt}{hline}
+
+{col 19}type:  string ({res}str8{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Uganda "
+
+{txt}{hline}
+{res}location{right:Location}
+{txt}{hline}
+
+{col 19}type:  string ({res}str23{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Kasangati Health Centre"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}no_sites{right:Sites}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}1
+
+{txt}{hline}
+{res}pop_density{right:Urbanicity}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Peri-Urban"
+
+{txt}{hline}
+{res}ownership{right:Ownership}
+{txt}{hline}
+
+{col 19}type:  string ({res}str6{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Public"
+
+{txt}{hline}
+{res}platform{right:Platform}
+{txt}{hline}
+
+{col 19}type:  string ({res}str15{txt}), but longest is str14
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Fixed Facility"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}facility_cat{right:Platform specificity}
+{txt}{hline}
+
+{col 19}type:  string ({res}str68{txt}), but longest is str28
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Hospital - Level Unspecified"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}id_class{right:Intervention Category}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Prevention"
+
+{txt}{hline}
+{res}id_int{right:Intervention}
+{txt}{hline}
+
+{col 19}type:  string ({res}str31{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"PRE-EXPOSURE PROPHYLAXIS (PREP)"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}int_description_long{right:Intervention Description (Long)}
+{txt}{hline}
+
+{col 19}type:  string ({res}str263{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Standard care for HIV positive partner
+{col 33}included: sexual behavior counseling,
+{col 33}ART provision, adherence counseling,
+{col 33}viral load monitoring. PrEP care for HIV
+{col 33}negative partner included: HIV
+{col 33}counseling & testing, drug provision,
+{col 33}serum creatinine tests, pregnancy tests"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}clinical_monitoring{right:Clinical monitoring}
+{txt}{hline}
+
+{col 19}type:  string ({res}str31{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Vl Monitoring, Serum Creatinine"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}demand_generation{right:Demand generation}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}counseling_content{right:Counseling content}
+{txt}{hline}
+
+{col 19}type:  string ({res}str64{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Sexual Behavior Counseling, Adherence
+{col 33}Counseling, Hiv Counseling"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}staff_type{right:Staff type & number}
+{txt}{hline}
+
+{col 19}type:  string ({res}str36{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Nurse Counselors (4), Clinicians (2)"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}supportive_care{right:Supportive care}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}visits{right:Visit type & number}
+{txt}{hline}
+
+{col 19}type:  string ({res}str45{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Screening (7), Enrollment (5),
+{col 33}Follow-Up (18)"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}referrals{right:Referrals}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}method{right:Method}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Rapid Test"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}id_tech{right:Technology}
+{txt}{hline}
+
+{col 19}type:  string ({res}str16{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"First Line, Prep"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}treatment_phase{right:Treatment phase}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"initiation"
+
+{txt}{hline}
+{res}arv_regimen{right:ARV Regimen}
+{txt}{hline}
+
+{col 19}type:  string ({res}str11{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"FTC+TDF+EFV"
+
+{txt}{hline}
+{res}treatment{right:Treatment}
+{txt}{hline}
+
+{col 19}type:  string ({res}str7{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"FTC+TDF"
+
+{txt}{hline}
+{res}screening_diagnoses{right:Screening and diagnosis}
+{txt}{hline}
+
+{col 19}type:  string ({res}str30{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"HIV testing, Pregnancy testing"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}community_awareness{right:Community awareness}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}health_system{right:Health system}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}id_activities{right:Costed activities}
+{txt}{hline}
+
+{col 19}type:  string ({res}str86{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Clinical Monitoring; Counseling
+{col 33}Content; Arv Regimen; Screening &
+{col 33}Diagnoses; Treatment"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}start_month{right:Start Month}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}start_year{right:Start Year}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}end_month{right:End Month}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}end_year{right:End Year}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}period_portrayed{right:Total Months}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"12"
+
+{txt}{hline}
+{res}year_intro{right:Year introduced at study site}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}coverage{right:Coverage}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}id_pop_dem_std{right:Target group (demographic)}
+{txt}{hline}
+
+{col 19}type:  string ({res}str23{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Sero-discordant Couples"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}id_pop_clin_std{right:Target group (clinical)}
+{txt}{hline}
+
+{col 19}type:  string ({res}str22{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"serodiscordant couples"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}pop_age{right:Average Age}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}30{txt},{res}30{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}30
+
+{txt}{hline}
+{res}pop_sex{right:Gender}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}pop_ses{right:SES}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}pop_education{right:Education}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}hiv_prev{right:HIV Prevalence}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.5{txt},{res}.5{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.5
+
+{txt}{hline}
+{res}tb_prev{right:TB Prevalence}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}tb_rx_resistance{right:TB Drug Resistance}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}costing_purpose{right:Costing Purpose}
+{txt}{hline}
+
+{col 19}type:  string ({res}str145{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"To assess the feasibility of
+{col 33}antiretroviral-based interventions (ART
+{col 33}and PrEP) to prevent HIV transmission
+{col 33}among high-risk serodiscordant couples"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}timing{right:Timing}
+{txt}{hline}
+
+{col 19}type:  string ({res}str15{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Cross-Sectional"
+
+{txt}{hline}
+{res}country_sampling{right:Country Sampling}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}geo_sampling_incountry{right:Geographic Area In Country Sampling}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}site_sampling{right:Site Sampling}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}px_sampling{right:Patient Sampling}
+{txt}{hline}
+
+{col 19}type:  string ({res}str14{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Entire Program"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}sample_size_derived{right:Sample size formally derived}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"No"
+
+{txt}{hline}
+{res}controls{right:Controls}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"No"
+
+{txt}{hline}
+{res}econ_perspective_actual{right:Perspective}
+{txt}{hline}
+
+{col 19}type:  string ({res}str8{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Provider"
+
+{txt}{hline}
+{res}econ_costing{right:Economic / Financial}
+{txt}{hline}
+
+{col 19}type:  string ({res}str8{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Economic"
+
+{txt}{hline}
+{res}real_world{right:Real World / Per Protocol}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Real World"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}asd_costs{right:Above Service Costs Included}
+{txt}{hline}
+
+{col 19}type:  string ({res}str17{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"No Costs Included"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}list_asd_costs{right:Above Service Cost List}
+{txt}{hline}
+
+{col 19}type:  string ({res}str4{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"None"
+
+{txt}{hline}
+{res}omitted_costs{right:Omitted Costs}
+{txt}{hline}
+
+{col 19}type:  string ({res}str13{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Patient costs"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}sensitivity_analysis{right:Sensitivity Analysis}
+{txt}{hline}
+
+{col 19}type:  string ({res}str13{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Comprehensive"
+
+{txt}{hline}
+{res}scale{right:Economies of scale}
+{txt}{hline}
+
+{col 19}type:  string ({res}str7{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Ignored"
+
+{txt}{hline}
+{res}research_costs{right:Research Costs Included}
+{txt}{hline}
+
+{col 19}type:  string ({res}str8{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Excluded"
+
+{txt}{hline}
+{res}unrelated_costs{right:Unrelated Costs Included}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"No"
+
+{txt}{hline}
+{res}overhead{right:Overhead Costs Included}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Yes"
+
+{txt}{hline}
+{res}overhead_costs{right:Overhead Costs List}
+{txt}{hline}
+
+{col 19}type:  string ({res}str50{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Start-Up, Transportation, Fuel,
+{col 33}Building, Vehicles"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}pot_distortions{right:Potential distortions}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}volunteer_time{right:Valuing Volunteer Time}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}family_time{right:Valuing Family Time}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}px_costs_measured{right:Patient-Incurred Costs Measured}
+{txt}{hline}
+
+{col 19}type:  string ({res}str12{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Not Included"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}cat_cost{right:Catastrophic Cost Calculated}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"No"
+
+{txt}{hline}
+{res}currency_yr{right:Reported Currency Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}2012{txt},{res}2012{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}2012
+
+{txt}{hline}
+{res}iso_code{right:Reported Currency}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"USD"
+
+{txt}{hline}
+{res}currency_iso{right:Currency of Data Collection}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        12{col 33}"."
+{col 21}         1{col 33}"UGX"
+
+{txt}{hline}
+{res}currency_x{right:Currency Exchange Method}
+{txt}{hline}
+
+{col 19}type:  string ({res}str11{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"Market Only"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}current_x_rate{right:Currency Exchange Rate}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}discount_rate{right:Discount Rate}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}3{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}3
+
+{txt}{hline}
+{res}inflation{right:Inflation rate}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}"."
+
+{txt}{hline}
+{res}mean_cost{right:Mean Unit Cost}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}97.423084{txt},{res}1120.3655{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}13{col 51}{txt}missing .:  {res}0{txt}/{res}13
+
+{txt}{col 19}mean:{res}{col 26} 521.979
+{txt}{col 15}std. dev:{res}{col 26} 316.055
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 106.954{col 37}  382.28{col 47} 479.703{col 57} 672.431{col 67} 1064.24
+
+{txt}{hline}
+{res}si_personnel{right:Personnel (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}47.52552{txt},{res}47.52552{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}47.52552
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}si_per_service_delivery{right:Personnel: Direct Service Delivery (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}si_per_support{right:Personnel: Support (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}si_per_mixed_unspec{right:Personnel: Mixed Unspecified (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}47.52552{txt},{res}47.52552{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}47.52552
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}si_recurrent{right:Recurrent Goods (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}371.56316{txt},{res}371.56316{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}371.56316
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}si_rec_key_drugs{right:Recurring: Supplies (key drugs) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}159.85857{txt},{res}159.85857{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}159.85857
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{p 0 39}{res}si_rec_med_int_supplies{space 16}Recurring: Medical Supplies (excluding drugs) (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}12.961506{txt},{res}12.961506{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}12.961506
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}si_rec_nonmed_int_supplies{right:Recurring: Non-medical Supplies (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}si_rec_building_space{right:Recurring: Building Space (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}si_rec_other{right:Recurring: Other (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}198.74309{txt},{res}198.74309{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}198.74309
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}si_capital{right:Capital (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}8.641004{txt},{res}8.641004{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}8.6410036
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}si_cap_med_equip{right:Capital: Equipment (medical) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}si_cap_nonmed_equip{right:Capital: Equipment (non-medical) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}si_cap_building_space{right:Capital: Building Space (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}si_cap_vehicles{right:Capital: Vehicles (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}si_cap_other{right:Capital: Other (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}8.641004{txt},{res}8.641004{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}8.6410036
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}si_mixed{right:Mixed (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}692.63575{txt},{res}692.63575{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}692.63575
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_primary_sd{right:Primary Service Delivery (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}895.69933{txt},{res}895.69933{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}895.69933
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_prisd_arv_delivery{right:Primary SD: ARV Delivery (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}688.31525{txt},{res}688.31525{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}688.31525
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_prisd_unspecified{right:Primary SD: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}207.3841{txt},{res}207.3841{txt}]{col 55}units:  {res}.0001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}207.38409
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_secondary_sd{right:Secondary Service Delivery (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_secsd_unspecified{right:Secondary SD: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_ancillary{right:Ancillary (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}211.70459{txt},{res}211.70459{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}211.70459
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_anc_demand_generation{right:Ancillary: Demand Generation (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_anc_lab_services{right:Ancillary: Lab Services (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}198.74309{txt},{res}198.74309{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}198.74309
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_anc_adhereten{right:Ancillary: Adherence/Retention (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_anc_unspecified{right:Ancillary: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}12.961506{txt},{res}12.961506{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}12.961506
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_operational{right:Operational (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}12.961505{txt},{res}12.961505{txt}]{col 55}units:  {res}1.000e-10
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}12.961505
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_ope_bldg_equip{right:Operational: Buildings and Equipment (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_ope_logistics{right:Operational: Logistics (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}8.641004{txt},{res}8.641004{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}8.6410036
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_ope_program_mgmt{right:Operational: Program Management (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_ope_supervision{right:Operational: Supervision (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_ope_training{right:Operational: Training (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_ope_transportation{right:Operational: Transportation (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}4.320502{txt},{res}4.320502{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}12{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}4.3205018
+{col 21}        12{col 33}.
+
+{txt}{hline}
+{res}a_ope_massed{right:Operational: Mass Education (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_ope_hmis{right:Operational: HMIS and Record-Keeping (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_ope_unspecified{right:Operational: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+
+{txt}{hline}
+{res}a_mixed{right:Mixed (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}13{txt}/{res}13
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        13{col 33}.
+{txt}
+{com}. /*
+> 
+> \end{c -(}verbatim{c )-}
+> 
+> 
+> 
+> \begin{c -(}verbatim{c )-}
+> ***/
+. 
+. * can generate clean tables
+. 
+. /**/ quietly cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/PrEP/checks"
+{txt}
+{com}. 
+. /**/ quietly eststo sumstats: quietly estpost summarize
+{txt}
+{com}. 
+. /**/ quietly esttab sumstats using sumstats, ///
+>         cells("count mean sd min max") ///
+>         title("Summary Statistics") tex  replace
+{txt}
+{com}. * note: do not use 'fragment' with esttab; doing so removes centering and 
+. * tabular syntax
+. 
+. 
+. * go back to main dir
+. /**/ quietly cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/PrEP/checks"
+{txt}
+{com}. 
+. 
+. /***
+> \end{c -(}verbatim{c )-}
+> 
+> Here we import the table of summary statistics.\\
+> 
+> \input{c -(}./checks/sumstats{c )-} 
+> 
+> Now lets generate and add a figure that visualizing one of these variables.\\
+> 
+> ----------------------
+> export final tex document
+> -----------------------------
+> */
+. 
+. /* Exporting in several formats */
+. *markdoc example1, replace              /* exporting a markdown file */
+. *markdoc example1, replace export(html) 
+. *markdoc example1, replace export(odt) 
+. *markdoc example1, replace export(txt) 
+. *markdoc example1, replace export(epub) 
+. *markdoc mytemplatelatex, replace author() affiliation() export(docx) 
+. /* could add date option (no parentheses) */
+. *markdoc mytemplatelatex, replace author() affiliation() export(pdf)
+. 
+. * markdoc mytemplatelatex, replace author() affiliation() export(docx) markup()
+. * markdoc mytemplatelatex, replace author() affiliation() export(html) markup()
+. markdoc data_check, replace author() affiliation() export(tex) markup()
+{txt}
+{p}(MarkDoc created {bf:{browse "data_check.tex"}})
+
+
+{com}. 
+. /*
+> can also produce pdf slides:
+> markdoc example1, replace author(Matthew C. Ingram) affiliation(University at Albany, SUNY) date export(slide)
+> NOTE: this will replace any existing pdf file with same name, so be cautious
+> */
+. 
+. * end
+. 
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/0y/5bmlgxmx39v_fqw0vs5vrp680000gn/T//SD04963.000000"
+{txt}
+{com}. // Lily Alexander 
+. // MPH Student, University of Washington 
+. // March 7, 2018
+. 
+. // Purpose: Exploring second-trimester abortion in SAEH national-level data 
+. 
+. 
+. *****************************************************
+. * Set Stata preferences and local directories
+. *****************************************************
+. 
+.         clear all
+{res}{txt}
+{com}.         set more off
+{txt}
+{com}.         set mem 2g
+{txt}{bf:set memory} ignored.
+{p 4 4 2}
+Memory no longer
+needs to be set in modern Statas;
+memory adjustments are performed on the fly
+automatically.
+{p_end}
+
+{com}.         
+.         local data "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/SFP_2017-2019/04 Aim 1a - SAEH/01 Datos/Bases/Lily_data/Datos nacionales"
+{txt}
+{com}.         
+. 
+. *****************************************************
+. * First, merge different parts of SAEH sheet
+. *****************************************************
+.         
+.         forvalues i=2010/2014 {c -(} 
+{txt}  2{com}.         
+.         // Bring in obstetric section
+.         import excel using "`data'/SAEH_BD`i'/OBSTET.xlsx", clear 
+{txt}  3{com}.         
+.                 if `i' == 2014 {c -(} 
+{txt}  4{com}.                         import delimited using "`data'/SAEH_BD`i'/OBSTET.csv", clear
+{txt}  5{com}.                 {c )-}
+{txt}  6{com}.         
+.         gen year = `i'
+{txt}  7{com}.         tempfile obstet 
+{txt}  8{com}.         save `obstet', replace
+{txt}  9{com}.         
+.         // Bring in productos section 
+.         import excel using "`data'/SAEH_BD`i'/PRODUCTOS.xlsx", clear 
+{txt} 10{com}.         
+.                 if `i' == 2014 {c -(} 
+{txt} 11{com}.                         import delimited using "`data'/SAEH_BD`i'/PRODUCTOS.csv", clear
+{txt} 12{com}.                 {c )-}
+{txt} 13{com}.         
+.                 // Reshape so that we have 1 observation per woman, with number of babies and their respective variables wide. 
+.                 reshape wide pesoprod sexprod condnac condegre naviapag navirean navicune, i(id) j(numproducto)
+{txt} 14{com}. 
+.         tempfile productos 
+{txt} 15{com}.         save `productos', replace
+{txt} 16{com}.         
+.         // Bring in defunc section 
+.         import excel using "`data'/SAEH_BD`i'/DEFUNC.xlsx", clear 
+{txt} 17{com}.                 
+.                 if `i' == 2014 {c -(} 
+{txt} 18{com}.                         import delimited using "`data'/SAEH_BD`i'/DEFUNC.csv", clear
+{txt} 19{com}.                 {c )-}
+{txt} 20{com}.                 
+.         tempfile defunc 
+{txt} 21{com}.         save `defunc', replace
+{txt} 22{com}.         
+.         // Bring in procedimientos section 
+.         import excel using "`data'/SAEH_BD`i'/PROCEDIMIENTOS.xlsx", clear 
+{txt} 23{com}. 
+.         if `i' == 2014 {c -(} 
+{txt} 24{com}.                         import delimited using "`data'/SAEH_BD`i'/PROCEDIMIENTOS.csv", clear
+{txt} 25{com}.                 {c )-}
+{txt} 26{com}.                 
+.                 sort id promed
+{txt} 27{com}.                 drop if numpromed > 11 // keep just the first 10 procedures. 
+{txt} 28{com}.                 
+.                 // Reshape so that we have 1 observation per woman
+.                 reshape wide tipo promed anest quirof qh qm, i(id) j(numpromed)
+{txt} 29{com}.                 
+.         tempfile proced
+{txt} 30{com}.         save `proced', replace
+{txt} 31{com}.         
+.         
+.         // Bring in afecciones section 
+.         import excel using "`data'/SAEH_BD`i'/AFECCIONES.xlsx", clear 
+{txt} 32{com}. 
+.         if `i' == 2014 {c -(} 
+{txt} 33{com}.                         import delimited using "`data'/SAEH_BD`i'/AFECCIONES.csv", clear
+{txt} 34{com}.                 {c )-}
+{txt} 35{com}.                         
+.         duplicates drop id numafec afec, force
+{txt} 36{com}.         reshape wide afec, i(id) j(numafec)
+{txt} 37{com}.         
+.         tempfile afec
+{txt} 38{com}.         save `afec', replace
+{txt} 39{com}.         
+.         // Bring in egresos section 
+.         import excel using "`data'/SAEH_BD`i'/EGRESO.xlsx", clear 
+{txt} 40{com}. 
+.                 if `i' == 2014 {c -(} 
+{txt} 41{com}.                         import delimited using "`data'/SAEH_BD`i'/EGRESO.csv", clear
+{txt} 42{com}.                 {c )-}
+{txt} 43{com}.                 
+.                 split egreso, p(" ")
+{txt} 44{com}.                 drop egreso egreso2 
+{txt} 45{com}.                 rename egreso1 egreso 
+{txt} 46{com}.                 
+.         
+.         // Merge iwth other datasets 
+.         merge 1:1 id using `obstet', nogen
+{txt} 47{com}.         merge 1:1 id using `productos', nogen
+{txt} 48{com}.         merge 1:1 id using `defunc', nogen
+{txt} 49{com}.         merge 1:1 id using `proced', nogen
+{txt} 50{com}.         merge 1:1 id using `afec', nogen
+{txt} 51{com}.         
+.         tempfile data_`i'
+{txt} 52{com}.         save `data_`i'', replace
+{txt} 53{com}.         
+. {c )-}
+{res}{err}file /Users/lilyalexander/Dropbox/ALL LIFE THINGS/SFP_2017-2019/04 Aim 1a - SAEH/01 Datos/Bases/Lily_data/Datos nacionales/SAEH_BD2010/OBSTET.xlsx too big
+{txt}{search r(601), local:r(601);}
+
+end of do-file
+
+{search r(601), local:r(601);}
+
+{com}. import excel using "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/SFP_2017-2019/04 Aim 1a - SAEH/01 Datos/Bases/Lily_data/Datos nacionales/SAEH_BD2010/OBSTET.xlsx", clear
+{res}{err}file /Users/lilyalexander/Dropbox/ALL LIFE THINGS/SFP_2017-2019/04 Aim 1a - SAEH/01 Datos/Bases/Lily_data/Datos nacionales/SAEH_BD2010/OBSTET.xlsx too big
+{txt}{search r(601), local:r(601);}
+
+{com}. import excel using "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/SFP_2017-2019/04 Aim 1a - SAEH/01 Datos/Bases/Lily_data/Datos nacionales/SAEH_BD2011/OBSTET.xlsx" clear
+{err}invalid 'clear' 
+{txt}{search r(198), local:r(198);}
+
+{com}. import excel using "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/SFP_2017-2019/04 Aim 1a - SAEH/01 Datos/Bases/Lily_data/Datos nacionales/SAEH_BD2011/OBSTET.xlsx", clear
+{res}{err}file /Users/lilyalexander/Dropbox/ALL LIFE THINGS/SFP_2017-2019/04 Aim 1a - SAEH/01 Datos/Bases/Lily_data/Datos nacionales/SAEH_BD2011/OBSTET.xlsx too big
+{txt}{search r(601), local:r(601);}
+
+{com}.         set excelxlsxlargefile on
+
+. 
+. import excel using "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/SFP_2017-2019/04 Aim 1a - SAEH/01 Datos/Bases/Lily_data/Datos nacionales/SAEH_BD2011/OBSTET.xlsx", clear

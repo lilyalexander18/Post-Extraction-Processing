@@ -1,0 +1,2365 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. * ----------------------------
+. * load/install packages
+. * ----------------------------
+. 
+. /* 
+> If needed, install necessary packages to compile notebook document (e.g., html, docx, pdf)
+> these packages include: markdoc, kethcup, weaver, synlight, and statax
+> note: if get any error messages, follow on-screen instructions in Stata console to 
+> complete correct installation
+> 
+> * once install following packages once, do not need to re-install; 
+> * here, commented out
+> */
+. *packages for MarkDoc
+. *ssc install Markdoc
+. *ssc install weaver
+. *ssc install synlight
+. *ssc install statax
+. *markdocpandoc // installs pandoc
+. *packages for analysis and presentation of results
+. *ssc install estout, replace
+. *ssc install outreg
+. *ssc install pandoc
+. *ssc install coefplot 
+. 
+. *-----------------------
+. *-----------------------
+. 
+. 
+. /* Template: 
+> MI 20170122: 
+> comments from Stata do-file will not appear in final markdoc.
+> The text included in this do-file will only appear if it
+> is blocked between a forward slash '/' and 3 asterisks '***', as done below
+> immediately before start of latex syntax.
+> */
+.         
+. 
+. /***
+> 
+> \documentclass{c -(}article{c )-}
+> 
+> \usepackage{c -(}graphicx{c )-}  % this is a package for inserting graphics
+> \usepackage{c -(}hyperref{c )-}
+> \hypersetup{c -(}
+>     colorlinks=true,
+>     linkcolor=blue,
+>     filecolor=blue,      
+>     urlcolor=blue
+>         {c )-}
+>         
+> \usepackage{c -(}geometry{c )-}   % useful package for formatting document
+> \geometry{c -(}
+>         letterpaper,
+>         total={c -(}6.5in, 9in{c )-},
+>         left=1in,
+>         right=1in,
+>         top=1in,
+>         bottom=1in
+>         {c )-}
+> 
+> \begin{c -(}document{c )-}
+> 
+> \title{c -(}Data Validation Exercise before Entry into UCSR{c )-}
+> \author{c -(}
+>   Lily Alexander
+>   {c )-}
+> 
+>  \date{c -(}
+>   \bigskip
+>   \today
+>   {c )-}
+> 
+> \maketitle
+>         
+> \begin{c -(}abstract{c )-}
+> \textbf{c -(}Summary{c )-}. This is a document to validate and check variables before they are integrated into the UCSR.
+> \end{c -(}abstract{c )-}
+> 
+> \section{c -(}High-level codebook for all variables{c )-}
+> 
+> \begin{c -(}verbatim{c )-}
+> ***/
+. 
+. /* ------------------------
+> load dataset
+> ---------------------------
+> */
+. 
+. /**/ use ART_clean_wide_file_Feb2018.dta, clear 
+{txt}
+{com}. 
+. 
+. /* ------------------------
+> codebook generation
+> ---------------------------
+> */
+. /**/ codebook 
+
+{txt}{hline}
+{res}disease{right:Disease}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:disease}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       138{col 33}       1{col 43}{txt}HIV
+
+{txt}{hline}
+{res}collapsed{right:Collapsed}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+{ralign 22:label}:  {res:collapsed}
+
+{col 18}range:  [{res}0{txt},{res}0{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       138{col 33}       0{col 43}{txt}No
+
+{txt}{hline}
+{res}lead_author{right:Lead Author}
+{txt}{hline}
+
+{col 19}type:  string ({res}str59{txt}), but longest is str21
+
+{col 10}unique values:  {res}22{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"Bautista-Arredondo, S"
+{col 26}"Larson, B"
+{col 26}"Rosen, S"
+{col 26}"Settumba, S"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}ref_year{right:Reference Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}2008{txt},{res}2016{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}8{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        27{col 33}2008
+{col 21}         6{col 33}2009
+{col 21}        14{col 33}2011
+{col 21}         4{col 33}2012
+{col 21}        21{col 33}2013
+{col 21}        31{col 33}2014
+{col 21}        33{col 33}2015
+{col 21}         2{col 33}2016
+
+{txt}{hline}
+{res}output_unit2{right:Output unit}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:output_unit2}
+
+{col 18}range:  [{res}2{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         5{col 33}       2{col 43}{txt}patient visit
+{col 21}{res}       133{col 33}       3{col 43}{txt}patient year
+
+{txt}{hline}
+{res}title{right:Title}
+{txt}{hline}
+
+{col 19}type:  string ({res}str214{txt})
+
+{col 10}unique values:  {res}23{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"Costing Analysis of National HIV Treatment and Care
+{col 26}Program in Vietnam"
+{col 26}"Costs of HIV/AIDS treatment in Indonesia by time of
+{col 26}treatment and stage of disease"
+{col 26}"Monitoring of HIV viral load, CD4 cell count, and
+{col 26}clinical assessment versus clinical monitoring alone
+{col 26}for antiretroviral therapy in low-resource settings
+{col 26}(Stratall ANRS 12110/ESTHER): a cost-effectiveness
+{col 26}analysis"
+{col 26}"The cost-effectiveness of integrated care for people
+{col 26}living with HIV including antiretroviral treatment in
+{col 26}a primary health care center in Bujumbura, Burundi"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}journal_etc{right:Journal}
+{txt}{hline}
+
+{col 19}type:  string ({res}str57{txt})
+
+{col 10}unique values:  {res}23{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"BMC Health Serv Res. 2015; 15: 440"
+{col 26}"J Acquir Immune Defic Syndr. 2014 Jan 1;65(1):e1-7"
+{col 26}"PLoS Med. 2011 Sep;8(9):e1001095"
+{col 26}"Trop Med Int Health. 2008 Aug;13(8):1005-15"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}url{right:URL}
+{txt}{hline}
+
+{col 19}type:  string ({res}str97{txt}), but longest is str79
+
+{col 10}unique values:  {res}23{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"<https://www.ncbi.nlm.nih.gov/pmc/articles/PMC459025
+{col 26}8/>."
+{col 26}"<https://www.ncbi.nlm.nih.gov/pubmed/18631314>."
+{col 26}"<https://www.ncbi.nlm.nih.gov/pubmed/21765366>."
+{col 26}"<https://www.ncbi.nlm.nih.gov/pubmed/23846564>."
+
+{txt}{hline}
+{res}iso_name{right:Country}
+{txt}{hline}
+
+{col 19}type:  string ({res}str30{txt}), but longest is str14
+
+{col 10}unique values:  {res}18{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"Indonesia"
+{col 26}"Lesotho "
+{col 26}"South Africa "
+{col 26}"Uganda "
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}location{right:Location}
+{txt}{hline}
+
+{col 19}type:  string ({res}str55{txt})
+
+{col 10}unique values:  {res}25{col 51}{txt}missing "":  {res}2{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"Bujumbura"
+{col 26}"Gauteng Province"
+{col 26}"Mexico City, Cuernavaca, Guadalajara"
+{col 26}"mixed"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}no_sites{right:Sites}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}13{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"1"
+{col 26}"1"
+{col 26}"11"
+{col 26}"3"
+
+{txt}{hline}
+{res}pop_density{right:Urbanicity}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:pop_density}, but {res:1} nonmissing value is not labeled
+
+{col 18}range:  [{res}1{txt},{res}5{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}5{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         2{col 33}       1{col 43}{txt}.
+{col 21}{res}        40{col 33}       2{col 43}{txt}mixture
+{col 21}{res}         2{col 33}       3{col 43}{txt}peri-urban
+{col 21}{res}        23{col 33}       4{col 43}{txt}rural
+{col 21}{res}        71{col 33}       5{col 43}{txt}urban
+
+{txt}{hline}
+{res}ownership{right:Ownership}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:ownership}
+
+{col 18}range:  [{res}1{txt},{res}5{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}5{col 51}{txt}missing .:  {res}10{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         6{col 33}       1{col 43}{txt}in-country NGO
+{col 21}{res}        19{col 33}       2{col 43}{txt}international NGO
+{col 21}{res}        11{col 33}       3{col 43}{txt}mixed
+{col 21}{res}         8{col 33}       4{col 43}{txt}private
+{col 21}{res}        84{col 33}       5{col 43}{txt}public
+{col 21}{res}        10{col 33}       .{col 43}
+
+{txt}{hline}
+{res}platform{right:Platform}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+{ralign 22:label}:  {res:platform}
+
+{col 18}range:  [{res}1{txt},{res}5{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       133{col 33}       1{col 43}{txt}Fixed facility
+{col 21}{res}         5{col 33}       5{col 43}{txt}Other
+
+{txt}{hline}
+{res}facility_cat{right:Platform specificity}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+{ralign 22:label}:  {res:facility_cat}
+
+{col 18}range:  [{res}101{txt},{res}501{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}11{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{ralign 23: examples:}{col 26}{res}104{col 32}{txt}Clinic at hospital (intervention- or disease-specific)
+{ralign 23: }{col 26}{res}104{col 32}{txt}Clinic at hospital (intervention- or disease-specific)
+{ralign 23: }{col 26}{res}107{col 32}{txt}Hospital - Secondary (regional, specialist)
+{ralign 23: }{col 26}{res}110{col 32}{txt}Mix of health care facility types
+
+{txt}{hline}
+{res}id_class{right:Intervention Category}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:id_class}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       138{col 33}       1{col 43}{txt}Treatment and Care
+
+{txt}{hline}
+{res}id_int{right:Intervention}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:id_int}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       138{col 33}       1{col 43}{txt}Adult ART
+
+{txt}{hline}
+{res}int_description_long{right:Intervention Description (Long)}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1165{txt}), but longest is str1071
+
+{col 10}unique values:  {res}31{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"ART treatment and support care"
+{col 26}"Integrated care center offered out-patient visits,
+{col 26}pharmacy and lab services, voluntary counseling and
+{col 26}testing, adherence counseling, and psychological,
+{col 26}social, and food support"
+{col 26}"Patients visited the clinic monthly to take ART, and
+{col 26}underwent CD4 cell count, viral load, and routine
+{col 26}laboratory tests approx every 6 mo."
+{col 26}"Standard of care was nurse driven and doctor
+{col 26}supported. Patients queued to have their folders
+{col 26}retrieved by administrative clerks on arrival for
+{col 26}their monthly scheduled appointments. Patients then
+{col 26}queued to be seen by a nurse who prescribed their
+{col 26}medication and again at the pharmacy where their
+{col 26}medication was individually dispensed. In Waiting
+{col 26}Times Surveys conducted in similar settings, waiting
+{col 26}times for patients range from 20 to 215 min"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}clinical_monitoring{right:Clinical monitoring}
+{txt}{hline}
+
+{col 19}type:  string ({res}str62{txt})
+
+{col 10}unique values:  {res}20{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"CD4, VL"
+{col 26}"CD4, VL, complete blood count"
+{col 26}"CD4, hematology, biochemistry"
+{col 26}"yes - details NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}demand_generation{right:Demand generation}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:demand_generation}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       138{col 33}       1{col 43}{txt}nr
+
+{txt}{hline}
+{res}counseling_content{right:Counseling content}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:counseling_content}
+
+{col 18}range:  [{res}1{txt},{res}6{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}6{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         3{col 33}       1{col 43}{txt}counseling - details nr
+{col 21}{res}        25{col 33}       2{col 43}{txt}initial counseling, ongoing
+{col 43}counseling
+{col 21}{res}         2{col 33}       3{col 43}{txt}none
+{col 21}{res}        75{col 33}       4{col 43}{txt}nr
+{col 21}{res}         8{col 33}       5{col 43}{txt}ongoing adherence counseling
+{col 21}{res}        25{col 33}       6{col 43}{txt}yes - details nr
+
+{txt}{hline}
+{res}staff_type{right:Staff type & number}
+{txt}{hline}
+
+{col 19}type:  string ({res}str115{txt})
+
+{col 10}unique values:  {res}20{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"NR"
+{col 26}"Physician (4), Nurse (2), Other - specify:
+{col 26}Laboratory (1), Other - specify: Administration and
+{col 26}Cleaning Service (6)"
+{col 26}"Physician (NR), Nurse (NR)"
+{col 26}"physician (0.8), nurse (7.7), community health
+{col 26}worker (5.9), other (2.4)"
+
+{txt}{col 16}warning:  variable has leading and embedded blanks
+
+{txt}{hline}
+{res}supportive_care{right:Supportive care}
+{txt}{hline}
+
+{col 19}type:  string ({res}str60{txt})
+
+{col 10}unique values:  {res}11{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"OI prophylaxis"
+{col 26}"OI treatment"
+{col 26}"OI treatment"
+{col 26}"nutritional support, OI prophylaxis, OI treatment"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}visits{right:Visit type & number}
+{txt}{hline}
+
+{col 19}type:  string ({res}str58{txt}), but longest is str41
+
+{col 10}unique values:  {res}33{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"12/yr"
+{col 26}"NR"
+{col 26}"NR"
+{col 26}"NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}referrals{right:Referrals}
+{txt}{hline}
+
+{col 19}type:  string ({res}str25{txt})
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}2{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}""
+{col 21}       123{col 33}"NR"
+{col 21}         8{col 33}"Nurse (#NR), Doctor (#NR)"
+{col 21}         1{col 33}"yes - hospital"
+{col 21}         4{col 33}"yes - social worker"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}method{right:Method}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:method}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       138{col 33}       1{col 43}{txt}n/a
+
+{txt}{hline}
+{res}id_tech{right:Technology}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:id_tech}
+
+{col 18}range:  [{res}1{txt},{res}22{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}19{col 51}{txt}missing .:  {res}30{txt}/{res}138
+
+{txt}{ralign 23: examples:}{col 26}{res}8{col 32}{txt}TDF + FTC + EFV; TDF + FTC + LPV/r
+{ralign 23: }{col 26}{res}17{col 32}{txt}d4t + 3TC + NVP (most common)
+{ralign 23: }{col 26}{res}21{col 32}{txt}first line; second line
+{ralign 23: }{col 26}{res}.{col 32}{txt}
+
+{txt}{hline}
+{res}treatment_phase{right:Treatment phase}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:treatment_phase}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        56{col 33}       1{col 43}{txt}initiation
+{col 21}{res}        51{col 33}       2{col 43}{txt}initiation and maintenance
+{col 21}{res}        31{col 33}       3{col 43}{txt}maintenance
+
+{txt}{hline}
+{res}arv_regimen{right:ARV Regimen}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:arv_regimen}
+
+{col 18}range:  [{res}1{txt},{res}7{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}7{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        34{col 33}       1{col 43}{txt}first line
+{col 21}{res}        63{col 33}       2{col 43}{txt}first line, second line
+{col 21}{res}         8{col 33}       3{col 43}{txt}first line, second line, third
+{col 43}line
+{col 21}{res}         6{col 33}       4{col 43}{txt}mixed
+{col 21}{res}        23{col 33}       5{col 43}{txt}nr
+{col 21}{res}         1{col 33}       6{col 43}{txt}second line
+{col 21}{res}         3{col 33}       7{col 43}{txt}yes, details nr
+
+{txt}{hline}
+{res}treatment{right:Treatment}
+{txt}{hline}
+
+{col 19}type:  string ({res}str122{txt})
+
+{col 10}unique values:  {res}9{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}"AZT + 3TC + NVP, D4T+ 3TC+ EFV, D4T +
+{col 33}3TC + NVP or DDI + 3TC + NVP"
+{col 21}         6{col 33}"AZT+3TC+NVP; d4T+3TC+NVP; AZT+3TC+EFV;
+{col 33}d4T+3TC+EFV; 3TC+ddI+NVP; AZT+3TC+ABC;
+{col 33}d4T+3TC+ABC; d4T+ddI+EFV; AZT+3TC+NFV;
+{col 33}Other"
+{col 21}         4{col 33}"EFV + ZDV/3TC; NVP + ZDV/3TC; ABC + TDF
+{col 33}+ LPV/r"
+{col 21}        87{col 33}"N/A"
+{col 21}         1{col 33}"TDF ; AZT + 3TC ; LPV+R; ATZ; DRV; 3TC;
+{col 33}FPV; NVP; RTV; RAL; AZT; D4T"
+{col 21}         6{col 33}"TDF+FTC; AZT+3TC; ABC+3TC; d4T+3TC;
+{col 33}NNRTI or PI; NVP; EFV; LPV/r"
+{col 21}         8{col 33}"d4T+3TC+EFV; d4T+3TC+NVP;
+{col 33}AZT+ddI+LPV/r"
+{col 21}        22{col 33}"first line; second line"
+{col 21}         3{col 33}"yes, details NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}screening_diagnoses{right:Screening and diagnosis}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:screening_diagnoses}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        51{col 33}       1{col 43}{txt}n/a
+{col 21}{res}        54{col 33}       2{col 43}{txt}nr
+{col 21}{res}        33{col 33}       3{col 43}{txt}yes, details nr
+
+{txt}{hline}
+{res}community_awareness{right:Community awareness}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:community_awareness}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       138{col 33}       1{col 43}{txt}nr
+
+{txt}{hline}
+{res}id_activities{right:Costed activities}
+{txt}{hline}
+
+{col 19}type:  string ({res}str146{txt}), but longest is str130
+
+{col 10}unique values:  {res}19{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"adherence support; clinical monitoring; ART
+{col 26}administration"
+{col 26}"adherence support; clinical monitoring; ART
+{col 26}administration; supportive care"
+{col 26}"clinical monitoring; ART administration"
+{col 26}"clinical monitoring; ART administration; supportive
+{col 26}care"
+
+{txt}{col 16}warning:  variable has leading and embedded blanks
+
+{txt}{hline}
+{res}start_month{right:Start Month}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+{ralign 22:label}:  {res:non_standard}, but {res:5} nonmissing values are not labeled
+
+{col 18}range:  [{res}1{txt},{res}99{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}7{col 51}{txt}missing .:  {res}41{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        48{col 33}       1{col 43}
+{col 21}         1{col 33}       2{col 43}
+{col 21}        15{col 33}       4{col 43}
+{col 21}         1{col 33}       7{col 43}
+{col 21}         2{col 33}       8{col 43}
+{col 21}         6{col 33}      88{col 43}{txt}Open
+{col 21}{res}        24{col 33}      99{col 43}{txt}Mixed
+{col 21}{res}        41{col 33}       .{col 43}
+
+{txt}{hline}
+{res}start_year{right:Start Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+{ralign 22:label}:  {res:non_standard}, but {res:8} nonmissing values are not labeled
+
+{col 18}range:  [{res}88{txt},{res}2011{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}10{col 51}{txt}missing .:  {res}45{txt}/{res}138
+
+{txt}{ralign 23: examples:}{col 26}{res}99{col 32}{txt}Mixed
+{ralign 23: }{col 26}{res}2005{col 32}{txt}
+{ralign 23: }{col 26}{res}2009{col 32}{txt}
+{ralign 23: }{col 26}{res}.{col 32}{txt}
+
+{txt}{hline}
+{res}end_month{right:End Month}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+{ralign 22:label}:  {res:non_standard}, but {res:6} nonmissing values are not labeled
+
+{col 18}range:  [{res}1{txt},{res}99{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}8{col 51}{txt}missing .:  {res}49{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         9{col 33}       1{col 43}
+{col 21}         1{col 33}       2{col 43}
+{col 21}        15{col 33}       3{col 43}
+{col 21}         1{col 33}       6{col 43}
+{col 21}         2{col 33}       7{col 43}
+{col 21}        31{col 33}      12{col 43}
+{col 21}         6{col 33}      88{col 43}{txt}Open
+{col 21}{res}        24{col 33}      99{col 43}{txt}Mixed
+{col 21}{res}        49{col 33}       .{col 43}
+
+{txt}{hline}
+{res}end_year{right:End Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+{ralign 22:label}:  {res:non_standard}, but {res:7} nonmissing values are not labeled
+
+{col 18}range:  [{res}88{txt},{res}2011{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}9{col 51}{txt}missing .:  {res}45{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         6{col 33}      88{col 43}{txt}Open
+{col 21}{res}        24{col 33}      99{col 43}{txt}Mixed
+{col 21}{res}        20{col 33}    2005{col 43}
+{col 21}         2{col 33}    2006{col 43}
+{col 21}         9{col 33}    2007{col 43}
+{col 21}        14{col 33}    2008{col 43}
+{col 21}         4{col 33}    2009{col 43}
+{col 21}         7{col 33}    2010{col 43}
+{col 21}         7{col 33}    2011{col 43}
+{col 21}        45{col 33}       .{col 43}
+
+{txt}{hline}
+{res}period_portrayed{right:Total Months}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+{ralign 22:label}:  {res:non_standard}, but {res:10} nonmissing values are not labeled
+
+{col 18}range:  [{res}6{txt},{res}288{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}11{col 51}{txt}missing .:  {res}2{txt}/{res}138
+
+{txt}{ralign 23: examples:}{col 26}{res}12{col 32}{txt}
+{ralign 23: }{col 26}{res}12{col 32}{txt}
+{ralign 23: }{col 26}{res}12{col 32}{txt}
+{ralign 23: }{col 26}{res}36{col 32}{txt}
+
+{txt}{hline}
+{res}year_intro{right:Year introduced at study site}
+{txt}{hline}
+
+{col 19}type:  string ({res}str9{txt}), but longest is str4
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}119{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       119{col 33}""
+{col 21}        10{col 33}"2003"
+{col 21}         1{col 33}"2005"
+{col 21}         2{col 33}"2006"
+{col 21}         1{col 33}"2007"
+{col 21}         5{col 33}"99"
+
+{txt}{hline}
+{res}coverage{right:Coverage}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}id_pop_dem_std{right:Target group (demographic)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:id_pop_dem_std}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        87{col 33}       1{col 43}{txt}adults
+{col 21}{res}        51{col 33}       2{col 43}{txt}general populations
+
+{txt}{hline}
+{res}id_pop_clin_std{right:Target group (clinical)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:id_pop_clin_std}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}135{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         3{col 33}       1{col 43}{txt}hiv positive
+{col 21}{res}       135{col 33}       .{col 43}
+
+{txt}{hline}
+{res}pop_age{right:Average Age}
+{txt}{hline}
+
+{col 19}type:  string ({res}str31{txt})
+
+{col 10}unique values:  {res}20{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"31-34 (depending on care phase)"
+{col 26}"35.14"
+{col 26}"43"
+{col 26}"NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}pop_sex{right:Gender}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:pop_sex}, but {res:1} nonmissing value is not labeled
+
+{col 18}range:  [{res}1{txt},{res}32{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}31{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{ralign 23: examples:}{col 26}{res}1{col 32}{txt}.
+{ralign 23: }{col 26}{res}2{col 32}{txt}.4
+{ralign 23: }{col 26}{res}9{col 32}{txt}52% female
+{ralign 23: }{col 26}{res}22{col 32}{txt}70% women
+
+{txt}{hline}
+{res}pop_ses{right:SES}
+{txt}{hline}
+
+{col 19}type:  string ({res}str25{txt})
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}"63% earning"
+{col 21}         2{col 33}"64.8% above middle income"
+{col 21}         8{col 33}"70% worked in agriculture"
+{col 21}         1{col 33}"84.1% farmers"
+{col 21}       125{col 33}"NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}pop_education{right:Education}
+{txt}{hline}
+
+{col 19}type:  string ({res}str93{txt})
+
+{col 10}unique values:  {res}14{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"31%; 10%; 25% (primary or less)
+53%; 52%; 50%
+{col 26}(preporatory or less)
+16%; 38% 17% (higher ed.)"
+{col 26}"NR"
+{col 26}"NR"
+{col 26}"NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}hiv_prev{right:HIV Prevalence}
+{txt}{hline}
+
+{col 19}type:  string ({res}str17{txt})
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}".003"
+{col 21}        13{col 33}".0045"
+{col 21}         2{col 33}".022"
+{col 21}        20{col 33}".1666666666666667"
+{col 21}         2{col 33}".37"
+{col 21}        99{col 33}"NR"
+
+{txt}{hline}
+{res}tb_prev{right:TB Prevalence}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        67{col 33}"N/A"
+{col 21}        71{col 33}"NR"
+
+{txt}{hline}
+{res}tb_rx_resistance{right:TB Drug Resistance}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:tb_rx_resistance}, but {res:1} nonmissing value is not labeled
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        88{col 33}       1{col 43}{txt}.
+{col 21}{res}        50{col 33}       2{col 43}{txt}N/A
+
+{txt}{hline}
+{res}costing_purpose{right:Costing Purpose}
+{txt}{hline}
+
+{col 19}type:  string ({res}str233{txt})
+
+{col 10}unique values:  {res}23{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"To assess the options and limitations of costs
+{col 26}reduction, improving access, and scaling up services"
+{col 26}"To determine whether the benefits from laboratory
+{col 26}monitoring are large enough to justify the associated
+{col 26}extra cost"
+{col 26}"To inform ART costs specifically in high CD4+ count
+{col 26}(>350) individuals"
+{col 26}"To provide multi-national ART cost data for
+{col 26}investment planning and model inputs"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}timing{right:Timing}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:timing}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         1{col 33}       1{col 43}{txt}Cross-sectional
+{col 21}{res}        95{col 33}       2{col 43}{txt}cross-sectional
+{col 21}{res}        42{col 33}       3{col 43}{txt}longitudinal
+
+{txt}{hline}
+{res}country_sampling{right:Country Sampling}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:country_sampling}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}26{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}       104{col 33}       1{col 43}{txt}N/A
+{col 21}{res}         8{col 33}       2{col 43}{txt}purposive
+{col 21}{res}        26{col 33}       .{col 43}
+
+{txt}{hline}
+{res}geo_sampling_incountry{right:Geographic Area In Country Sampling}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:geo_sampling_incountry}
+
+{col 18}range:  [{res}1{txt},{res}5{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}74{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        33{col 33}       1{col 43}{txt}N/A
+{col 21}{res}         5{col 33}       3{col 43}{txt}convenience
+{col 21}{res}        21{col 33}       4{col 43}{txt}purposive
+{col 21}{res}         5{col 33}       5{col 43}{txt}random
+{col 21}{res}        74{col 33}       .{col 43}
+
+{txt}{hline}
+{res}site_sampling{right:Site Sampling}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:site_sampling}
+
+{col 18}range:  [{res}1{txt},{res}6{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}5{col 51}{txt}missing .:  {res}63{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        24{col 33}       1{col 43}{txt}N/A
+{col 21}{res}         8{col 33}       3{col 43}{txt}convenience
+{col 21}{res}         8{col 33}       4{col 43}{txt}entire program
+{col 21}{res}        30{col 33}       5{col 43}{txt}purposive
+{col 21}{res}         5{col 33}       6{col 43}{txt}random
+{col 21}{res}        63{col 33}       .{col 43}
+
+{txt}{hline}
+{res}px_sampling{right:Patient Sampling}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:px_sampling}
+
+{col 18}range:  [{res}1{txt},{res}4{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}27{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         2{col 33}       1{col 43}{txt}N/A
+{col 21}{res}        55{col 33}       2{col 43}{txt}convenience
+{col 21}{res}        34{col 33}       3{col 43}{txt}entire program
+{col 21}{res}        20{col 33}       4{col 43}{txt}random
+{col 21}{res}        27{col 33}       .{col 43}
+
+{txt}{hline}
+{res}sample_size_derived{right:Sample size formally derived}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:sample_size_derived}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}91{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        27{col 33}       1{col 43}{txt}no
+{col 21}{res}        20{col 33}       2{col 43}{txt}yes
+{col 21}{res}        91{col 33}       .{col 43}
+
+{txt}{hline}
+{res}controls{right:Controls}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:controls}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}77{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        37{col 33}       1{col 43}{txt}no
+{col 21}{res}        24{col 33}       2{col 43}{txt}yes
+{col 21}{res}        77{col 33}       .{col 43}
+
+{txt}{hline}
+{res}econ_perspective_actual{right:Perspective}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:econ_perspective_actual}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         2{col 33}       1{col 43}{txt}patient
+{col 21}{res}       134{col 33}       2{col 43}{txt}provider
+{col 21}{res}         2{col 33}       3{col 43}{txt}society
+
+{txt}{hline}
+{res}econ_costing{right:Economic / Financial}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:econ_costing}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        93{col 33}       1{col 43}{txt}economic
+{col 21}{res}        45{col 33}       2{col 43}{txt}financial only
+
+{txt}{hline}
+{res}real_world{right:Real World / Per Protocol}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:real_world}
+
+{col 18}range:  [{res}2{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        28{col 33}       2{col 43}{txt}per protocol
+{col 21}{res}       110{col 33}       3{col 43}{txt}real world
+
+{txt}{hline}
+{res}asd_costs{right:Above Service Costs Included}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:asd_costs}
+
+{col 18}range:  [{res}1{txt},{res}4{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}26{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         1{col 33}       1{col 43}{txt}N/A
+{col 21}{res}        99{col 33}       2{col 43}{txt}no costs included
+{col 21}{res}         3{col 33}       3{col 43}{txt}not included
+{col 21}{res}         9{col 33}       4{col 43}{txt}some costs included
+{col 21}{res}        26{col 33}       .{col 43}
+
+{txt}{hline}
+{res}list_asd_costs{right:Above Service Cost List}
+{txt}{hline}
+
+{col 19}type:  string ({res}str103{txt})
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}51{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        51{col 33}""
+{col 21}         8{col 33}"ART storage at a central facility"
+{col 21}         1{col 33}"Laboratory investigations are requested
+{col 33}by providers in the health unit, but
+{col 33}done in a central facility"
+{col 21}         1{col 33}"N/A"
+{col 21}         2{col 33}"None"
+{col 21}        75{col 33}"none"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}omitted_costs{right:Omitted Costs}
+{txt}{hline}
+
+{col 19}type:  string ({res}str202{txt}), but longest is str150
+
+{col 10}unique values:  {res}12{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"Building/space, Patient costs"
+{col 26}"Patient costs"
+{col 26}"Patient costs"
+{col 26}"Service delivery personnel, Patient costs"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}sensitivity_analysis{right:Sensitivity Analysis}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:sensitivity_analysis}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}2{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        38{col 33}       1{col 43}{txt}comprehensive
+{col 21}{res}        16{col 33}       2{col 43}{txt}limited
+{col 21}{res}        82{col 33}       3{col 43}{txt}none
+{col 21}{res}         2{col 33}       .{col 43}
+
+{txt}{hline}
+{res}scale{right:Economies of scale}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:scale}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        18{col 33}       1{col 43}{txt}analyzed
+{col 21}{res}        43{col 33}       2{col 43}{txt}discussed
+{col 21}{res}        77{col 33}       3{col 43}{txt}ignored
+
+{txt}{hline}
+{res}research_costs{right:Research Costs Included}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:research_costs}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}88{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        50{col 33}       1{col 43}{txt}excluded
+{col 21}{res}        88{col 33}       .{col 43}
+
+{txt}{hline}
+{res}unrelated_costs{right:Unrelated Costs Included}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:unrelated_costs}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}86{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         5{col 33}       1{col 43}{txt}no
+{col 21}{res}        47{col 33}       2{col 43}{txt}no costs included
+{col 21}{res}        86{col 33}       .{col 43}
+
+{txt}{hline}
+{res}overhead{right:Overhead Costs Included}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:overhead}, but {res:1} nonmissing value is not labeled
+
+{col 18}range:  [{res}1{txt},{res}4{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         3{col 33}       1{col 43}{txt}.
+{col 21}{res}         5{col 33}       2{col 43}{txt}no
+{col 21}{res}         2{col 33}       3{col 43}{txt}partial
+{col 21}{res}       128{col 33}       4{col 43}{txt}yes
+
+{txt}{hline}
+{res}overhead_costs{right:Overhead Costs List}
+{txt}{hline}
+
+{col 19}type:  string ({res}str164{txt})
+
+{col 10}unique values:  {res}21{col 51}{txt}missing "":  {res}4{txt}/{res}138
+
+{txt}{col 15}examples:  {res}"UNCLEAR. The unit cost of "hospital stay" probably
+{col 26}includes overhead (because it's roughly 10x the cost
+{col 26}of one physician consultation)."
+{col 26}"administrative and operational costs: utilities,
+{col 26}office supplies, rentals, repairs, annual capital
+{col 26}costs"
+{col 26}"infrastructure, equipment and furnishings, data
+{col 26}capture, programme management"
+{col 26}"rent, electricity, water, office supplies,
+{col 26}motorcycle maintenance and fuel, ART storage,
+{col 26}adminsitrative staff, vehicle maintenance"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}pot_distortions{right:Potential distortions}
+{txt}{hline}
+
+{col 19}type:  string ({res}str319{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}"AIDS treatment expense data were from
+{col 33}county-level hospitals, which were
+{col 33}usually second-level hospitals. Thus,
+{col 33}the results are likely to have
+{col 33}underestimated the costs of hospital
+{col 33}care compared with the highest-level
+{col 33}hospitals in cities and overestimate the
+{col 33}costs compared with town- ship hospitals
+{col 33}and village clinics. "
+{col 21}       129{col 33}"NR"
+{col 21}         8{col 33}"research setting (RCT)"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}volunteer_time{right:Valuing Volunteer Time}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:volunteer_time}
+
+{col 18}range:  [{res}1{txt},{res}1{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}124{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        14{col 33}       1{col 43}{txt}N/A
+{col 21}{res}       124{col 33}       .{col 43}
+
+{txt}{hline}
+{res}family_time{right:Valuing Family Time}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:family_time}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}56{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        78{col 33}       1{col 43}{txt}N/A
+{col 21}{res}         2{col 33}       2{col 43}{txt}interview
+{col 21}{res}         2{col 33}       3{col 43}{txt}local paid income
+{col 21}{res}        56{col 33}       .{col 43}
+
+{txt}{hline}
+{res}px_costs_measured{right:Patient-Incurred Costs Measured}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:px_costs_measured}, but {res:1} nonmissing value is not labeled
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        42{col 33}       1{col 43}{txt}.
+{col 21}{res}         6{col 33}       2{col 43}{txt}included
+{col 21}{res}        90{col 33}       3{col 43}{txt}not included
+
+{txt}{hline}
+{res}cat_cost{right:Catastrophic Cost Calculated}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:cat_cost}, but {res:1} nonmissing value is not labeled
+
+{col 18}range:  [{res}1{txt},{res}5{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}        47{col 33}       1{col 43}{txt}.
+{col 21}{res}        73{col 33}       2{col 43}{txt}N/A
+{col 21}{res}        16{col 33}       4{col 43}{txt}none
+{col 21}{res}         2{col 33}       5{col 43}{txt}yes
+
+{txt}{hline}
+{res}currency_yr{right:Reported Currency Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}2002{txt},{res}2012{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}9{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         5{col 33}2002
+{col 21}         1{col 33}2004
+{col 21}        22{col 33}2006
+{col 21}         6{col 33}2007
+{col 21}         6{col 33}2008
+{col 21}        43{col 33}2009
+{col 21}        28{col 33}2010
+{col 21}        16{col 33}2011
+{col 21}        11{col 33}2012
+
+{txt}{hline}
+{res}iso_code{right:Reported Currency}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:iso_code}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         1{col 33}       1{col 43}{txt}BRL
+{col 21}{res}       137{col 33}       3{col 43}{txt}USD
+
+{txt}{hline}
+{res}currency_iso{right:Currency of Data Collection}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:currency_iso}
+
+{col 18}range:  [{res}1{txt},{res}19{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}18{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{ralign 23: examples:}{col 26}{res}7{col 32}{txt}IDR
+{ralign 23: }{col 26}{res}12{col 32}{txt}NR
+{ralign 23: }{col 26}{res}15{col 32}{txt}USD
+{ralign 23: }{col 26}{res}18{col 32}{txt}ZAR
+
+{txt}{hline}
+{res}currency_x{right:Currency Exchange Method}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:currency_x}
+
+{col 18}range:  [{res}1{txt},{res}2{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}19{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         6{col 33}       1{col 43}{txt}N/A
+{col 21}{res}       113{col 33}       2{col 43}{txt}market only
+{col 21}{res}        19{col 33}       .{col 43}
+
+{txt}{hline}
+{res}current_x_rate{right:Currency Exchange Rate}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}6.8{txt},{res}20828{txt}]{col 55}units:  {res}.01
+{col 10}{txt}unique values:  {res}15{col 51}{txt}missing .:  {res}55{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 3994.82
+{txt}{col 15}std. dev:{res}{col 26} 7114.68
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}     6.8{col 37}       7{col 47}    72.2{col 57}    4861{col 67}   18462
+
+{txt}{hline}
+{res}discount_rate{right:Discount Rate}
+{txt}{hline}
+
+{col 19}type:  string ({res}str4{txt})
+
+{col 10}unique values:  {res}9{col 51}{txt}missing "":  {res}56{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        56{col 33}""
+{col 21}        15{col 33}".03"
+{col 21}         4{col 33}".035"
+{col 21}         2{col 33}".05"
+{col 21}         9{col 33}".07"
+{col 21}         2{col 33}".08"
+{col 21}         8{col 33}"0"
+{col 21}        35{col 33}"3"
+{col 21}         3{col 33}"N/A"
+{col 21}         4{col 33}"none"
+
+{txt}{hline}
+{res}inflation{right:Inflation rate}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}long{txt})
+{ralign 22:label}:  {res:inflation}
+
+{col 18}range:  [{res}1{txt},{res}3{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.   Numeric  Label
+{col 21}{res}         1{col 33}       1{col 43}{txt}.03
+{col 21}{res}        16{col 33}       2{col 43}{txt}N/A
+{col 21}{res}       121{col 33}       3{col 43}{txt}NR
+
+{txt}{hline}
+{res}mean_cost{right:Mean Unit Cost}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}9.6090115{txt},{res}8502.0885{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}137{col 51}{txt}missing .:  {res}0{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26}  1036.2
+{txt}{col 15}std. dev:{res}{col 26} 1387.09
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 199.514{col 37} 353.783{col 47}  667.76{col 57} 1095.19{col 67} 1690.08
+
+{txt}{hline}
+{res}si_personnel{right:Personnel (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.1647286{txt},{res}1133.9703{txt}]{col 55}units:  {res}1.000e-15
+{col 10}{txt}unique values:  {res}56{col 51}{txt}missing .:  {res}78{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 87.9146
+{txt}{col 15}std. dev:{res}{col 26}  154.62
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 13.5313{col 37} 24.0171{col 47}  56.577{col 57} 80.2195{col 67} 174.714
+
+{txt}{hline}
+{res}si_per_service_delivery{right:Personnel: Direct Service Delivery (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}10.00049{txt},{res}1133.9703{txt}]{col 55}units:  {res}1.000e-15
+{col 10}{txt}unique values:  {res}48{col 51}{txt}missing .:  {res}86{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 90.7422
+{txt}{col 15}std. dev:{res}{col 26} 161.797
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 14.8589{col 37}   30.95{col 47}  56.694{col 57} 84.1191{col 67} 128.128
+
+{txt}{hline}
+{res}si_per_support{right:Personnel: Support (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}21.88288{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}9{col 51}{txt}missing .:  {res}127{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}0
+{col 21}         1{col 33}.111416
+{col 21}         1{col 33}.22283199
+{col 21}         1{col 33}.33424801
+{col 21}         1{col 33}.77991199
+{col 21}         1{col 33}1.002744
+{col 21}         1{col 33}1.1141601
+{col 21}         1{col 33}8.9683027
+{col 21}         1{col 33}21.88288
+{col 21}       127{col 33}.
+
+{txt}{hline}
+{res}si_per_mixed_unspec{right:Personnel: Mixed Unspecified (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.1647286{txt},{res}267.45621{txt}]{col 55}units:  {res}1.000e-12
+{col 10}{txt}unique values:  {res}10{col 51}{txt}missing .:  {res}128{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 52.1861
+{txt}{col 15}std. dev:{res}{col 26}    78.8
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 1.82798{col 37} 2.97653{col 47} 33.0142{col 57} 55.0011{col 67} 162.307
+
+{txt}{hline}
+{res}si_recurrent{right:Recurrent Goods (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}3.7961527{txt},{res}6062.1812{txt}]{col 55}units:  {res}1.000e-16
+{col 10}{txt}unique values:  {res}99{col 51}{txt}missing .:  {res}32{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 654.332
+{txt}{col 15}std. dev:{res}{col 26} 1085.01
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27}   112.4{col 37} 165.843{col 47}  282.44{col 57}  789.64{col 67}  1164.7
+
+{txt}{hline}
+{res}si_rec_key_drugs{right:Recurring: Supplies (key drugs) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}3.5804622{txt},{res}6062.1812{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}92{col 51}{txt}missing .:  {res}32{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 620.322
+{txt}{col 15}std. dev:{res}{col 26} 1088.47
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 105.981{col 37} 132.585{col 47} 198.705{col 57} 789.301{col 67} 1015.62
+
+{txt}{hline}
+{p 0 39}{res}si_rec_med_int_supplies{space 16}Recurring: Medical Supplies (excluding drugs) (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}249.19847{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}62{col 51}{txt}missing .:  {res}62{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26}  42.602
+{txt}{col 15}std. dev:{res}{col 26} 47.9048
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} .471737{col 37} 8.69697{col 47} 21.1789{col 57} 55.9224{col 67} 105.845
+
+{txt}{hline}
+{res}si_rec_nonmed_int_supplies{right:Recurring: Non-medical Supplies (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}24.355772{txt},{res}56.258076{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}6{col 51}{txt}missing .:  {res}129{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}24.355772
+{col 21}         2{col 33}29.650503
+{col 21}         1{col 33}30.70945
+{col 21}         3{col 33}33.886289
+{col 21}         1{col 33}37.063129
+{col 21}         1{col 33}56.258076
+{col 21}       129{col 33}.
+
+{txt}{hline}
+{res}si_rec_building_space{right:Recurring: Building Space (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}3.1768396{txt},{res}12.707358{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}130{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}3.1768396
+{col 21}         1{col 33}4.2357864
+{col 21}         4{col 33}8.4715729
+{col 21}         1{col 33}12.707358
+{col 21}       130{col 33}.
+
+{txt}{hline}
+{res}si_rec_other{right:Recurring: Other (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.21569049{txt},{res}.26961312{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}135{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}.21569049
+{col 21}         1{col 33}.22647502
+{col 21}         1{col 33}.26961312
+{col 21}       135{col 33}.
+
+{txt}{hline}
+{res}si_capital{right:Capital (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}11.648412{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}6{col 51}{txt}missing .:  {res}125{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}0
+{col 21}         5{col 33}2.1178932
+{col 21}         1{col 33}2.8255455
+{col 21}         1{col 33}4.1089039
+{col 21}         1{col 33}7.2903385
+{col 21}         2{col 33}11.648412
+{col 21}       125{col 33}.
+
+{txt}{hline}
+{res}si_cap_medical_equip{right:Capital: Equipment (medical) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_cap_nonmed_equip{right:Capital: Equipment (non-medical) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_cap_build{right:Capital: Building/space (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_cap_vehicles{right:Capital: Vehicles (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}1.0589466{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}130{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}0
+{col 21}         5{col 33}1.0589466
+{col 21}       130{col 33}.
+
+{txt}{hline}
+{res}si_cap_other{right:Capital: Other (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}11.648412{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}6{col 51}{txt}missing .:  {res}125{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}0
+{col 21}         5{col 33}1.0589466
+{col 21}         1{col 33}2.8255455
+{col 21}         1{col 33}4.1089039
+{col 21}         1{col 33}7.2903385
+{col 21}         2{col 33}11.648412
+{col 21}       125{col 33}.
+
+{txt}{hline}
+{res}si_mixed{right:Mixed (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}8.9132805{txt},{res}1205.3613{txt}]{col 55}units:  {res}1.000e-15
+{col 10}{txt}unique values:  {res}93{col 51}{txt}missing .:  {res}35{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 222.385
+{txt}{col 15}std. dev:{res}{col 26} 200.607
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 28.9682{col 37} 59.3149{col 47} 166.082{col 57} 312.355{col 67} 547.482
+
+{txt}{hline}
+{res}si_pdm{right:(Patient) Direct, Medical (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}2.4215844{txt},{res}2.6417284{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}2.4215844
+{col 21}         1{col 33}2.6417284
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{res}si_pdm_pat_fees{right:(Patient) Direct, Medical: Patient Fees (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}2.4215844{txt},{res}2.6417284{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}2.4215844
+{col 21}         1{col 33}2.6417284
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{res}si_pdm_pat_tests{right:(Patient) Direct, Medical: Tests (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_pdm_pat_tb_drugs{right:(Patient) Direct, Medical: Non-TB drugs (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_pdm_pat_non_tb_drugs{right:(Patient) Direct, Medical: Non-TB drugs (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_pdm_mix{right:(Patient) Direct, Mixed: Mixed (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_pdn{right:(Patient) Direct, Non-medical (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}5.1733851{txt},{res}6.4942493{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}5.1733851
+{col 21}         1{col 33}6.4942493
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{p 0 39}{res}si_pdn__patient__transport{space 13}(Patient) Direct, Non-medical: Transport (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}5.1733851{txt},{res}6.4942493{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}5.1733851
+{col 21}         1{col 33}6.4942493
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{res}si_pdn_accomodation{right:(Patient) Direct, Non-medical: Accomodation (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_pdn_supplements{right:(Patient) Direct, Non-medical: Supplements (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_pia{right:(Patient) Indirect, Access (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.2107922{txt},{res}3.5223045{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.2107922
+{col 21}         1{col 33}3.5223045
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{p 0 39}{res}si_pia_pat_productivity{space 16}(Patient) Indirect, Access: Productivity loss (mixed) (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.2107922{txt},{res}3.5223045{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.2107922
+{col 21}         1{col 33}3.5223045
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{p 0 39}{res}si_pia_prod_loss_trans{space 17}(Patient) Indirect, Access: Productivity loss (transport) (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{p 0 39}{res}si_pia_prod_loss_visits{space 16}(Patient) Indirect, Access: Productivity loss (visits) (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{p 0 39}{res}si_pia_prod_loss_access_mix{space 12}(Patient) Indirect, Access: Productivity loss (access: mixed) (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{p 0 39}{res}si_pia_prod_loss_illness{space 15}(Patient) Indirect, Access: Productivity loss (illness) (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}si_pmx{right:Patient Mixed (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}10.566914{txt},{res}12.107923{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}10.566914
+{col 21}         1{col 33}12.107923
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{res}si_pmx_pat_mixed{right:(Patient) Mixed: Mixed (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}10.566914{txt},{res}12.107923{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}10.566914
+{col 21}         1{col 33}12.107923
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{res}a_primary_sd{right:Primary Service Delivery (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}6.5569911{txt},{res}6565.2885{txt}]{col 55}units:  {res}1.000e-14
+{col 10}{txt}unique values:  {res}102{col 51}{txt}missing .:  {res}32{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 830.854
+{txt}{col 15}std. dev:{res}{col 26} 1182.73
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 157.893{col 37} 264.373{col 47} 404.087{col 57} 1007.38{col 67} 1258.49
+
+{txt}{hline}
+{res}a_prisd_arv_delivery{right:Primary SD: ARV Delivery (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}6.5569911{txt},{res}6062.1812{txt}]{col 55}units:  {res}1.000e-15
+{col 10}{txt}unique values:  {res}101{col 51}{txt}missing .:  {res}32{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 649.089
+{txt}{col 15}std. dev:{res}{col 26} 1078.99
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 116.987{col 37} 162.946{col 47} 273.666{col 57} 789.301{col 67} 1015.62
+
+{txt}{hline}
+{res}a_prisd_lab_monitoring{right:Primary SD: Routine Lab Monitoring (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}6.0621727{txt},{res}403.45865{txt}]{col 55}units:  {res}1.000e-15
+{col 10}{txt}unique values:  {res}82{col 51}{txt}missing .:  {res}45{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 109.889
+{txt}{col 15}std. dev:{res}{col 26} 98.0788
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 16.1768{col 37} 37.6446{col 47} 71.2716{col 57}  169.31{col 67} 269.627
+
+{txt}{hline}
+{res}a_prisd_unspecified{right:Primary SD: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.20059216{txt},{res}1133.9703{txt}]{col 55}units:  {res}1.000e-14
+{col 10}{txt}unique values:  {res}70{col 51}{txt}missing .:  {res}59{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 114.524
+{txt}{col 15}std. dev:{res}{col 26} 129.842
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 29.5252{col 37}  55.708{col 47} 101.873{col 57} 139.191{col 67} 183.787
+
+{txt}{hline}
+{res}a_secondary_sd{right:Secondary Service Delivery (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}24.893332{txt},{res}738.93889{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}10{col 51}{txt}missing .:  {res}123{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 177.663
+{txt}{col 15}std. dev:{res}{col 26} 165.352
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 40.6154{col 37} 115.873{col 47} 162.883{col 57} 162.883{col 67} 271.206
+
+{txt}{hline}
+{res}a_secsd_unspecified{right:Secondary SD: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}24.893332{txt},{res}738.93889{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}10{col 51}{txt}missing .:  {res}123{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 177.663
+{txt}{col 15}std. dev:{res}{col 26} 165.352
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 40.6154{col 37} 115.873{col 47} 162.883{col 57} 162.883{col 67} 271.206
+
+{txt}{hline}
+{res}a_ancillary{right:Ancillary (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}249.19847{txt}]{col 55}units:  {res}1.000e-09
+{col 10}{txt}unique values:  {res}51{col 51}{txt}missing .:  {res}73{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 39.6603
+{txt}{col 15}std. dev:{res}{col 26} 48.6092
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} .471737{col 37} 4.91345{col 47} 25.4147{col 57} 51.7338{col 67} 85.6192
+
+{txt}{hline}
+{res}a_anc_demand_generation{right:Ancillary: Demand Generation (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}a_anc_lab_services{right:Ancillary: Lab Services (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}10.027441{txt},{res}17.82656{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}136{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}10.027441
+{col 21}         1{col 33}17.82656
+{col 21}       136{col 33}.
+
+{txt}{hline}
+{res}a_anc_adherence_retention{right:Ancillary (A): Adherence/retention (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.4882644{txt},{res}66.389229{txt}]{col 55}units:  {res}1.000e-09
+{col 10}{txt}unique values:  {res}15{col 51}{txt}missing .:  {res}114{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 27.8304
+{txt}{col 15}std. dev:{res}{col 26} 24.4292
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 5.29473{col 37} 9.20416{col 47}  16.445{col 57} 52.2557{col 67} 66.3892
+
+{txt}{hline}
+{res}a_anc_unspecified{right:Ancillary: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}249.19847{txt}]{col 55}units:  {res}1.000e-09
+{col 10}{txt}unique values:  {res}38{col 51}{txt}missing .:  {res}88{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 37.6427
+{txt}{col 15}std. dev:{res}{col 26} 51.2069
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} .279414{col 37} 4.91345{col 47}   19.23{col 57}  48.365{col 67} 90.3568
+
+{txt}{hline}
+{res}a_mix_mixed{right:(sum) a_mix_mixed}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.21569049{txt},{res}267.45621{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}10{col 51}{txt}missing .:  {res}128{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 44.4929
+{txt}{col 15}std. dev:{res}{col 26}  81.111
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} .221083{col 37} .269613{col 47} 14.7255{col 57} 55.0011{col 67} 162.307
+
+{txt}{hline}
+{res}a_operational{right:Operational (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}284.37436{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}58{col 51}{txt}missing .:  {res}63{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 51.0355
+{txt}{col 15}std. dev:{res}{col 26} 51.4579
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 7.29034{col 37} 23.3974{col 47} 36.6674{col 57} 65.7354{col 67} 100.972
+
+{txt}{hline}
+{res}a_ope_bldg_equip{right:Operational: Buildings and Equipment (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}3.1768396{txt},{res}10.589466{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}130{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}3.1768396
+{col 21}         4{col 33}6.3536792
+{col 21}         1{col 33}10.589466
+{col 21}       130{col 33}.
+
+{txt}{hline}
+{res}a_ope_logistics{right:Operational: Logistics (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}26.326763{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}124{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}0
+{col 21}         5{col 33}1.0589466
+{col 21}         1{col 33}2.1178932
+{col 21}         6{col 33}26.326763
+{col 21}       124{col 33}.
+
+{txt}{hline}
+{res}a_ope_program_mgmt{right:Operational: Program Management (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}5.44295{txt},{res}5.44295{txt}]{col 55}units:  {res}.00001
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}137{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}5.4429498
+{col 21}       137{col 33}.
+
+{txt}{hline}
+{res}a_ope_supervision{right:Operational: Supervision (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}95.762054{txt},{res}95.762054{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}135{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}95.762054
+{col 21}       135{col 33}.
+
+{txt}{hline}
+{res}a_ope_training{right:Operational: Training (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}24.801201{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}5{col 51}{txt}missing .:  {res}129{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}0
+{col 21}         1{col 33}1.3747034
+{col 21}         2{col 33}5.6933575
+{col 21}         2{col 33}17.068932
+{col 21}         2{col 33}24.801201
+{col 21}       129{col 33}.
+
+{txt}{hline}
+{res}a_ope_transportation{right:Operational: Transportation (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}3.1768398{txt},{res}95.305191{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}9{col 51}{txt}missing .:  {res}124{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}3.1768398
+{col 21}         1{col 33}4.2357862
+{col 21}         1{col 33}5.5036011
+{col 21}         4{col 33}7.4126258
+{col 21}         1{col 33}7.7050414
+{col 21}         2{col 33}9.9064817
+{col 21}         1{col 33}11.648413
+{col 21}         1{col 33}86.833618
+{col 21}         1{col 33}95.305191
+{col 21}       124{col 33}.
+
+{txt}{hline}
+{res}a_ope_massed{right:Operational: Mass Education (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}a_ope_hmis{right:Operational: HMIS and Record-Keeping (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}138{txt}/{res}138
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}       138{col 33}.
+
+{txt}{hline}
+{res}a_ope_unspecified{right:Operational: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}2.8255455{txt},{res}284.37436{txt}]{col 55}units:  {res}1.000e-10
+{col 10}{txt}unique values:  {res}51{col 51}{txt}missing .:  {res}80{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 51.0426
+{txt}{col 15}std. dev:{res}{col 26} 53.4979
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 8.91328{col 37} 23.3974{col 47} 40.5633{col 57}  62.393{col 67} 95.5293
+
+{txt}{hline}
+{res}a_mixed{right:Mixed (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.21569049{txt},{res}267.45621{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}10{col 51}{txt}missing .:  {res}128{txt}/{res}138
+
+{txt}{col 19}mean:{res}{col 26} 44.4929
+{txt}{col 15}std. dev:{res}{col 26}  81.111
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} .221083{col 37} .269613{col 47} 14.7255{col 57} 55.0011{col 67} 162.307
+{txt}
+{com}. /*
+> 
+> \end{c -(}verbatim{c )-}
+> 
+> 
+> 
+> \begin{c -(}verbatim{c )-}
+> ***/
+. 
+. * can generate clean tables
+. 
+. /**/ quietly cd "/Users/studentuser/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/ART/checks"
+{txt}
+{com}. /**/ quietly eststo sumstats: quietly estpost summarize
+{txt}
+{com}. 
+. /**/ quietly esttab sumstats using sumstats, ///
+>         cells("count mean sd min max") ///
+>         title("Summary Statistics") tex  replace
+{txt}
+{com}. * note: do not use 'fragment' with esttab; doing so removes centering and 
+. * tabular syntax
+. 
+. 
+. * go back to main dir
+. /**/ quietly cd "/Users/studentuser/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/ART/checks"
+{txt}
+{com}. 
+. 
+. /***
+> \end{c -(}verbatim{c )-}
+> 
+> Here we import the table of summary statistics.\\
+> 
+> \input{c -(}./checks/sumstats{c )-} 
+> 
+> Now lets generate and add a figure that visualizing one of these variables.\\
+> 
+> ----------------------
+> export final tex document
+> -----------------------------
+> */
+. 
+. /* Exporting in several formats */
+. *markdoc example1, replace              /* exporting a markdown file */
+. *markdoc example1, replace export(html) 
+. *markdoc example1, replace export(odt) 
+. *markdoc example1, replace export(txt) 
+. *markdoc example1, replace export(epub) 
+. *markdoc mytemplatelatex, replace author() affiliation() export(docx) 
+. /* could add date option (no parentheses) */
+. *markdoc mytemplatelatex, replace author() affiliation() export(pdf)
+. 
+. * markdoc mytemplatelatex, replace author() affiliation() export(docx) markup()
+. * markdoc mytemplatelatex, replace author() affiliation() export(html) markup()
+. markdoc data_check, replace author() affiliation() export(tex) markup()
+{txt}
+{p}(MarkDoc created {bf:{browse "data_check.tex"}})
+
+
+{com}. 
+. /*
+> can also produce pdf slides:
+> markdoc example1, replace author(Matthew C. Ingram) affiliation(University at Albany, SUNY) date export(slide)
+> NOTE: this will replace any existing pdf file with same name, so be cautious
+> */
+. 
+. * end
+. 
+. 
+{txt}end of do-file
+
+{com}. do "/var/folders/8n/f2yc_nqn0kg10tvry03g2jdw0000gn/T//SD09764.000000"
+{txt}
+{com}. 
+. /********************************************
+> VMMC Data Check 
+> Author: Lily Alexander
+> Date created: February 9, 2018 
+> Last updated: February 9, 2018 
+> *********************************************/
+. 
+. 
+. //-------------------------------
+. 
+. /* ----------------------- 
+> Environment Setup
+> --------------------------
+> */
+. 
+. log close _all
+      {txt}name:  {res}<unnamed>
+       {txt}log:  {res}/Users/studentuser/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/ART/wide_files/data_check.smcl
+  {txt}log type:  {res}smcl
+ {txt}closed on:  {res}26 Feb 2018, 17:02:35
+{txt}{.-}
+{smcl}
+{txt}{sf}{ul off}

@@ -1,0 +1,2220 @@
+{smcl}
+{com}{sf}{ul off}{txt}
+{com}. 
+. 
+. * ----------------------------
+. * load/install packages
+. * ----------------------------
+. 
+. /* 
+> If needed, install necessary packages to compile notebook document (e.g., html, docx, pdf)
+> these packages include: markdoc, kethcup, weaver, synlight, and statax
+> note: if get any error messages, follow on-screen instructions in Stata console to 
+> complete correct installation
+> 
+> * once install following packages once, do not need to re-install; 
+> * here, commented out
+> */
+. *packages for MarkDoc
+. *ssc install Markdoc
+. *ssc install weaver
+. *ssc install synlight
+. *ssc install statax
+. *markdocpandoc // installs pandoc
+. *packages for analysis and presentation of results
+. *ssc install estout, replace
+. *ssc install outreg
+. *ssc install pandoc
+. *ssc install coefplot 
+. 
+. *-----------------------
+. *-----------------------
+. 
+. 
+. /* Template: 
+> MI 20170122: 
+> comments from Stata do-file will not appear in final markdoc.
+> The text included in this do-file will only appear if it
+> is blocked between a forward slash '/' and 3 asterisks '***', as done below
+> immediately before start of latex syntax.
+> */
+.         
+. 
+. /***
+> 
+> \documentclass{c -(}article{c )-}
+> 
+> \usepackage{c -(}graphicx{c )-}  % this is a package for inserting graphics
+> \usepackage{c -(}hyperref{c )-}
+> \hypersetup{c -(}
+>     colorlinks=true,
+>     linkcolor=blue,
+>     filecolor=blue,      
+>     urlcolor=blue
+>         {c )-}
+>         
+> \usepackage{c -(}geometry{c )-}   % useful package for formatting document
+> \geometry{c -(}
+>         letterpaper,
+>         total={c -(}6.5in, 9in{c )-},
+>         left=1in,
+>         right=1in,
+>         top=1in,
+>         bottom=1in
+>         {c )-}
+> 
+> \begin{c -(}document{c )-}
+> 
+> \title{c -(}Data Validation Exercise before Entry into UCSR{c )-}
+> \author{c -(}
+>   Lily Alexander
+>   {c )-}
+> 
+>  \date{c -(}
+>   \bigskip
+>   \today
+>   {c )-}
+> 
+> \maketitle
+>         
+> \begin{c -(}abstract{c )-}
+> \textbf{c -(}Summary{c )-}. This is a document to validate and check variables before they are integrated into the UCSR.
+> \end{c -(}abstract{c )-}
+> 
+> \section{c -(}High-level codebook for all variables{c )-}
+> 
+> \begin{c -(}verbatim{c )-}
+> ***/
+. 
+. /* ------------------------
+> load dataset
+> ---------------------------
+> */
+. 
+. /**/ use STI_clean_wide_file_Mar2018.dta, clear 
+{txt}
+{com}. 
+. 
+. /* ------------------------
+> codebook generation
+> ---------------------------
+> */
+. /**/ codebook 
+
+{txt}{hline}
+{res}disease{right:Disease}
+{txt}{hline}
+
+{col 19}type:  string ({res}str8{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"HIV"
+{col 21}        33{col 33}"STDs"
+{col 21}         3{col 33}"Syphilis"
+
+{txt}{hline}
+{res}collapsed{right:Collapsed}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str2
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"No"
+
+{txt}{hline}
+{res}lead_author{right:Lead Author}
+{txt}{hline}
+
+{col 19}type:  string ({res}str13{txt})
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"Benzaken, AS"
+{col 21}        12{col 33}"Carrara, V"
+{col 21}         3{col 33}"Dandona, L"
+{col 21}         2{col 33}"Gilson, L"
+{col 21}        16{col 33}"Shelley, KD"
+{col 21}         3{col 33}"Söderlund, N"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}ref_year{right:Reference Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}1993{txt},{res}2015{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}6{col 51}{txt}missing .:  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}1993
+{col 21}         2{col 33}1997
+{col 21}        12{col 33}2004
+{col 21}         3{col 33}2005
+{col 21}         3{col 33}2008
+{col 21}        16{col 33}2015
+
+{txt}{hline}
+{res}output_unit2{right:Output unit}
+{txt}{hline}
+
+{col 19}type:  string ({res}str14{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        36{col 33}"."
+{col 21}         3{col 33}"cost per visit"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}title{right:Title}
+{txt}{hline}
+
+{col 19}type:  string ({res}str199{txt}), but longest is str177
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"Cost and efficiency of public sector
+{col 33}sexually transmitted infection clinics
+{col 33}in Andhra Pradesh, India"
+{col 21}         2{col 33}"Cost-effectiveness of improved
+{col 33}treatment services for sexually
+{col 33}transmitted diseases in preventing HIV-1
+{col 33}infection in Mwanza Region, Tanzania "
+{col 21}         3{col 33}"Field evaluation of the performance and
+{col 33}testing costs of a rapid point-of-care
+{col 33}test for syphilis in a red-light
+{col 33}district of Manaus, Brazil "
+{col 21}        12{col 33}"Operational and economic evaluation of
+{col 33}an NGO-led sexually transmitted
+{col 33}infections intervention: north-Western
+{col 33}Cambodia"
+{col 21}        16{col 33}"Scaling Down to Scale Up: A Health
+{col 33}Economic Analysis of Integrating
+{col 33}Point-of-Care Syphilis Testing into
+{col 33}Antenatal Care in Zambia during Pilot
+{col 33}and National Rollout Implementation"
+{col 21}         3{col 33}"The costs of HIV prevention strategies
+{col 33}in developing countries"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}journal_etc{right:Journal}
+{txt}{hline}
+
+{col 19}type:  string ({res}str47{txt})
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        12{col 33}"B World Health Organ. 2004 Jun;
+{col 33}83(6):401-480"
+{col 21}         3{col 33}"BMC Health Serv Res. 2005 Nov 5;5:69"
+{col 21}         3{col 33}"Bull World Health Organ. 1993; 71(5):
+{col 33}595–604"
+{col 21}         2{col 33}"Lancet. 1997 Dec
+{col 33}20-27;350(9094):1805-9"
+{col 21}        16{col 33}"PLoS One. 2015 May 13;10(5):e0125675"
+{col 21}         3{col 33}"Sex Transm Infect. 2008
+{col 33}Aug;84(4):297-302."
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}url{right:URL}
+{txt}{hline}
+
+{col 19}type:  string ({res}str56{txt})
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        12{col 33}"<http://www.who.int/bulletin/volumes/83
+{col 33}/6/434.pdf>."
+{col 21}         3{col 33}"<https://www.ncbi.nlm.nih.gov/pmc/artic
+{col 33}les/PMC2393468/>."
+{col 21}         3{col 33}"<https://www.ncbi.nlm.nih.gov/pubmed/16
+{col 33}271151>."
+{col 21}         3{col 33}"<https://www.ncbi.nlm.nih.gov/pubmed/18
+{col 33}305119>."
+{col 21}        16{col 33}"<https://www.ncbi.nlm.nih.gov/pubmed/25
+{col 33}970443>."
+{col 21}         2{col 33}"<https://www.ncbi.nlm.nih.gov/pubmed/94
+{col 33}28251>."
+
+{txt}{hline}
+{res}iso_name{right:Country}
+{txt}{hline}
+
+{col 19}type:  string ({res}str30{txt})
+
+{col 10}unique values:  {res}8{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"Brazil"
+{col 21}        12{col 33}"Cambodia "
+{col 21}         3{col 33}"India"
+{col 21}         1{col 33}"Kenya "
+{col 21}         1{col 33}"Mozambique "
+{col 21}         1{col 33}"South Africa "
+{col 21}         2{col 33}"Tanzania, United Republic of "
+{col 21}        16{col 33}"Zambia"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}location{right:Location}
+{txt}{hline}
+
+{col 19}type:  string ({res}str97{txt})
+
+{col 10}unique values:  {res}8{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}"."
+{col 21}         3{col 33}"Andhra Pradesh state"
+{col 21}        12{col 33}"Banteay Meanchey province "
+{col 21}         3{col 33}"Manaus "
+{col 21}         8{col 33}"Mansa (Luapula Province), Kalomo
+{col 33}(Southern Province), and Lundazi and
+{col 33}Nyimba (Eastern Province). "
+{col 21}         8{col 33}"Mongu and Lusaka"
+{col 21}         2{col 33}"Mwanza"
+{col 21}         1{col 33}"Pumwani area of Nairobi"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}no_sites{right:Sites}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}7{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}         3{col 33}"1"
+{col 21}        12{col 33}"2"
+{col 21}        10{col 33}"4"
+{col 21}         2{col 33}"49"
+{col 21}         8{col 33}"5"
+{col 21}         1{col 33}"6"
+
+{txt}{hline}
+{res}pop_density{right:Urbanicity}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt}), but longest is str7
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}         2{col 33}"Rural"
+{col 21}        11{col 33}"mixture"
+{col 21}         4{col 33}"rural"
+{col 21}        19{col 33}"urban"
+
+{txt}{hline}
+{res}ownership{right:Ownership}
+{txt}{hline}
+
+{col 19}type:  string ({res}str17{txt})
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         6{col 33}"."
+{col 21}        12{col 33}"international NGO"
+{col 21}        16{col 33}"mixed"
+{col 21}         5{col 33}"public"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}platform{right:Platform}
+{txt}{hline}
+
+{col 19}type:  string ({res}str15{txt}), but longest is str14
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"Fixed facility"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}facility_cat{right:Platform specificity}
+{txt}{hline}
+
+{col 19}type:  string ({res}str68{txt})
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"Clinic at hospital (intervention- or
+{col 33}disease-specific)"
+{col 21}         1{col 33}"Clinic at hospital (not intervention-
+{col 33}or disease-specific)"
+{col 21}        32{col 33}"Health Center (e.g. community health
+{col 33}clinic - sometimes w/ 1-2 beds)"
+{col 21}         2{col 33}"Mix of health care facility types"
+{col 21}         1{col 33}"Unspecified health care facility type"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}id_class{right:Intervention Category}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"Prevention"
+
+{txt}{hline}
+{res}id_int{right:Intervention}
+{txt}{hline}
+
+{col 19}type:  string ({res}str14{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"STI Management"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}int_description_long{right:Intervention Description (Long)}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1490{txt}), but longest is str1356
+
+{col 10}unique values:  {res}7{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"
+We included STI clinics in the
+{col 33}government-run public sec- tor hospitals
+{col 33}for this study. These clinics provide
+{col 33}services predominantly to the poor at no
+{col 33}or minimal fee, and many persons
+{col 33}receiving services here have relatively
+{col 33}advanced STIs. At the time of starting
+{col 33}data collection for this study in
+{col 33}mid-2004, 85 public sector clinics were
+{col 33}func- tioning. Of these, 28 STI clinics
+{col 33}had been functioning since the 1960's in
+{col 33}the state capital and the district head-
+{col 33}quarters as part of the medical college
+{col 33}hospitals and other major public
+{col 33}hospitals of Andhra Pradesh. In
+{col 33}addition, 57 STI clinics were formally
+{col 33}designated in mid-2002 in pub- lic
+{col 33}hospitals, in district headquarter
+{col 33}hospitals and in area hospitals located
+{col 33}in smaller jurisdictions. Generally, the
+{col 33}STI care in medical college hospitals
+{col 33}and district head- quarter hospitals is
+{col 33}provided in distinct separate clinics,
+{col 33}whereas in area hospitals it is provided
+{col 33}as part of the gen- eral outpatient."
+{col 21}         8{col 33}"A centralized two-day RST training
+{col 33}workshop took place before RST was
+{col 33}integrated within existing clinic
+{col 33}staffing patterns, patient flow, and
+{col 33}clinic processes alongside other routine
+{col 33}antenatal POC tests (HIV, malaria, and
+{col 33}haemoglobin). The pilot uti- lised SD
+{col 33}BIOLINE Syphilis 3.0, a rapid POC
+{col 33}syphilis antibody test produced by
+{col 33}Standard Diagnostics (Yongin-Si, South
+{col 33}Korea), with a manufacturer reported
+{col 33}99.3% sensitivity and 99.5% specificity
+{col 33}in serum versus the gold standard
+{col 33}Treponema pallidum haemagglutination
+{col 33}(TPHA) test ; of note, a recent
+{col 33}meta-analysis of the diagnostic accuracy
+{col 33}of SD Bioline 3.0 in field conditions
+{col 33}reported a lower pooled sensitivity
+{col 33}(87.9% serum; 83.8% whole blood) and
+{col 33}specificity (96.0% serum; 98.4% whole
+{col 33}blood). Pilot-specific QA and quality
+{col 33}control (QC) measures were established
+{col 33}to ensure high standards of quality
+{col 33}management. The pilot results showed
+{col 33}increased syphilis testing among ANC
+{col 33}attendees (79.9% versus 95.6%, p<0.0001)
+{col 33}and treatment of syphilis positive
+{col 33}pregnant women (51.1% versus 95.2%,
+{col 33}p<0.0001), and demon- strated the
+{col 33}feasibility of integrating RST within
+{col 33}busy urban and rural ANC settings in
+{col 33}Zambia. Zambian syphilis treatment
+{col 33}guideline pre-RST adoption was three
+{col 33}weekly doses of Benzathine Penicillin
+{col 33}(BP). During the pilot, patients were
+{col 33}given one documented dose of BP
+{col 33}following a positive RST test.
+"
+{col 21}         3{col 33}"Between May and October 2006,
+{col 33}consecutive unselected patients with no
+{col 33}age restriction presenting at the FUAM
+{col 33}harbour clinic who showed interest in
+{col 33}being screened with the rapid POC
+{col 33}VisiTect Syphilis test (Omega
+{col 33}Diagnostics, Alloa, Scotland) were
+{col 33}invited to participate in the study. We
+{col 33}included male and female sex workers,
+{col 33}sex worker clients, and other patients
+{col 33}living and working in the area who
+{col 33}accessed the clinic. A sex worker client
+{col 33}was defined as those men or women who
+{col 33}reported having had sex with a male or
+{col 33}female sex worker in the last 12 months.
+{col 33}At the end of each clinic, venous blood
+{col 33}samples were transferred to the FUAM
+{col 33}laboratory. A laboratory technician,
+{col 33}blind to the POC test results, tested
+{col 33}sera using the FTA-Abs (WAMA
+{col 33}Diagnostica, S ̃ao Paulo, Brazil) and
+{col 33}VDRL (Winer Laboratorios, Rosario,
+{col 33}Argentina), and VDRL titres were
+{col 33}determined. The reference standard test
+{col 33}for syphilis was FTA-Abs. This widely
+{col 33}used test was considered the most
+{col 33}appropriate comparator since the rapid
+{col 33}POC test was also Treponema specific.
+{col 33}Active syphilis was defined as sera
+{col 33}reactive with both FTA-Abs and VDRL,
+{col 33}with high and low titre active syphilis
+{col 33}defined based on VDRL titres > or ,1:8,
+{col 33}respectively. Participants with a
+{col 33}positive POC test were treated
+{col 33}immediately with one intramuscular
+{col 33}injection of 2.4 MU benzathine
+{col 33}penicillin."
+{col 21}         3{col 33}"Provision of sexually transmitted
+{col 33}disease (STD) treatment and prevention
+{col 33}services."
+{col 21}        12{col 33}"The MSF project initially aimed to
+{col 33}offer STI clinical services and outreach
+{col 33}on HIV/AIDS prevention and condom
+{col 33}distribution to these sex workers and
+{col 33}their clients. Both clinics were located
+{col 33}near red-light districts and
+{col 33}marketplaces to facilitate access for
+{col 33}clients. The clinics also accepted
+{col 33}patients presenting with non-STI related
+{col 33}complaints as well as members of the
+{col 33}general population. STI case management
+{col 33}at the MSF clinics included taking a
+{col 33}detailed history and assessing the risk
+{col 33}of being infected with an STI, clinical
+{col 33}examination (including a speculum
+{col 33}examination for women), health
+{col 33}education, promotion of condom use, and
+{col 33}treatment using the syndromic approach.
+{col 33}STI index patients were provided with a
+{col 33}contact slip to allow them to notify
+{col 33}their sexual partners; these partners
+{col 33}were treated in accordance with the
+{col 33}patient’s syndrome, irrespective of the
+{col 33}presence of symptoms. "
+{col 21}         2{col 33}"The intervention was designed to be
+{col 33}replicable and sustainable in the rural
+{col 33}Tanzanian setting, and had five main
+{col 33}elements. Primary-health-care workers
+{col 33}from all health units in each community
+{col 33}were trained to recognise and treat STDs
+{col 33}by use of syndromic treatment
+{col 33}algorithms. The primary-health-care
+{col 33}workers were provided with simple
+{col 33}equipment required for diagnosis of STDs
+{col 33}, and a regular supply of appropriate
+{col 33}drugs and consumables was assured.
+{col 33}Supervisory visits were made roughly
+{col 33}every 6 weeks to review the treatments
+{col 33}prescribed by the primary-health-care
+{col 33}workers and to provide further informal
+{col 33}training. A health education team
+{col 33}visited the villages served by each
+{col 33}health unit every 6 months to encourage
+{col 33}prompt attendance for STD treatment. A
+{col 33}reference clinic was established in
+{col 33}Mwanza town to act as a training centre
+{col 33}for rural primary-health-care workers
+{col 33}and to monitor the aetiology of STD
+{col 33}syndromes and the effectiveness of the
+{col 33}treatment algorithms."
+{col 21}         8{col 33}"Treatment alogorithm: Treat with one
+{col 33}dose of BP following positive RST
+{col 33}result; run RPR confirmation and if
+{col 33}active infection confirmed, treat with
+{col 33}two additional doses of BP. If RPR
+{col 33}confirmation unavailable, continue 2nd
+{col 33}and 3rd weekly dose of BP.
+"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}clinical_monitoring{right:Clinical monitoring}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}demand_generation{right:Demand generation}
+{txt}{hline}
+
+{col 19}type:  string ({res}str30{txt})
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        31{col 33}"."
+{col 21}         2{col 33}"Outreach health education team"
+{col 21}         3{col 33}"advertisting campaign"
+{col 21}         3{col 33}"yes - details NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}counseling_content{right:Counseling content}
+{txt}{hline}
+
+{col 19}type:  string ({res}str30{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        37{col 33}"."
+{col 21}         2{col 33}"Outreach health education team"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}staff_type{right:Staff type & number}
+{txt}{hline}
+
+{col 19}type:  string ({res}str93{txt})
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         5{col 33}"."
+{col 21}         3{col 33}"Clinical Staff (10), Laboratory
+{col 33}Technicians (2)"
+{col 21}         3{col 33}"Medical Oofficer (NR), Mmedico-social
+{col 33}Worker (NR), Counselor (NR), Laboratory
+{col 33}Technician (NR)"
+{col 21}        28{col 33}"Yes, Details NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}supportive_care{right:Supportive care}
+{txt}{hline}
+
+{col 19}type:  string ({res}str19{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        27{col 33}"."
+{col 21}        12{col 33}"condom distribution"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}visits{right:Visit type & number}
+{txt}{hline}
+
+{col 19}type:  string ({res}str16{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         5{col 33}"."
+{col 21}        31{col 33}"Yes, Details NR"
+{col 21}         3{col 33}"yes - details NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}referrals{right:Referrals}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}method{right:Method}
+{txt}{hline}
+
+{col 19}type:  string ({res}str41{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        20{col 33}"."
+{col 21}        16{col 33}"SD Bioline RST; confirmatory RPR test
+{col 33}kit"
+{col 21}         3{col 33}"VisiTect, FTA-Ab"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}id_tech{right:Technology}
+{txt}{hline}
+
+{col 19}type:  string ({res}str41{txt})
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        17{col 33}"."
+{col 21}        16{col 33}"SD Bioline RST; confirmatory RPR test
+{col 33}kit"
+{col 21}         3{col 33}"VisiTect, FTA-Ab"
+{col 21}         3{col 33}"demand generation, screening &
+{col 33}diagnoses"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}treatment_phase{right:Treatment phase}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}arv_regimen{right:ARV Regimen}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}treatment{right:Treatment}
+{txt}{hline}
+
+{col 19}type:  string ({res}str104{txt}), but longest is str60
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         5{col 33}"."
+{col 21}        16{col 33}"Benzathine penicillin (2.5 MU 1 dose)"
+{col 21}        15{col 33}"Yes, Details NR"
+{col 21}         3{col 33}"one intramuscular injection of 2.4 MU
+{col 33}benzathine penicillin."
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}screening_diagnoses{right:Screening and diagnosis}
+{txt}{hline}
+
+{col 19}type:  string ({res}str104{txt}), but longest is str35
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}"."
+{col 21}        16{col 33}"Syphilis; HIV; Malaria; Haemoglobin"
+{col 21}        15{col 33}"Yes, details NR"
+{col 21}         3{col 33}"syphilis"
+{col 21}         3{col 33}"yes - details NR"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}community_awareness{right:Community awareness}
+{txt}{hline}
+
+{col 19}type:  string ({res}str30{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        37{col 33}"."
+{col 21}         2{col 33}"Outreach health education team"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}health_system{right:Health system}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}id_activities{right:Costed activities}
+{txt}{hline}
+
+{col 19}type:  string ({res}str69{txt}), but longest is str58
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}         2{col 33}"demand generation; counseling content;
+{col 33}community awareness"
+{col 21}         3{col 33}"demand generation; screening &
+{col 33}diagnoses; treatment"
+{col 21}        19{col 33}"screening & diagnoses; treatment"
+{col 21}        12{col 33}"supportive care; screening & diagnoses;
+{col 33}treatment"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}start_month{right:Start Month}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}1{txt},{res}7{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}6{col 51}{txt}missing .:  {res}3{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}1
+{col 21}        16{col 33}3
+{col 21}         1{col 33}4
+{col 21}         4{col 33}5
+{col 21}         1{col 33}6
+{col 21}        12{col 33}7
+{col 21}         3{col 33}.
+
+{txt}{hline}
+{res}start_year{right:Start Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}1992{txt},{res}2012{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}8{col 51}{txt}missing .:  {res}3{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}1992
+{col 21}        12{col 33}1997
+{col 21}         1{col 33}2003
+{col 21}         1{col 33}2004
+{col 21}         1{col 33}2005
+{col 21}         3{col 33}2006
+{col 21}         8{col 33}2010
+{col 21}         8{col 33}2012
+{col 21}         3{col 33}.
+
+{txt}{hline}
+{res}end_month{right:End Month}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}3{txt},{res}12{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}6{col 51}{txt}missing .:  {res}3{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}3
+{col 21}         1{col 33}4
+{col 21}         1{col 33}5
+{col 21}        16{col 33}7
+{col 21}         3{col 33}10
+{col 21}        14{col 33}12
+{col 21}         3{col 33}.
+
+{txt}{hline}
+{res}end_year{right:End Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}1993{txt},{res}2012{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}6{col 51}{txt}missing .:  {res}3{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}1993
+{col 21}        12{col 33}1999
+{col 21}         3{col 33}2004
+{col 21}         3{col 33}2006
+{col 21}         8{col 33}2010
+{col 21}         8{col 33}2012
+{col 21}         3{col 33}.
+
+{txt}{hline}
+{res}period_portrayed{right:Total Months}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}         3{col 33}"12"
+{col 21}         2{col 33}"24"
+{col 21}        12{col 33}"30"
+{col 21}        16{col 33}"5"
+{col 21}         3{col 33}"6"
+
+{txt}{hline}
+{res}year_intro{right:Year introduced at study site}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}1960{txt},{res}2008{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}17{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}1960
+{col 21}         3{col 33}1997
+{col 21}        16{col 33}2008
+{col 21}        17{col 33}.
+
+{txt}{hline}
+{res}coverage{right:Coverage}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}id_pop_dem_std{right:Target group (demographic)}
+{txt}{hline}
+
+{col 19}type:  string ({res}str19{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        19{col 33}"General Populations"
+{col 21}         4{col 33}"Sex Worker"
+{col 21}        16{col 33}"Women"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}id_pop_clin_std{right:Target group (clinical)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}byte{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}pop_age{right:Average Age}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt}), but longest is str4
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        34{col 33}"."
+{col 21}         3{col 33}"27.9"
+{col 21}         2{col 33}"28"
+
+{txt}{hline}
+{res}pop_sex{right:Gender}
+{txt}{hline}
+
+{col 19}type:  string ({res}str11{txt}), but longest is str10
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        21{col 33}"."
+{col 21}        12{col 33}"17% male"
+{col 21}         1{col 33}"35.8% male"
+{col 21}         1{col 33}"5.1% male"
+{col 21}         3{col 33}"60% female"
+{col 21}         1{col 33}"66.3% male"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}pop_ses{right:SES}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}pop_education{right:Education}
+{txt}{hline}
+
+{col 19}type:  string ({res}str37{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        36{col 33}"."
+{col 21}         3{col 33}"52% didn't complete elementary school"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}hiv_prev{right:HIV Prevalence}
+{txt}{hline}
+
+{col 19}type:  string ({res}str9{txt})
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        19{col 33}"."
+{col 21}         3{col 33}".025"
+{col 21}         2{col 33}".04"
+{col 21}        12{col 33}".41"
+{col 21}         3{col 33}"16–30% "
+
+{txt}{col 16}warning:  variable has trailing blanks
+
+{txt}{hline}
+{res}tb_prev{right:TB Prevalence}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}tb_rx_resistance{right:TB Drug Resistance}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}costing_purpose{right:Costing Purpose}
+{txt}{hline}
+
+{col 19}type:  string ({res}str531{txt})
+
+{col 10}unique values:  {res}7{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}"The primary aim of this study was to
+{col 33}analyse the implementation costs of
+{col 33}Zambia’s pilot programme, which explored
+{col 33}feasibility of  rapid syphilis test
+{col 33}(RST) integration into antenatal care
+{col 33}(ANC services), and secondarily, to
+{col 33}present preliminary costs observed
+{col 33}during Zambia’s national rollout of RST.
+{col 33}Authors explored the key drivers of
+{col 33}differences in cost between the two
+{col 33}implementation stages, and examined how
+{col 33}cost containment measures may have
+{col 33}impacted on the quality of syphilis
+{col 33}testing delivered to rollout ANC
+{col 33}attendees. "
+{col 21}        12{col 33}"To  present an evaluation of the
+{col 33}operational performance, costs and
+{col 33}cost-effectiveness of an STI
+{col 33}intervention programme implemented by
+{col 33}MSF–Holland in the Banteay Meanchey
+{col 33}province of north-western Cambodia
+{col 33}during the initial 30 months of
+{col 33}operation (1997–99) "
+{col 21}        14{col 33}"To analyse the implementation costs of
+{col 33}Zambia’s pilot programme, which explored
+{col 33}feasibility of  rapid syphilis test
+{col 33}(RST) integration into antenatal care
+{col 33}(ANC services), and secondarily, to
+{col 33}present preliminary costs observed
+{col 33}during Zambia’s national rollout of RST.
+{col 33}Authors explored the key drivers of
+{col 33}differences in cost between the two
+{col 33}implementation stages, and examined how
+{col 33}cost containment measures may have
+{col 33}impacted on the quality of syphilis
+{col 33}testing delivered to rollout ANC
+{col 33}attendees. "
+{col 21}         3{col 33}"To assess the cost and efficiency of
+{col 33}STI clinics in the public sector, as
+{col 33}part of a study to assess the cost and
+{col 33}efficiency of various HIV prevention
+{col 33}strategies in Andhra Pradesh."
+{col 21}         2{col 33}"To assess the impact, cost, and
+{col 33}cost-effectiveness of averting HIV-1
+{col 33}infection through improved management of
+{col 33}sexually transmitted diseases (STDs) by
+{col 33}primary-health-care workers in Mwanza
+{col 33}Region, Tanzania. "
+{col 21}         3{col 33}"To assess the performance, usefulness
+{col 33}and cost of a rapid treponemal antibody
+{col 33}assay (VisiTect Syphilis) to detect
+{col 33}syphilis in high risk populations "
+{col 21}         3{col 33}"To present data on the costs and
+{col 33}outputs of HIV prevention projects and
+{col 33}discuss some of the difficulties faced
+{col 33}in economic evaluation in this area"
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}timing{right:Timing}
+{txt}{hline}
+
+{col 19}type:  string ({res}str15{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"cross-sectional"
+
+{txt}{hline}
+{res}country_sampling{right:Country Sampling}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}geo_sampling_incountry{right:Geographic Area In Country Sampling}
+{txt}{hline}
+
+{col 19}type:  string ({res}str9{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         6{col 33}"."
+{col 21}         2{col 33}"cluster"
+{col 21}        31{col 33}"purposive"
+
+{txt}{hline}
+{res}site_sampling{right:Site Sampling}
+{txt}{hline}
+
+{col 19}type:  string ({res}str14{txt})
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}         3{col 33}"cluster"
+{col 21}        11{col 33}"convenience"
+{col 21}        12{col 33}"entire program"
+{col 21}        10{col 33}"purposive"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}px_sampling{right:Patient Sampling}
+{txt}{hline}
+
+{col 19}type:  string ({res}str14{txt})
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        31{col 33}"."
+{col 21}         3{col 33}"convenience"
+{col 21}         3{col 33}"entire program"
+{col 21}         2{col 33}"random"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}sample_size_derived{right:Sample size formally derived}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}        36{col 33}"no"
+
+{txt}{hline}
+{res}controls{right:Controls}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        37{col 33}"."
+{col 21}         2{col 33}"yes"
+
+{txt}{hline}
+{res}econ_perspective_actual{right:Perspective}
+{txt}{hline}
+
+{col 19}type:  string ({res}str8{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"provider"
+
+{txt}{hline}
+{res}econ_costing{right:Economic / Financial}
+{txt}{hline}
+
+{col 19}type:  string ({res}str14{txt}), but longest is str8
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"economic"
+
+{txt}{hline}
+{res}real_world{right:Real World / Per Protocol}
+{txt}{hline}
+
+{col 19}type:  string ({res}str10{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         2{col 33}"mix"
+{col 21}        37{col 33}"real world"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}asd_costs{right:Above Service Costs Included}
+{txt}{hline}
+
+{col 19}type:  string ({res}str19{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}         6{col 33}"no costs included"
+{col 21}        30{col 33}"some costs included"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}list_asd_costs{right:Above Service Cost List}
+{txt}{hline}
+
+{col 19}type:  string ({res}str204{txt})
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         6{col 33}"."
+{col 21}         3{col 33}"None"
+{col 21}         8{col 33}"Supervision; Central personnel; vehicle
+{col 33}operation/maintenance; vehicle capital"
+{col 21}         8{col 33}"Supervision; Central personnel; vehicle
+{col 33}operation/maintenance; vehicle capital;
+{col 33}quality assurance/control; incoming
+{col 33}inspection; external quality control;
+{col 33}external quality assurance; confirmatory
+{col 33}retesting"
+{col 21}         2{col 33}"Training manuals; training hall;
+{col 33}training supervisors and central
+{col 33}support"
+{col 21}        12{col 33}"Traininig, Supervision and shared costs
+{col 33}related to setting up buildings"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}omitted_costs{right:Omitted Costs}
+{txt}{hline}
+
+{col 19}type:  string ({res}str132{txt})
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        31{col 33}"Patient costs"
+{col 21}         3{col 33}"Patient costs, Other: details NR"
+{col 21}         2{col 33}"Support staff, Building/space: captial,
+{col 33}Patient costs"
+{col 21}         3{col 33}"Vehicles/transport, Building/space,
+{col 33}Building/space recurring (e.g. rent,
+{col 33}utilities), Patient costs; Other:
+{col 33}training and supervision "
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}sensitivity_analysis{right:Sensitivity Analysis}
+{txt}{hline}
+
+{col 19}type:  string ({res}str13{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         6{col 33}"None"
+{col 21}        21{col 33}"comprehensive"
+{col 21}        12{col 33}"limited"
+
+{txt}{hline}
+{res}scale{right:Economies of scale}
+{txt}{hline}
+
+{col 19}type:  string ({res}str9{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        16{col 33}"analyzed"
+{col 21}        17{col 33}"discussed"
+{col 21}         6{col 33}"ignored"
+
+{txt}{hline}
+{res}research_costs{right:Research Costs Included}
+{txt}{hline}
+
+{col 19}type:  string ({res}str8{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        18{col 33}"."
+{col 21}        21{col 33}"excluded"
+
+{txt}{hline}
+{res}unrelated_costs{right:Unrelated Costs Included}
+{txt}{hline}
+
+{col 19}type:  string ({res}str1{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}overhead{right:Overhead Costs Included}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}3{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}        17{col 33}"Yes"
+{col 21}        19{col 33}"no"
+
+{txt}{hline}
+{res}overhead_costs{right:Overhead Costs List}
+{txt}{hline}
+
+{col 19}type:  string ({res}str347{txt})
+
+{col 10}unique values:  {res}5{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         6{col 33}"."
+{col 21}        16{col 33}"None"
+{col 21}         2{col 33}"Office equipment and furniture,
+{col 33}vehicles, field equipment and equipment
+{col 33}for PHCWs"
+{col 21}        12{col 33}"buildings, capital equipment items and
+{col 33}vehicles"
+{col 21}         3{col 33}"outpatient and inpatient furniture,
+{col 33}electrical fixtures, refrigerator,
+{col 33}centrifuge, microscope, needle and
+{col 33}syringe destroyer, water bath, slide
+{col 33}rotator, water filter, sterilizer, and
+{col 33}weighing machine. cleaning and building
+{col 33}maintenance, electricity, water,
+{col 33}telephone, gas/oil, waste disposal, the
+{col 33}occasional training of staff during that
+{col 33}fiscal year"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}pot_distortions{right:Potential distortions}
+{txt}{hline}
+
+{col 19}type:  string ({res}str548{txt}), but longest is str285
+
+{col 10}unique values:  {res}4{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        34{col 33}"."
+{col 21}         2{col 33}"All pilot costs were collected in 2010
+{col 33}Zambian Kwacah. "
+{col 21}         2{col 33}"At urban sites, higher facili- ty-level
+{col 33}costs were mitigated by the economies of
+{col 33}scale afforded by high patient volumes.
+{col 33}Costs to implement QA/QC in facilities
+{col 33}in rural districts were elevated due to
+{col 33}long travel distances from Lusaka. "
+{col 21}         1{col 33}"During the rollout, low RST coverage at
+{col 33}DH1 (24%) resulted in an elevated
+{col 33}screening unit cost ($11.16), which was
+{col 33}unexpected for a high volume ANC
+{col 33}setting. The low coverage meant the
+{col 33}average screening unit cost at DH1 was
+{col 33}comparable to the lower volume,
+{col 33}rural-based rollout facilities "
+
+{txt}{col 16}warning:  variable has embedded and trailing blanks
+
+{txt}{hline}
+{res}volunteer_time{right:Valuing Volunteer Time}
+{txt}{hline}
+
+{col 19}type:  string ({res}str17{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        36{col 33}"."
+{col 21}         3{col 33}"local full income"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}family_time{right:Valuing Family Time}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt}), but longest is str1
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"."
+
+{txt}{hline}
+{res}px_costs_measured{right:Patient-Incurred Costs Measured}
+{txt}{hline}
+
+{col 19}type:  string ({res}str22{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        36{col 33}"not included"
+{col 21}         3{col 33}"not includedt included"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}cat_cost{right:Catastrophic Cost Calculated}
+{txt}{hline}
+
+{col 19}type:  string ({res}str2{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        36{col 33}"."
+{col 21}         3{col 33}"No"
+
+{txt}{hline}
+{res}currency_yr{right:Reported Currency Year}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}int{txt})
+
+{col 18}range:  [{res}1990{txt},{res}2012{txt}]{col 55}units:  {res}1
+{col 10}{txt}unique values:  {res}7{col 51}{txt}missing .:  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}1990
+{col 21}         2{col 33}1993
+{col 21}        12{col 33}2002
+{col 21}         3{col 33}2004
+{col 21}         3{col 33}2006
+{col 21}         8{col 33}2010
+{col 21}         8{col 33}2012
+
+{txt}{hline}
+{res}iso_code{right:Reported Currency}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"USD"
+
+{txt}{hline}
+{res}currency_iso{right:Currency of Data Collection}
+{txt}{hline}
+
+{col 19}type:  string ({res}str3{txt})
+
+{col 10}unique values:  {res}6{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}         3{col 33}"BRL"
+{col 21}         3{col 33}"INR"
+{col 21}        12{col 33}"KHR"
+{col 21}         2{col 33}"TZS"
+{col 21}        16{col 33}"ZMW"
+
+{txt}{hline}
+{res}currency_x{right:Currency Exchange Method}
+{txt}{hline}
+
+{col 19}type:  string ({res}str11{txt})
+
+{col 10}unique values:  {res}1{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}"market only"
+
+{txt}{col 16}warning:  variable has embedded blanks
+
+{txt}{hline}
+{res}current_x_rate{right:Currency Exchange Rate}
+{txt}{hline}
+
+{col 19}type:  string ({res}str7{txt})
+
+{col 10}unique values:  {res}7{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         3{col 33}"."
+{col 21}         3{col 33}"2.14"
+{col 21}        12{col 33}"36.5"
+{col 21}         3{col 33}"45.95"
+{col 21}         8{col 33}"4743.98"
+{col 21}         2{col 33}"479.87"
+{col 21}         8{col 33}"5219.83"
+
+{txt}{hline}
+{res}discount_rate{right:Discount Rate}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.03{txt},{res}.03{txt}]{col 55}units:  {res}.01
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}9{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        30{col 33}.03
+{col 21}         9{col 33}.
+
+{txt}{hline}
+{res}inflation{right:Inflation rate}
+{txt}{hline}
+
+{col 19}type:  string ({res}str5{txt})
+
+{col 10}unique values:  {res}2{col 51}{txt}missing "":  {res}0{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        23{col 33}"."
+{col 21}        16{col 33}".0529"
+
+{txt}{hline}
+{res}mean_cost{right:Mean Unit Cost}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.60143173{txt},{res}185.6651{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}37{col 51}{txt}missing .:  {res}0{txt}/{res}39
+
+{txt}{col 19}mean:{res}{col 26} 47.8289
+{txt}{col 15}std. dev:{res}{col 26}   54.25
+
+{txt}{col 12}percentiles:{col 32}10%{col 42}25%{col 52}50%{col 62}75%{col 72}90%
+{res}{col 27} 2.78482{col 37} 11.8178{col 47} 25.7018{col 57} 61.9289{col 67} 165.503
+
+{txt}{hline}
+{res}si_personnel{right:Personnel (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.028614{txt},{res}30.520311{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}8{col 51}{txt}missing .:  {res}31{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.028614
+{col 21}         1{col 33}1.1896011
+{col 21}         1{col 33}9.3425913
+{col 21}         1{col 33}9.7517748
+{col 21}         1{col 33}10.047141
+{col 21}         1{col 33}18.359261
+{col 21}         1{col 33}22.483965
+{col 21}         1{col 33}30.520311
+{col 21}        31{col 33}.
+
+{txt}{hline}
+{res}si_per_service_delivery{right:Personnel: Service Delivery (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}si_per_support{right:Personnel: Support (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.1896011{txt},{res}1.1896011{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}38{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.1896011
+{col 21}        38{col 33}.
+
+{txt}{hline}
+{res}si_per_mixed_unspec{right:Personnel: Mixed Unspecified (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.028614{txt},{res}30.520311{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}7{col 51}{txt}missing .:  {res}32{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.028614
+{col 21}         1{col 33}9.3425913
+{col 21}         1{col 33}9.7517748
+{col 21}         1{col 33}10.047141
+{col 21}         1{col 33}18.359261
+{col 21}         1{col 33}22.483965
+{col 21}         1{col 33}30.520311
+{col 21}        32{col 33}.
+
+{txt}{hline}
+{res}si_recurrent{right:Recurrent Goods (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}3.6251455{txt},{res}65.512634{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}8{col 51}{txt}missing .:  {res}31{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}3.6251455
+{col 21}         1{col 33}4.0620832
+{col 21}         1{col 33}5.245503
+{col 21}         1{col 33}6.5033679
+{col 21}         1{col 33}10.628147
+{col 21}         1{col 33}14.752626
+{col 21}         1{col 33}17.576146
+{col 21}         1{col 33}65.512634
+{col 21}        31{col 33}.
+
+{txt}{hline}
+{res}si_rec_key_drugs{right:Recurring: Supplies (key drugs) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{p 0 39}{res}si_rec_med_int_supplies{space 16}Recurring: Medical Supplies (excluding drugs) (SI){p_end}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}3.2557504{txt},{res}9.3908651{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}37{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}3.2557504
+{col 21}         1{col 33}9.3908651
+{col 21}        37{col 33}.
+
+{txt}{hline}
+{res}si_rec_nonmed_int_supplies{right:Recurring: Non-medical Supplies (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.15652646{txt},{res}2.0304573{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}37{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}.15652646
+{col 21}         1{col 33}2.0304573
+{col 21}        37{col 33}.
+
+{txt}{hline}
+{res}si_rec_building_space{right:Recurring: Building Space (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.9898921{txt},{res}2.2683256{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}35{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}.98989213
+{col 21}         1{col 33}1.2690358
+{col 21}         1{col 33}1.6829916
+{col 21}         1{col 33}2.2683256
+{col 21}        35{col 33}.
+
+{txt}{hline}
+{res}si_rec_other{right:Recurring: Other (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}2.3790916{txt},{res}65.512634{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}8{col 51}{txt}missing .:  {res}31{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}2.3790916
+{col 21}         1{col 33}2.6352534
+{col 21}         1{col 33}2.9771774
+{col 21}         1{col 33}4.8857877
+{col 21}         1{col 33}6.5033679
+{col 21}         1{col 33}7.21587
+{col 21}         1{col 33}14.752626
+{col 21}         1{col 33}65.512634
+{col 21}        31{col 33}.
+
+{txt}{hline}
+{res}si_capital{right:Capital (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}13.83249{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}5{col 51}{txt}missing .:  {res}34{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}0
+{col 21}         1{col 33}.40364727
+{col 21}         1{col 33}3.8364635
+{col 21}         1{col 33}4.375442
+{col 21}         1{col 33}13.83249
+{col 21}        34{col 33}.
+
+{txt}{hline}
+{res}si_cap_medical_equip{right:Capital: Equipment (medical) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.36001086{txt},{res}.36001086{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}38{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}.36001086
+{col 21}        38{col 33}.
+
+{txt}{hline}
+{res}si_cap_equip_non_medical_inter{right:Capital: Equipment (non-medical) (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}2.728427{txt},{res}2.728427{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}38{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}2.7284269
+{col 21}        38{col 33}.
+
+{txt}{hline}
+{res}si_cap_building_space{right:Capital: Building/space (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.14087382{txt},{res}7.6776667{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}37{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}.14087382
+{col 21}         1{col 33}7.6776667
+{col 21}        37{col 33}.
+
+{txt}{hline}
+{res}si_cap_vehicles{right:Capital: Vehicles (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.19035538{txt},{res}1.815707{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}37{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}.19035538
+{col 21}         1{col 33}1.815707
+{col 21}        37{col 33}.
+
+{txt}{hline}
+{res}si_cap_other{right:Capital: Other (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}0{txt},{res}4.375442{txt}]{col 55}units:  {res}1.000e-09
+{col 10}{txt}unique values:  {res}5{col 51}{txt}missing .:  {res}34{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}0
+{col 21}         1{col 33}.40364727
+{col 21}         1{col 33}1.5198719
+{col 21}         1{col 33}3.2360413
+{col 21}         1{col 33}4.375442
+{col 21}        34{col 33}.
+
+{txt}{hline}
+{res}si_mixed{right:Mixed (SI)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_primary_sd{right:Primary Service Delivery (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.7094954{txt},{res}4.4766568{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}35{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.7094954
+{col 21}         1{col 33}1.8861458
+{col 21}         1{col 33}2.1501837
+{col 21}         1{col 33}4.4766568
+{col 21}        35{col 33}.
+
+{txt}{hline}
+{res}a_prisd_lab_services{right:Primary SD: Lab Services (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.0643799{txt},{res}1.0643799{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}38{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.0643799
+{col 21}        38{col 33}.
+
+{txt}{hline}
+{res}a_prisd_unspecified{right:Primary SD: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.7094954{txt},{res}3.4122769{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}35{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.7094954
+{col 21}         1{col 33}1.8861458
+{col 21}         1{col 33}2.1501837
+{col 21}         1{col 33}3.4122769
+{col 21}        35{col 33}.
+
+{txt}{hline}
+{res}a_secondary_sd{right:Secondary Service Delivery (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_ancillary{right:Ancillary (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_anc_demand_generation{right:Ancillary: Demand Generation (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_anc_lab_services{right:Ancillary: Lab Services (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_anc_adhreten{right:Ancillary: Adherence/Retention (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_anc_unspecified{right:Ancillary: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_operational{right:Operational (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}6.434803{txt},{res}57.677678{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}5{col 51}{txt}missing .:  {res}34{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}6.4348029
+{col 21}         1{col 33}11.490774
+{col 21}         1{col 33}11.695179
+{col 21}         1{col 33}21.45458
+{col 21}         1{col 33}57.677678
+{col 21}        34{col 33}.
+
+{txt}{hline}
+{res}a_ope_bldg_equip{right:Operational: Buildings and Equipment (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.14087382{txt},{res}11.675129{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}37{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}.14087382
+{col 21}         1{col 33}11.675129
+{col 21}        37{col 33}.
+
+{txt}{hline}
+{res}a_ope_logistics{right:Operational: Logistics (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_ope_program_mgmt{right:Operational: Program Management (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_ope_supervision{right:Operational: Supervision (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}.79828495{txt},{res}.79828495{txt}]{col 55}units:  {res}1.000e-08
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}38{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}.79828495
+{col 21}        38{col 33}.
+
+{txt}{hline}
+{res}a_ope_training{right:Operational: Training (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}2.3338095{txt},{res}2.3338095{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}38{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}2.3338095
+{col 21}        38{col 33}.
+
+{txt}{hline}
+{res}a_ope_transportation{right:Operational: Transportation (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}2.4111679{txt},{res}3.1618346{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}37{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}2.4111679
+{col 21}         1{col 33}3.1618346
+{col 21}        37{col 33}.
+
+{txt}{hline}
+{res}a_ope_massed{right:Operational: Mass Education (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}1.6497465{txt},{res}1.6497465{txt}]{col 55}units:  {res}1.000e-07
+{col 10}{txt}unique values:  {res}1{col 51}{txt}missing .:  {res}38{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}1.6497465
+{col 21}        38{col 33}.
+
+{txt}{hline}
+{res}a_ope_hmis{right:Operational: HMIS and Record-Keeping (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_ope_technology_development{right:Operational: Technology development (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}float{txt})
+
+{col 18}range:  [{res}.{txt},{res}.{txt}]{col 55}units:  {res}.
+{col 10}{txt}unique values:  {res}0{col 51}{txt}missing .:  {res}39{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}        39{col 33}.
+
+{txt}{hline}
+{res}a_ope_unspecified{right:Operational: Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}11.490774{txt},{res}41.941634{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}4{col 51}{txt}missing .:  {res}35{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}11.490774
+{col 21}         1{col 33}11.695179
+{col 21}         1{col 33}21.45458
+{col 21}         1{col 33}41.941634
+{col 21}        35{col 33}.
+
+{txt}{hline}
+{res}a_mixed{right:Mixed (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}15.78124{txt},{res}92.372041{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}3{col 51}{txt}missing .:  {res}36{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}15.78124
+{col 21}         1{col 33}16.954156
+{col 21}         1{col 33}92.372041
+{col 21}        36{col 33}.
+
+{txt}{hline}
+{res}a_unspecified{right:Unspecified (A)}
+{txt}{hline}
+
+{col 19}type:  numeric ({res}double{txt})
+
+{col 18}range:  [{res}4.25127{txt},{res}4.742752{txt}]{col 55}units:  {res}1.000e-06
+{col 10}{txt}unique values:  {res}2{col 51}{txt}missing .:  {res}37{txt}/{res}39
+
+{txt}{col 13}tabulation:  Freq.  Value
+{col 21}{res}         1{col 33}4.2512699
+{col 21}         1{col 33}4.7427518
+{col 21}        37{col 33}.
+{txt}
+{com}. /*
+> 
+> \end{c -(}verbatim{c )-}
+> 
+> 
+> 
+> \begin{c -(}verbatim{c )-}
+> ***/
+. 
+. * can generate clean tables
+. 
+. /**/ quietly cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/STI/checks"
+{txt}
+{com}. /**/ quietly eststo sumstats: quietly estpost summarize
+{txt}
+{com}. 
+. /**/ quietly esttab sumstats using sumstats, ///
+>         cells("count mean sd min max") ///
+>         title("Summary Statistics") tex  replace
+{txt}
+{com}. * note: do not use 'fragment' with esttab; doing so removes centering and 
+. * tabular syntax
+. 
+. 
+. * go back to main dir
+. /**/ quietly cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/STI/checks"
+{txt}
+{com}. 
+. 
+. /***
+> \end{c -(}verbatim{c )-}
+> 
+> Here we import the table of summary statistics.\\
+> 
+> \input{c -(}./checks/sumstats{c )-} 
+> 
+> Now lets generate and add a figure that visualizing one of these variables.\\
+> 
+> ----------------------
+> export final tex document
+> -----------------------------
+> */
+. 
+. /* Exporting in several formats */
+. *markdoc example1, replace              /* exporting a markdown file */
+. *markdoc example1, replace export(html) 
+. *markdoc example1, replace export(odt) 
+. *markdoc example1, replace export(txt) 
+. *markdoc example1, replace export(epub) 
+. *markdoc mytemplatelatex, replace author() affiliation() export(docx) 
+. /* could add date option (no parentheses) */
+. *markdoc mytemplatelatex, replace author() affiliation() export(pdf)
+. 
+. * markdoc mytemplatelatex, replace author() affiliation() export(docx) markup()
+. * markdoc mytemplatelatex, replace author() affiliation() export(html) markup()
+. markdoc data_check, replace author() affiliation() export(tex) markup()
+{txt}
+{p}(MarkDoc created {bf:{browse "data_check.tex"}})
+
+
+{com}. 
+. /*
+> can also produce pdf slides:
+> markdoc example1, replace author(Matthew C. Ingram) affiliation(University at Albany, SUNY) date export(slide)
+> NOTE: this will replace any existing pdf file with same name, so be cautious
+> */
+. 
+. * end
+. 
+. 
+{txt}end of do-file
+
+{com}. 

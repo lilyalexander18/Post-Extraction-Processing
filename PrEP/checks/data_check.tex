@@ -1,0 +1,1530 @@
+\documentclass{article}
+
+\usepackage{graphicx}  % this is a package for inserting graphics
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+filecolor=blue,
+urlcolor=blue
+}
+
+\usepackage{geometry}   % useful package for formatting document
+\geometry{
+letterpaper,
+total={6.5in, 9in},
+left=1in,
+right=1in,
+top=1in,
+bottom=1in
+}
+
+\begin{document}
+
+\title{PrEP Data Validation Exercise before Entry into UCSR}\author{
+Lily Alexander
+}
+
+\date{
+\bigskip
+\today
+}
+
+\maketitle
+
+\begin{abstract}
+\textbf{Summary}. This is a document to validate and check variables before they are inte
+grated into the UCSR.
+\end{abstract}
+
+\section{High-level codebook for all variables}
+
+\begin{verbatim}
+          
+          
+          
+          ------------------------------------------------------------------------------------------
+          disease                                                                            Disease
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "HIV"
+          
+          ------------------------------------------------------------------------------------------
+          collapsed                                                                        Collapsed
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str2
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "No"
+          
+          ------------------------------------------------------------------------------------------
+          lead_author                                                                    Lead Author
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str7)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Ying, R"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          ref_year                                                                    Reference Year
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (int)
+          
+                           range:  [2015,2015]                  units:  1
+                   unique values:  1                        missing .:  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  2015
+          
+          ------------------------------------------------------------------------------------------
+          output_unit2                                                                   Output unit
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str20)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Cost Per Couple-Year"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          title                                                                                Title
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str143)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Cost-effectiveness of pre-exposure
+                                          prophylaxis targeted to high-risk
+                                          serodiscordant couples as a bridge to
+                                          sustained ART use in Kampala, Uganda"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          journal_etc                                                                        Journal
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str41)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "J Int AIDS Soc. 2015; 18(4Suppl 3):
+                                          20013"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          url                                                                                    URL
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str56)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "<https://www.ncbi.nlm.nih.gov/pmc/artic
+                                          les/PMC4509901/>."
+          
+          ------------------------------------------------------------------------------------------
+          iso_name                                                                           Country
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str8)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Uganda "
+          
+          ------------------------------------------------------------------------------------------
+          location                                                                          Location
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str23)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Kasangati Health Centre"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          no_sites                                                                             Sites
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [1,1]                        units:  1
+                   unique values:  1                        missing .:  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  1
+          
+          ------------------------------------------------------------------------------------------
+          pop_density                                                                     Urbanicity
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str10)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Peri-Urban"
+          
+          ------------------------------------------------------------------------------------------
+          ownership                                                                        Ownership
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str6)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Public"
+          
+          ------------------------------------------------------------------------------------------
+          platform                                                                          Platform
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str15), but longest is str14
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Fixed Facility"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          facility_cat                                                          Platform specificity
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str68), but longest is str28
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Hospital - Level Unspecified"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          id_class                                                             Intervention Category
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str10)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Prevention"
+          
+          ------------------------------------------------------------------------------------------
+          id_int                                                                        Intervention
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str31)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "PRE-EXPOSURE PROPHYLAXIS (PREP)"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          int_description_long                                       Intervention Description (Long)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str263)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Standard care for HIV positive partner
+                                          included: sexual behavior counseling,
+                                          ART provision, adherence counseling,
+                                          viral load monitoring. PrEP care for HIV
+                                          negative partner included: HIV
+                                          counseling & testing, drug provision,
+                                          serum creatinine tests, pregnancy tests"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          clinical_monitoring                                                    Clinical monitoring
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str31)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Vl Monitoring, Serum Creatinine"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          demand_generation                                                        Demand generation
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          counseling_content                                                      Counseling content
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str64)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Sexual Behavior Counseling, Adherence
+                                          Counseling, Hiv Counseling"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          staff_type                                                             Staff type & number
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str36)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Nurse Counselors (4), Clinicians (2)"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          supportive_care                                                            Supportive care
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          visits                                                                 Visit type & number
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str45)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Screening (7), Enrollment (5),
+                                          Follow-Up (18)"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          referrals                                                                        Referrals
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          method                                                                              Method
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str10)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Rapid Test"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          id_tech                                                                         Technology
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str16)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "First Line, Prep"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          treatment_phase                                                            Treatment phase
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str10)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "initiation"
+          
+          ------------------------------------------------------------------------------------------
+          arv_regimen                                                                    ARV Regimen
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str11)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "FTC+TDF+EFV"
+          
+          ------------------------------------------------------------------------------------------
+          treatment                                                                        Treatment
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str7)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "FTC+TDF"
+          
+          ------------------------------------------------------------------------------------------
+          screening_diagnoses                                                Screening and diagnosis
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str30)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "HIV testing, Pregnancy testing"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          community_awareness                                                    Community awareness
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          health_system                                                                Health system
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          id_activities                                                            Costed activities
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str86)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Clinical Monitoring; Counseling
+                                          Content; Arv Regimen; Screening &
+                                          Diagnoses; Treatment"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          start_month                                                                    Start Month
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          start_year                                                                      Start Year
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          end_month                                                                        End Month
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          end_year                                                                          End Year
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          period_portrayed                                                              Total Months
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "12"
+          
+          ------------------------------------------------------------------------------------------
+          year_intro                                                   Year introduced at study site
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          coverage                                                                          Coverage
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          id_pop_dem_std                                                  Target group (demographic)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str23)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Sero-discordant Couples"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          id_pop_clin_std                                                    Target group (clinical)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str22)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "serodiscordant couples"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          pop_age                                                                        Average Age
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [30,30]                      units:  1
+                   unique values:  1                        missing .:  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  30
+          
+          ------------------------------------------------------------------------------------------
+          pop_sex                                                                             Gender
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          pop_ses                                                                                SES
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          pop_education                                                                    Education
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          hiv_prev                                                                    HIV Prevalence
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.5,.5]                      units:  1
+                   unique values:  1                        missing .:  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .5
+          
+          ------------------------------------------------------------------------------------------
+          tb_prev                                                                      TB Prevalence
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          tb_rx_resistance                                                        TB Drug Resistance
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          costing_purpose                                                            Costing Purpose
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str145)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "To assess the feasibility of
+                                          antiretroviral-based interventions (ART
+                                          and PrEP) to prevent HIV transmission
+                                          among high-risk serodiscordant couples"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          timing                                                                              Timing
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str15)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Cross-Sectional"
+          
+          ------------------------------------------------------------------------------------------
+          country_sampling                                                          Country Sampling
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          geo_sampling_incountry                                 Geographic Area In Country Sampling
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          site_sampling                                                                Site Sampling
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          px_sampling                                                               Patient Sampling
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str14)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Entire Program"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          sample_size_derived                                           Sample size formally derived
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "No"
+          
+          ------------------------------------------------------------------------------------------
+          controls                                                                          Controls
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "No"
+          
+          ------------------------------------------------------------------------------------------
+          econ_perspective_actual                                                        Perspective
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str8)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Provider"
+          
+          ------------------------------------------------------------------------------------------
+          econ_costing                                                          Economic / Financial
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str8)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Economic"
+          
+          ------------------------------------------------------------------------------------------
+          real_world                                                       Real World / Per Protocol
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str10)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Real World"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          asd_costs                                                     Above Service Costs Included
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str17)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "No Costs Included"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          list_asd_costs                                                     Above Service Cost List
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str4)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "None"
+          
+          ------------------------------------------------------------------------------------------
+          omitted_costs                                                                Omitted Costs
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str13)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Patient costs"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          sensitivity_analysis                                                  Sensitivity Analysis
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str13)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Comprehensive"
+          
+          ------------------------------------------------------------------------------------------
+          scale                                                                   Economies of scale
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str7)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Ignored"
+          
+          ------------------------------------------------------------------------------------------
+          research_costs                                                     Research Costs Included
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str8)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Excluded"
+          
+          ------------------------------------------------------------------------------------------
+          unrelated_costs                                                   Unrelated Costs Included
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "No"
+          
+          ------------------------------------------------------------------------------------------
+          overhead                                                           Overhead Costs Included
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Yes"
+          
+          ------------------------------------------------------------------------------------------
+          overhead_costs                                                         Overhead Costs List
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str50)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Start-Up, Transportation, Fuel,
+                                          Building, Vehicles"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          pot_distortions                                                      Potential distortions
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          volunteer_time                                                      Valuing Volunteer Time
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          family_time                                                            Valuing Family Time
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          px_costs_measured                                          Patient-Incurred Costs Measured
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str12)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Not Included"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          cat_cost                                                      Catastrophic Cost Calculated
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "No"
+          
+          ------------------------------------------------------------------------------------------
+          currency_yr                                                         Reported Currency Year
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (int)
+          
+                           range:  [2012,2012]                  units:  1
+                   unique values:  1                        missing .:  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  2012
+          
+          ------------------------------------------------------------------------------------------
+          iso_code                                                                 Reported Currency
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "USD"
+          
+          ------------------------------------------------------------------------------------------
+          currency_iso                                                   Currency of Data Collection
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  2                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      12  "."
+                                       1  "UGX"
+          
+          ------------------------------------------------------------------------------------------
+          currency_x                                                        Currency Exchange Method
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str11)
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "Market Only"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          current_x_rate                                                      Currency Exchange Rate
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          discount_rate                                                                Discount Rate
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [3,3]                        units:  1
+                   unique values:  1                        missing .:  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  3
+          
+          ------------------------------------------------------------------------------------------
+          inflation                                                                   Inflation rate
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/13
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+          
+          ------------------------------------------------------------------------------------------
+          mean_cost                                                                   Mean Unit Cost
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [97.423084,1120.3655]        units:  1.000e-06
+                   unique values:  13                       missing .:  0/13
+          
+                            mean:   521.979
+                        std. dev:   316.055
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     106.954    382.28   479.703   672.431   1064.24
+          
+          ------------------------------------------------------------------------------------------
+          si_personnel                                                                Personnel (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [47.52552,47.52552]          units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  47.52552
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          si_per_service_delivery                            Personnel: Direct Service Delivery (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          si_per_support                                                     Personnel: Support (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          si_per_mixed_unspec                                      Personnel: Mixed Unspecified (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [47.52552,47.52552]          units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  47.52552
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          si_recurrent                                                          Recurrent Goods (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [371.56316,371.56316]        units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  371.56316
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_key_drugs                                      Recurring: Supplies (key drugs) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [159.85857,159.85857]        units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  159.85857
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_med_int_supplies                Recurring: Medical Supplies (excluding drugs) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [12.961506,12.961506]        units:  1.000e-06
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  12.961506
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_nonmed_int_supplies                            Recurring: Non-medical Supplies (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_building_space                                       Recurring: Building Space (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_other                                                         Recurring: Other (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [198.74309,198.74309]        units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  198.74309
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          si_capital                                                                    Capital (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [8.641004,8.641004]          units:  1.000e-06
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  8.6410036
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_med_equip                                         Capital: Equipment (medical) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_nonmed_equip                                  Capital: Equipment (non-medical) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_building_space                                         Capital: Building Space (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_vehicles                                                     Capital: Vehicles (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_other                                                           Capital: Other (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [8.641004,8.641004]          units:  1.000e-06
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  8.6410036
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          si_mixed                                                                        Mixed (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [692.63575,692.63575]        units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  692.63575
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_primary_sd                                                  Primary Service Delivery (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [895.69933,895.69933]        units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  895.69933
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_prisd_arv_delivery                                          Primary SD: ARV Delivery (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [688.31525,688.31525]        units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  688.31525
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_prisd_unspecified                                            Primary SD: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [207.3841,207.3841]          units:  .0001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  207.38409
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_secondary_sd                                              Secondary Service Delivery (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_secsd_unspecified                                          Secondary SD: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ancillary                                                                  Ancillary (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [211.70459,211.70459]        units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  211.70459
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_demand_generation                                   Ancillary: Demand Generation (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_lab_services                                             Ancillary: Lab Services (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [198.74309,198.74309]        units:  .00001
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  198.74309
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_adhereten                                         Ancillary: Adherence/Retention (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_unspecified                                               Ancillary: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [12.961506,12.961506]        units:  1.000e-06
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  12.961506
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_operational                                                              Operational (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [12.961505,12.961505]        units:  1.000e-10
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  12.961505
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_bldg_equip                                  Operational: Buildings and Equipment (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_logistics                                                 Operational: Logistics (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [8.641004,8.641004]          units:  1.000e-06
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  8.6410036
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_program_mgmt                                     Operational: Program Management (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_supervision                                             Operational: Supervision (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_training                                                   Operational: Training (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_transportation                                       Operational: Transportation (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [4.320502,4.320502]          units:  1.000e-06
+                   unique values:  1                        missing .:  12/13
+          
+                      tabulation:  Freq.  Value
+                                       1  4.3205018
+                                      12  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_massed                                               Operational: Mass Education (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_hmis                                        Operational: HMIS and Record-Keeping (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_unspecified                                             Operational: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          ------------------------------------------------------------------------------------------
+          a_mixed                                                                          Mixed (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  13/13
+          
+                      tabulation:  Freq.  Value
+                                      13  .
+          
+          
+          
+          
+          
+          
+\end{verbatim}
+
+\end{document}
+
+*/

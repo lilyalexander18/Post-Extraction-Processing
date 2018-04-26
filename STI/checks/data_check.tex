@@ -21,7 +21,7 @@ bottom=1in
 
 \begin{document}
 
-\title{Data Validation Exercise before Entry into UCSR}\author{
+\title{STI Data Validation Exercise before Entry into UCSR}\author{
 Lily Alexander
 }
 
@@ -43,114 +43,44 @@ Lily Alexander
           
           
           ------------------------------------------------------------------------------------------
-          study                                                                                Study
+          disease                                                                            Disease
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str6)
+                            type:  string (str8)
           
-                   unique values:  6                        missing "":  0/47
+                   unique values:  3                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                       3  "hiv200"
-                                       2  "hiv201"
-                                      11  "hiv202"
-                                       3  "hiv203"
-                                      12  "hiv205"
-                                      16  "hiv206"
+                                       3  "HIV"
+                                      33  "STDs"
+                                       3  "Syphilis"
           
           ------------------------------------------------------------------------------------------
           collapsed                                                                        Collapsed
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str2)
+                            type:  string (str3), but longest is str2
           
-                   unique values:  1                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      47  "No"
-          
-          ------------------------------------------------------------------------------------------
-          Flags                                                                          (unlabeled)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str1)
-          
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "."
-          
-          ------------------------------------------------------------------------------------------
-          id                                                                             ID Variable
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str7)
-          
-                   unique values:  29                       missing "":  0/47
-          
-                        examples:  "hiv202b"
-                                   "hiv203b"
-                                   "hiv205i"
-                                   "hiv206c"
-          
-          ------------------------------------------------------------------------------------------
-          unit_cost                                                                     Unit Cost ID
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str11)
-          
-                   unique values:  47                       missing "":  0/47
-          
-                        examples:  "hiv202b_i"
-                                   "hiv203b_i"
-                                   "hiv205i_i"
-                                   "hiv206c_ii"
+                                      39  "No"
           
           ------------------------------------------------------------------------------------------
           lead_author                                                                    Lead Author
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str9)
+                            type:  string (str13)
           
-                   unique values:  6                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                       3  "Benzaken "
-                                      11  "Carrara"
-                                       3  "Dandona"
-                                       2  "Gilson"
-                                      12  "Parker"
-                                      16  "Shelley"
-          
-                         warning:  variable has trailing blanks
-          
-          ------------------------------------------------------------------------------------------
-          ref_author                                                               Reference Authors
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str114)
-          
-                   unique values:  6                        missing "":  0/47
+                   unique values:  6                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                       3  "Benzaken, A. S., Sabidó, M., Galban, E.
-                                          G., Pedroza, V., Vasquez, F., Araújo,
-                                          A., ... & Mayaud, P."
-                                      11  "Carrara, V., Terris-Prestholt, F.,
-                                          Kumaranayake, L., & Mayaud, P."
-                                       3  "Dandona, L., Sisodia, P., Prasad, T. L.
-                                          N., Marseille, E., Rao, M. C., Kumar, A.
-                                          A., ... & Kahn, J. G. "
-                                       2  "Gilson, L., Mkanje, R., Grosskurth, H.,
-                                          Mosha, F., Picard, J., Gavyole, A., ...
-                                          & Mabey, D"
-                                      12  "Parker, K. A., Koumans, E. H., Hawkins,
-                                          R. V., Massanga, M., Somse, P., Barker,
-                                          K., & Moran, J."
-                                      16  "Shelley, K. D., Ansbro, É. M., Ncube,
-                                          A. T., Sweeney, S., Fleischer, C.,
-                                          Mumba, G. T., ... & Terris-Prestholt,
-                                          F."
+                                       3  "Benzaken, AS"
+                                      12  "Carrara, V"
+                                       3  "Dandona, L"
+                                       2  "Gilson, L"
+                                      16  "Shelley, KD"
+                                       3  "Söderlund, N"
           
                          warning:  variable has embedded blanks
           
@@ -160,24 +90,38 @@ Lily Alexander
           
                             type:  numeric (int)
           
-                           range:  [1997,2015]                  units:  1
-                   unique values:  6                        missing .:  0/47
+                           range:  [1993,2015]                  units:  1
+                   unique values:  6                        missing .:  0/39
           
                       tabulation:  Freq.  Value
+                                       3  1993
                                        2  1997
-                                      12  1999
-                                      11  2004
+                                      12  2004
                                        3  2005
                                        3  2008
                                       16  2015
           
           ------------------------------------------------------------------------------------------
+          output_unit2                                                                   Output unit
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str14)
+          
+                   unique values:  2                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      36  "."
+                                       3  "cost per visit"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
           title                                                                                Title
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str199)
+                            type:  string (str199), but longest is str177
           
-                   unique values:  6                        missing "":  0/47
+                   unique values:  6                        missing "":  0/39
           
                       tabulation:  Freq.  Value
                                        3  "Cost and efficiency of public sector
@@ -191,21 +135,17 @@ Lily Alexander
                                           testing costs of a rapid point-of-care
                                           test for syphilis in a red-light
                                           district of Manaus, Brazil "
-                                      11  "Operational and economic evaluation of
+                                      12  "Operational and economic evaluation of
                                           an NGO-led sexually transmitted
                                           infections intervention: north-Western
                                           Cambodia"
-                                      12  "Providing Low-Cost Sexually Transmitted
-                                          Diseases Services in Two Semi-Urban
-                                          Health Centers in Central African
-                                          Republic (CAR): Characteristics of
-                                          Patients and Patterns of Health
-                                          Care-Seeking Behavior "
                                       16  "Scaling Down to Scale Up: A Health
                                           Economic Analysis of Integrating
                                           Point-of-Care Syphilis Testing into
                                           Antenatal Care in Zambia during Pilot
                                           and National Rollout Implementation"
+                                       3  "The costs of HIV prevention strategies
+                                          in developing countries"
           
                          warning:  variable has embedded and trailing blanks
           
@@ -213,62 +153,119 @@ Lily Alexander
           journal_etc                                                                        Journal
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str41)
+                            type:  string (str47)
           
-                   unique values:  6                        missing "":  0/47
+                   unique values:  6                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                       3  "BMC Health Services Research "
-                                      11  "Bulletin of the World Health
-                                          Organization"
-                                      16  "Plos one"
-                                       3  "Sex Transm Infect "
-                                      12  "Sexually Transmitted Diseases "
-                                       2  "The lancet"
+                                      12  "B World Health Organ. 2004 Jun;
+                                          83(6):401-480"
+                                       3  "BMC Health Serv Res. 2005 Nov 5;5:69"
+                                       3  "Bull World Health Organ. 1993; 71(5):
+                                          595–604"
+                                       2  "Lancet. 1997 Dec
+                                          20-27;350(9094):1805-9"
+                                      16  "PLoS One. 2015 May 13;10(5):e0125675"
+                                       3  "Sex Transm Infect. 2008
+                                          Aug;84(4):297-302."
           
-                         warning:  variable has embedded and trailing blanks
+                         warning:  variable has embedded blanks
           
           ------------------------------------------------------------------------------------------
           url                                                                                    URL
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str242)
+                            type:  string (str56)
           
-                   unique values:  6                        missing "":  0/47
+                   unique values:  6                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                       3  "https://www.ncbi.nlm.nih.gov/pubmed/?te
-                                          rm=Cost+and+efficiency+of+public+sector+
-                                          sexually+transmitted+infection+clinics+i
-                                          n+Andhra+Pradesh%2C+India"
-                                       2  "https://www.ncbi.nlm.nih.gov/pubmed/?te
-                                          rm=Cost-effectiveness+of+improved+treatm
-                                          ent+services+for+sexually+transmitted+di
-                                          seases+in+preventing+HIV-1+infection+in+
-                                          Mwanza+Region%2C+Tanzania"
-                                       3  "https://www.ncbi.nlm.nih.gov/pubmed/?te
-                                          rm=Field+evaluation+of+the+performance+a
-                                          nd+testing+costs+of+a+rapid+point-of-car
-                                          e+test+for+syphilis+in+a+red-light+distr
-                                          ict+of+Manaus%2C+Brazil"
-                                      11  "https://www.ncbi.nlm.nih.gov/pubmed/?te
-                                          rm=Operational+and+economic+evaluation+o
-                                          f+an+NGO-led+sexually+transmitted+infect
-                                          ions+intervention%3A+north-Western+Cambo
-                                          dia"
-                                      12  "https://www.ncbi.nlm.nih.gov/pubmed/?te
-                                          rm=Providing+Low-Cost+Sexually+Transmitt
-                                          ed+Diseases+Services+in+Two+Semi-Urban+H
-                                          ealth+Centers+in+Central+African+Republi
-                                          c+(CAR)%3A+Characteristics+of+Patients+a
-                                          nd+Patterns+of+Health+Care-Seeking+Behav
-                                          ior"
-                                      16  "https://www.ncbi.nlm.nih.gov/pubmed/?te
-                                          rm=Scaling+Down+to+Scale+Up%3A+A+Health+
-                                          Economic+Analysis+of+Integrating+Point-o
-                                          f-Care+Syphilis+Testing+into+Antenatal+C
-                                          are+in+Zambia+during+Pilot+and+National+
-                                          Rollout+Implementation"
+                                      12  "<http://www.who.int/bulletin/volumes/83
+                                          /6/434.pdf>."
+                                       3  "<https://www.ncbi.nlm.nih.gov/pmc/artic
+                                          les/PMC2393468/>."
+                                       3  "<https://www.ncbi.nlm.nih.gov/pubmed/16
+                                          271151>."
+                                       3  "<https://www.ncbi.nlm.nih.gov/pubmed/18
+                                          305119>."
+                                      16  "<https://www.ncbi.nlm.nih.gov/pubmed/25
+                                          970443>."
+                                       2  "<https://www.ncbi.nlm.nih.gov/pubmed/94
+                                          28251>."
+          
+          ------------------------------------------------------------------------------------------
+          iso_name                                                                           Country
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str30)
+          
+                   unique values:  8                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       3  "Brazil"
+                                      12  "Cambodia "
+                                       3  "India"
+                                       1  "Kenya "
+                                       1  "Mozambique "
+                                       1  "South Africa "
+                                       2  "Tanzania, United Republic of "
+                                      16  "Zambia"
+          
+                         warning:  variable has embedded and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          location                                                                          Location
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str97)
+          
+                   unique values:  8                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       2  "."
+                                       3  "Andhra Pradesh state"
+                                      12  "Banteay Meanchey province "
+                                       3  "Manaus "
+                                       8  "Mansa (Luapula Province), Kalomo
+                                          (Southern Province), and Lundazi and
+                                          Nyimba (Eastern Province). "
+                                       8  "Mongu and Lusaka"
+                                       2  "Mwanza"
+                                       1  "Pumwani area of Nairobi"
+          
+                         warning:  variable has embedded and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          no_sites                                                                             Sites
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2)
+          
+                   unique values:  7                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       3  "."
+                                       3  "1"
+                                      12  "2"
+                                      10  "4"
+                                       2  "49"
+                                       8  "5"
+                                       1  "6"
+          
+          ------------------------------------------------------------------------------------------
+          pop_density                                                                     Urbanicity
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str10), but longest is str7
+          
+                   unique values:  5                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       3  "."
+                                       2  "Rural"
+                                      11  "mixture"
+                                       4  "rural"
+                                      19  "urban"
           
           ------------------------------------------------------------------------------------------
           ownership                                                                        Ownership
@@ -276,29 +273,15 @@ Lily Alexander
           
                             type:  string (str17)
           
-                   unique values:  4                        missing "":  0/47
+                   unique values:  4                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                       3  "."
-                                      11  "International NGO"
-                                      16  "Mixed"
-                                      17  "Public"
+                                       6  "."
+                                      12  "international NGO"
+                                      16  "mixed"
+                                       5  "public"
           
                          warning:  variable has embedded blanks
-          
-          ------------------------------------------------------------------------------------------
-          id_facility                                                              Facility Category
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str4)
-          
-                   unique values:  4                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      30  "HC02"
-                                       3  "HC04"
-                                       2  "HC10"
-                                      12  "HC11"
           
           ------------------------------------------------------------------------------------------
           platform                                                                          Platform
@@ -306,135 +289,64 @@ Lily Alexander
           
                             type:  string (str15), but longest is str14
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "Fixed facility"
+                                      39  "Fixed facility"
           
                          warning:  variable has embedded blanks
           
           ------------------------------------------------------------------------------------------
-          id_class                                                                Intervention Class
+          facility_cat                                                          Platform specificity
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str68)
+          
+                   unique values:  5                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       3  "Clinic at hospital (intervention- or
+                                          disease-specific)"
+                                       1  "Clinic at hospital (not intervention-
+                                          or disease-specific)"
+                                      32  "Health Center (e.g. community health
+                                          clinic - sometimes w/ 1-2 beds)"
+                                       2  "Mix of health care facility types"
+                                       1  "Unspecified health care facility type"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          id_class                                                             Intervention Category
           ------------------------------------------------------------------------------------------
           
                             type:  string (str10)
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "Prevention"
+                                      39  "Prevention"
           
           ------------------------------------------------------------------------------------------
-          id_type                                                                  Intervention Type
+          id_int                                                                        Intervention
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str42)
+                            type:  string (str14)
           
-                   unique values:  2                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      19  "Sexually Transmitted Infections"
-                                      28  "Sexually Transmitted Infections
-                                          management"
+                                      39  "STI Management"
           
                          warning:  variable has embedded blanks
-          
-          ------------------------------------------------------------------------------------------
-          id_modality                                                              Delivery Modality
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str1)
-          
-                   unique values:  1                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      47  "."
-          
-          ------------------------------------------------------------------------------------------
-          disease                                                                            Disease
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str8)
-          
-                   unique values:  2                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      44  "STDs"
-                                       3  "Syphilis"
-          
-          ------------------------------------------------------------------------------------------
-          id_tech                                                                        (unlabeled)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str1)
-          
-                   unique values:  1                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      47  "."
-          
-          ------------------------------------------------------------------------------------------
-          id_tech_diag                                                      Technology for diagnosis
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str41)
-          
-                   unique values:  3                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      28  "."
-                                      16  "SD Bioline RST; confirmatory RPR test
-                                          kit"
-                                       3  "VisiTect, FTA-Abs, VDRL"
-          
-                         warning:  variable has embedded blanks
-          
-          ------------------------------------------------------------------------------------------
-          id_tech_treat                                                     Technology for treatment
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str89)
-          
-                   unique values:  13                       missing "":  0/47
-          
-                        examples:  "."
-                                   "Benzathine penicillin (2.5 MU 1 dose)"
-                                   "Benzathine penicillin (2.5 MU 1 dose)"
-                                   "benzathine penicillin"
-          
-                         warning:  variable has embedded blanks
-          
-          ------------------------------------------------------------------------------------------
-          id_tech_prevention                                               Technology for prevention
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str7)
-          
-                   unique values:  3                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      35  "."
-                                       8  "Condoms"
-                                       4  "condoms"
-          
-          ------------------------------------------------------------------------------------------
-          id_phase                                                                             Phase
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str3), but longest is str1
-          
-                   unique values:  1                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      47  "."
           
           ------------------------------------------------------------------------------------------
           int_description_long                                       Intervention Description (Long)
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str1490)
+                            type:  string (str1490), but longest is str1356
           
-                   unique values:  7                        missing "":  0/47
+                   unique values:  7                        missing "":  0/39
           
                       tabulation:  Freq.  Value
                                        3  "
@@ -538,47 +450,10 @@ Lily Alexander
                                           immediately with one intramuscular
                                           injection of 2.4 MU benzathine
                                           penicillin."
-                                      12  "Paramedical health workers (medical
-                                          assistants or nurses) were selected at
-                                          each site to receive training in three
-                                          programmatic areas: clinical management
-                                          of STDs using simple algorithms adapted
-                                          from those recommended by the World
-                                          Health Organization, patient education
-                                          and counseling. A complementary
-                                          step-by-step job aid detailing the
-                                          sequence and content of the clinical
-                                          encounter was given to the providers and
-                                          their supervisors. A minimum of two
-                                          workers were trained at each site to
-                                          prevent the interruption of services in
-                                          the event of illness, vacation, and
-                                          attrition. One trained worker at each
-                                          site was then dedicated to the delivery
-                                          of STD care using a private consultation
-                                          room designated for that purpose in the
-                                          OPD building.
-          Patients presented at the
-                                          outpatient registration and triage; they
-                                          could be self-referred (with symptoms or
-                                          referral vouchers) or referred by the
-                                          maternal and child health clinic or
-                                          school health service. After history
-                                          taking and a clinical examination, the
-                                          provider explained the diagnosis and
-                                          treatment to each patient. Single dose
-                                          oral therapy and initial doses of
-                                          multidose therapy (e.g., ciprofloxacin
-                                          and doxycycline, respectively) were
-                                          taken in the provider's presence.
-                                          Providers then offered partner referral
-                                          vouchers and explained the importance of
-                                          partner treatment. The visit ended with
-                                          a discussion and demonstration of condom
-                                          use using a wooden model of a penis.
-                                          Patients received drugs for a complete
-                                          treatment and a packet of four condoms."
-                                      11  "The MSF project initially aimed to
+                                       3  "Provision of sexually transmitted
+                                          disease (STD) treatment and prevention
+                                          services."
+                                      12  "The MSF project initially aimed to
                                           offer STI clinical services and outreach
                                           on HIV/AIDS prevention and condom
                                           distribution to these sex workers and
@@ -640,91 +515,344 @@ Lily Alexander
                          warning:  variable has embedded and trailing blanks
           
           ------------------------------------------------------------------------------------------
+          clinical_monitoring                                                    Clinical monitoring
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str1
+          
+                   unique values:  1                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      39  "."
+          
+          ------------------------------------------------------------------------------------------
+          demand_generation                                                        Demand generation
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str30)
+          
+                   unique values:  4                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      31  "."
+                                       2  "Outreach health education team"
+                                       3  "advertisting campaign"
+                                       3  "yes - details NR"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          counseling_content                                                      Counseling content
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str30)
+          
+                   unique values:  2                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      37  "."
+                                       2  "Outreach health education team"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          staff_type                                                             Staff type & number
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str93)
+          
+                   unique values:  4                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       5  "."
+                                       3  "Clinical Staff (10), Laboratory
+                                          Technicians (2)"
+                                       3  "Medical Oofficer (NR), Mmedico-social
+                                          Worker (NR), Counselor (NR), Laboratory
+                                          Technician (NR)"
+                                      28  "Yes, Details NR"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          supportive_care                                                            Supportive care
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str19)
+          
+                   unique values:  2                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      27  "."
+                                      12  "condom distribution"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          visits                                                                 Visit type & number
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str16)
+          
+                   unique values:  3                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       5  "."
+                                      31  "Yes, Details NR"
+                                       3  "yes - details NR"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          referrals                                                                        Referrals
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      39  "."
+          
+          ------------------------------------------------------------------------------------------
+          method                                                                              Method
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str41)
+          
+                   unique values:  3                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      20  "."
+                                      16  "SD Bioline RST; confirmatory RPR test
+                                          kit"
+                                       3  "VisiTect, FTA-Ab"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          id_tech                                                                         Technology
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str41)
+          
+                   unique values:  4                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      17  "."
+                                      16  "SD Bioline RST; confirmatory RPR test
+                                          kit"
+                                       3  "VisiTect, FTA-Ab"
+                                       3  "demand generation, screening &
+                                          diagnoses"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          treatment_phase                                                            Treatment phase
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str1
+          
+                   unique values:  1                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      39  "."
+          
+          ------------------------------------------------------------------------------------------
+          arv_regimen                                                                    ARV Regimen
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str1
+          
+                   unique values:  1                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      39  "."
+          
+          ------------------------------------------------------------------------------------------
+          treatment                                                                        Treatment
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str104), but longest is str60
+          
+                   unique values:  4                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       5  "."
+                                      16  "Benzathine penicillin (2.5 MU 1 dose)"
+                                      15  "Yes, Details NR"
+                                       3  "one intramuscular injection of 2.4 MU
+                                          benzathine penicillin."
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          screening_diagnoses                                                Screening and diagnosis
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str104), but longest is str35
+          
+                   unique values:  5                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       2  "."
+                                      16  "Syphilis; HIV; Malaria; Haemoglobin"
+                                      15  "Yes, details NR"
+                                       3  "syphilis"
+                                       3  "yes - details NR"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          community_awareness                                                    Community awareness
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str30)
+          
+                   unique values:  2                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      37  "."
+                                       2  "Outreach health education team"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          health_system                                                                Health system
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      39  "."
+          
+          ------------------------------------------------------------------------------------------
+          id_activities                                                            Costed activities
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str69), but longest is str58
+          
+                   unique values:  5                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       3  "."
+                                       2  "demand generation; counseling content;
+                                          community awareness"
+                                       3  "demand generation; screening &
+                                          diagnoses; treatment"
+                                      19  "screening & diagnoses; treatment"
+                                      12  "supportive care; screening & diagnoses;
+                                          treatment"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
           start_month                                                                    Start Month
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str2)
+                            type:  numeric (byte)
           
-                   unique values:  7                        missing "":  0/47
+                           range:  [1,7]                        units:  1
+                   unique values:  6                        missing .:  3/39
           
                       tabulation:  Freq.  Value
-                                       2  "1"
-                                      12  "10"
-                                      16  "3"
-                                       1  "4"
-                                       4  "5"
-                                       1  "6"
-                                      11  "7"
+                                       2  1
+                                      16  3
+                                       1  4
+                                       4  5
+                                       1  6
+                                      12  7
+                                       3  .
           
           ------------------------------------------------------------------------------------------
           start_year                                                                      Start Year
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str4)
+                            type:  numeric (int)
           
-                   unique values:  9                        missing "":  0/47
+                           range:  [1992,2012]                  units:  1
+                   unique values:  8                        missing .:  3/39
           
                       tabulation:  Freq.  Value
-                                       2  "1992"
-                                      12  "1993"
-                                      11  "1997"
-                                       1  "2003"
-                                       1  "2004"
-                                       1  "2005"
-                                       3  "2006"
-                                       8  "2010"
-                                       8  "2012"
+                                       2  1992
+                                      12  1997
+                                       1  2003
+                                       1  2004
+                                       1  2005
+                                       3  2006
+                                       8  2010
+                                       8  2012
+                                       3  .
           
           ------------------------------------------------------------------------------------------
           end_month                                                                        End Month
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str2)
+                            type:  numeric (byte)
           
-                   unique values:  7                        missing "":  0/47
+                           range:  [3,12]                       units:  1
+                   unique values:  6                        missing .:  3/39
           
                       tabulation:  Freq.  Value
-                                      12  "1"
-                                       3  "10"
-                                      13  "12"
-                                       1  "3"
-                                       1  "4"
-                                       1  "5"
-                                      16  "7"
+                                       1  3
+                                       1  4
+                                       1  5
+                                      16  7
+                                       3  10
+                                      14  12
+                                       3  .
           
           ------------------------------------------------------------------------------------------
           end_year                                                                          End Year
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str4)
+                            type:  numeric (int)
           
-                   unique values:  7                        missing "":  0/47
+                           range:  [1993,2012]                  units:  1
+                   unique values:  6                        missing .:  3/39
           
                       tabulation:  Freq.  Value
-                                       2  "1993"
-                                      12  "1996"
-                                      11  "1999"
-                                       3  "2004"
-                                       3  "2006"
-                                       8  "2010"
-                                       8  "2012"
+                                       2  1993
+                                      12  1999
+                                       3  2004
+                                       3  2006
+                                       8  2010
+                                       8  2012
+                                       3  .
           
           ------------------------------------------------------------------------------------------
           period_portrayed                                                              Total Months
           ------------------------------------------------------------------------------------------
           
-                            type:  numeric (byte)
+                            type:  string (str2)
           
-                           range:  [5,30]                       units:  1
-                   unique values:  6                        missing .:  0/47
+                   unique values:  6                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      16  5
-                                       3  6
-                                       3  12
-                                       2  24
-                                      12  28
-                                      11  30
+                                       3  "."
+                                       3  "12"
+                                       2  "24"
+                                      12  "30"
+                                      16  "5"
+                                       3  "6"
+          
+          ------------------------------------------------------------------------------------------
+          year_intro                                                   Year introduced at study site
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (int)
+          
+                           range:  [1960,2008]                  units:  1
+                   unique values:  3                        missing .:  17/39
+          
+                      tabulation:  Freq.  Value
+                                       3  1960
+                                       3  1997
+                                      16  2008
+                                      17  .
           
           ------------------------------------------------------------------------------------------
           coverage                                                                          Coverage
@@ -733,170 +861,66 @@ Lily Alexander
                             type:  numeric (byte)
           
                            range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                      39  .
           
           ------------------------------------------------------------------------------------------
-          int_services                                                           Integrated Services
+          id_pop_dem_std                                                  Target group (demographic)
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str20)
+                            type:  string (str19)
           
-                   unique values:  2                        missing "":  0/47
+                   unique values:  3                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      31  "Integrated"
-                                      16  "Partially integrated"
+                                      19  "General Populations"
+                                       4  "Sex Worker"
+                                      16  "Women"
           
                          warning:  variable has embedded blanks
           
           ------------------------------------------------------------------------------------------
-          country                                                                            Country
+          id_pop_clin_std                                                    Target group (clinical)
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str25)
+                            type:  numeric (byte)
           
-                   unique values:  6                        missing "":  0/47
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                       3  "Brazil"
-                                      11  "Cambodia "
-                                      12  "Central African Republic "
-                                       3  "India"
-                                       2  "Tanzania"
-                                      16  "Zambia"
-          
-                         warning:  variable has embedded and trailing blanks
-          
-          ------------------------------------------------------------------------------------------
-          region                                                                              Region
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str4)
-          
-                   unique values:  3                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      14  "Asia"
-                                       3  "LAC"
-                                      30  "SSA"
-          
-          ------------------------------------------------------------------------------------------
-          pop_density                                                                     Urbanicity
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str10)
-          
-                   unique values:  4                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      11  "Mixture"
-                                      12  "Peri-Urban"
-                                       6  "Rural"
-                                      18  "Urban"
-          
-          ------------------------------------------------------------------------------------------
-          neonates                                                        Target group (demographic)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (float)
-                           label:  neonates
-          
-                           range:  [0,0]                        units:  1
-                   unique values:  1                        missing .:  0/47
-          
-                      tabulation:  Freq.   Numeric  Label
-                                      47         0  Adults and/or Adolescents
-          
-          ------------------------------------------------------------------------------------------
-          location                                                                          Location
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str97)
-          
-                   unique values:  7                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                       3  "Andhra Pradesh state"
-                                      12  "Bambari and  Bria"
-                                      11  "Banteay Meanchey province "
-                                       3  "Manaus "
-                                       8  "Mansa (Luapula Province), Kalomo
-                                          (Southern Province), and Lundazi and
-                                          Nyimba (Eastern Province). "
-                                       8  "Mongu and Lusaka"
-                                       2  "Mwanza"
-          
-                         warning:  variable has embedded and trailing blanks
-          
-          ------------------------------------------------------------------------------------------
-          ss_unique_trait                                                               Unique Trait
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str74)
-          
-                   unique values:  29                       missing "":  0/47
-          
-                        examples:  "Phase: Pilot. Setting: Urban"
-                                   "Phase: Rollout. Setting: all"
-                                   "Syndrome: pelvic Inflamatory Disease (PID).
-                                   Population: non-pregnant women"
-                                   "Year of program implementation: 1997"
-          
-                         warning:  variable has embedded and trailing blanks
-          
-          ------------------------------------------------------------------------------------------
-          id_pop_dem_std                                                           Population served
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str30), but longest is str23
-          
-                   unique values:  6                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                       2  "general population"
-                                       3  "FSWs; MSWs; SW clients"
-                                      11  "FSWs; MSWs; SW partners"
-                                       3  "FSWs; SW partners"
-                                      16  "Women on ANC"
-                                      12  "general population"
-          
-                         warning:  variable has leading and embedded blanks
+                                      39  .
           
           ------------------------------------------------------------------------------------------
           pop_age                                                                        Average Age
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str10)
+                            type:  string (str10), but longest is str4
           
-                   unique values:  4                        missing "":  0/47
+                   unique values:  3                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      41  "."
+                                      34  "."
                                        3  "27.9"
                                        2  "28"
-                                       1  "70-75% >19"
-          
-                         warning:  variable has embedded blanks
           
           ------------------------------------------------------------------------------------------
           pop_sex                                                                             Gender
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str11)
+                            type:  string (str11), but longest is str10
           
-                   unique values:  7                        missing "":  0/47
+                   unique values:  6                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      29  "."
-                                      11  "17% males"
-                                       1  "35.8% males"
-                                       1  "5.1% males"
-                                       1  "54-57% male"
-                                       3  "60% females"
-                                       1  "66.3% males"
+                                      21  "."
+                                      12  "17% male"
+                                       1  "35.8% male"
+                                       1  "5.1% male"
+                                       3  "60% female"
+                                       1  "66.3% male"
           
                          warning:  variable has embedded blanks
           
@@ -906,10 +930,10 @@ Lily Alexander
           
                             type:  string (str2), but longest is str1
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "."
+                                      39  "."
           
           ------------------------------------------------------------------------------------------
           pop_education                                                                    Education
@@ -917,25 +941,13 @@ Lily Alexander
           
                             type:  string (str37)
           
-                   unique values:  2                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      44  "."
-                                       3  "52% didn't complete elementary school"
-          
-                         warning:  variable has embedded blanks
-          
-          ------------------------------------------------------------------------------------------
-          pop_couples                                                                        Couples
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str3)
-          
-                   unique values:  2                        missing "":  0/47
+                   unique values:  2                        missing "":  0/39
           
                       tabulation:  Freq.  Value
                                       36  "."
-                                      11  ".13"
+                                       3  "52% didn't complete elementary school"
+          
+                         warning:  variable has embedded blanks
           
           ------------------------------------------------------------------------------------------
           hiv_prev                                                                    HIV Prevalence
@@ -943,39 +955,16 @@ Lily Alexander
           
                             type:  string (str9)
           
-                   unique values:  6                        missing "":  0/47
+                   unique values:  5                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      27  "."
+                                      19  "."
                                        3  ".025"
                                        2  ".04"
-                                       1  ".22"
-                                      11  ".41"
+                                      12  ".41"
                                        3  "16–30% "
           
                          warning:  variable has trailing blanks
-          
-          ------------------------------------------------------------------------------------------
-          cd4_med                                                                   Median CD4 Count
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str1)
-          
-                   unique values:  1                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      47  "."
-          
-          ------------------------------------------------------------------------------------------
-          cd4_range                                                                        CD4 Range
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str2), but longest is str1
-          
-                   unique values:  1                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      47  "."
           
           ------------------------------------------------------------------------------------------
           tb_prev                                                                      TB Prevalence
@@ -983,10 +972,10 @@ Lily Alexander
           
                             type:  string (str2), but longest is str1
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "."
+                                      39  "."
           
           ------------------------------------------------------------------------------------------
           tb_rx_resistance                                                        TB Drug Resistance
@@ -994,26 +983,78 @@ Lily Alexander
           
                             type:  string (str3), but longest is str1
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "."
+                                      39  "."
           
           ------------------------------------------------------------------------------------------
-          costing_purpose_cat                                                        Costing Purpose
+          costing_purpose                                                            Costing Purpose
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str26)
+                            type:  string (str531)
           
-                   unique values:  4                        missing "":  0/47
+                   unique values:  7                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      12  "Tech efficiency analysis"
-                                       5  "econ eval/priority setting"
-                                      27  "mixed"
-                                       3  "tech efficiency analysis"
+                                       2  "The primary aim of this study was to
+                                          analyse the implementation costs of
+                                          Zambia’s pilot programme, which explored
+                                          feasibility of  rapid syphilis test
+                                          (RST) integration into antenatal care
+                                          (ANC services), and secondarily, to
+                                          present preliminary costs observed
+                                          during Zambia’s national rollout of RST.
+                                          Authors explored the key drivers of
+                                          differences in cost between the two
+                                          implementation stages, and examined how
+                                          cost containment measures may have
+                                          impacted on the quality of syphilis
+                                          testing delivered to rollout ANC
+                                          attendees. "
+                                      12  "To  present an evaluation of the
+                                          operational performance, costs and
+                                          cost-effectiveness of an STI
+                                          intervention programme implemented by
+                                          MSF–Holland in the Banteay Meanchey
+                                          province of north-western Cambodia
+                                          during the initial 30 months of
+                                          operation (1997–99) "
+                                      14  "To analyse the implementation costs of
+                                          Zambia’s pilot programme, which explored
+                                          feasibility of  rapid syphilis test
+                                          (RST) integration into antenatal care
+                                          (ANC services), and secondarily, to
+                                          present preliminary costs observed
+                                          during Zambia’s national rollout of RST.
+                                          Authors explored the key drivers of
+                                          differences in cost between the two
+                                          implementation stages, and examined how
+                                          cost containment measures may have
+                                          impacted on the quality of syphilis
+                                          testing delivered to rollout ANC
+                                          attendees. "
+                                       3  "To assess the cost and efficiency of
+                                          STI clinics in the public sector, as
+                                          part of a study to assess the cost and
+                                          efficiency of various HIV prevention
+                                          strategies in Andhra Pradesh."
+                                       2  "To assess the impact, cost, and
+                                          cost-effectiveness of averting HIV-1
+                                          infection through improved management of
+                                          sexually transmitted diseases (STDs) by
+                                          primary-health-care workers in Mwanza
+                                          Region, Tanzania. "
+                                       3  "To assess the performance, usefulness
+                                          and cost of a rapid treponemal antibody
+                                          assay (VisiTect Syphilis) to detect
+                                          syphilis in high risk populations "
+                                       3  "To present data on the costs and
+                                          outputs of HIV prevention projects and
+                                          discuss some of the difficulties faced
+                                          in economic evaluation in this area"
           
-                         warning:  variable has embedded blanks
+                         warning:  variable has embedded and trailing blanks
           
           ------------------------------------------------------------------------------------------
           timing                                                                              Timing
@@ -1021,10 +1062,10 @@ Lily Alexander
           
                             type:  string (str15)
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "cross-sectional"
+                                      39  "cross-sectional"
           
           ------------------------------------------------------------------------------------------
           country_sampling                                                          Country Sampling
@@ -1032,10 +1073,10 @@ Lily Alexander
           
                             type:  string (str3), but longest is str1
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "."
+                                      39  "."
           
           ------------------------------------------------------------------------------------------
           geo_sampling_incountry                                 Geographic Area In Country Sampling
@@ -1043,12 +1084,12 @@ Lily Alexander
           
                             type:  string (str9)
           
-                   unique values:  3                        missing "":  0/47
+                   unique values:  3                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      15  "."
+                                       6  "."
                                        2  "cluster"
-                                      30  "purposive"
+                                      31  "purposive"
           
           ------------------------------------------------------------------------------------------
           site_sampling                                                                Site Sampling
@@ -1056,13 +1097,13 @@ Lily Alexander
           
                             type:  string (str14)
           
-                   unique values:  5                        missing "":  0/47
+                   unique values:  5                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      12  "."
+                                       3  "."
                                        3  "cluster"
                                       11  "convenience"
-                                      11  "entire program"
+                                      12  "entire program"
                                       10  "purposive"
           
                          warning:  variable has embedded blanks
@@ -1073,10 +1114,10 @@ Lily Alexander
           
                             type:  string (str14)
           
-                   unique values:  4                        missing "":  0/47
+                   unique values:  4                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      39  "."
+                                      31  "."
                                        3  "convenience"
                                        3  "entire program"
                                        2  "random"
@@ -1089,10 +1130,11 @@ Lily Alexander
           
                             type:  string (str2)
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  2                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "no"
+                                       3  "."
+                                      36  "no"
           
           ------------------------------------------------------------------------------------------
           controls                                                                          Controls
@@ -1100,10 +1142,10 @@ Lily Alexander
           
                             type:  string (str3)
           
-                   unique values:  2                        missing "":  0/47
+                   unique values:  2                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      45  "."
+                                      37  "."
                                        2  "yes"
           
           ------------------------------------------------------------------------------------------
@@ -1112,24 +1154,21 @@ Lily Alexander
           
                             type:  string (str8)
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "provider"
+                                      39  "provider"
           
           ------------------------------------------------------------------------------------------
           econ_costing                                                          Economic / Financial
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str14)
+                            type:  string (str14), but longest is str8
           
-                   unique values:  2                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      35  "economic"
-                                      12  "financial only"
-          
-                         warning:  variable has embedded blanks
+                                      39  "economic"
           
           ------------------------------------------------------------------------------------------
           real_world                                                       Real World / Per Protocol
@@ -1137,11 +1176,11 @@ Lily Alexander
           
                             type:  string (str10)
           
-                   unique values:  2                        missing "":  0/47
+                   unique values:  2                        missing "":  0/39
           
                       tabulation:  Freq.  Value
                                        2  "mix"
-                                      45  "real world"
+                                      37  "real world"
           
                          warning:  variable has embedded blanks
           
@@ -1151,12 +1190,12 @@ Lily Alexander
           
                             type:  string (str19)
           
-                   unique values:  3                        missing "":  0/47
+                   unique values:  3                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      12  "."
+                                       3  "."
                                        6  "no costs included"
-                                      29  "some costs included"
+                                      30  "some costs included"
           
                          warning:  variable has embedded blanks
           
@@ -1166,10 +1205,11 @@ Lily Alexander
           
                             type:  string (str204)
           
-                   unique values:  6                        missing "":  0/47
+                   unique values:  6                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      15  "."
+                                       6  "."
+                                       3  "None"
                                        8  "Supervision; Central personnel; vehicle
                                           operation/maintenance; vehicle capital"
                                        8  "Supervision; Central personnel; vehicle
@@ -1181,11 +1221,56 @@ Lily Alexander
                                        2  "Training manuals; training hall;
                                           training supervisors and central
                                           support"
-                                      11  "Traininig, Supervision and shared costs
+                                      12  "Traininig, Supervision and shared costs
                                           related to setting up buildings"
-                                       3  "none"
           
                          warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          omitted_costs                                                                Omitted Costs
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str132)
+          
+                   unique values:  4                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      31  "Patient costs"
+                                       3  "Patient costs, Other: details NR"
+                                       2  "Support staff, Building/space: captial,
+                                          Patient costs"
+                                       3  "Vehicles/transport, Building/space,
+                                          Building/space recurring (e.g. rent,
+                                          utilities), Patient costs; Other:
+                                          training and supervision "
+          
+                         warning:  variable has embedded and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          sensitivity_analysis                                                  Sensitivity Analysis
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str13)
+          
+                   unique values:  3                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       6  "None"
+                                      21  "comprehensive"
+                                      12  "limited"
+          
+          ------------------------------------------------------------------------------------------
+          scale                                                                   Economies of scale
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str9)
+          
+                   unique values:  3                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      16  "analyzed"
+                                      17  "discussed"
+                                       6  "ignored"
           
           ------------------------------------------------------------------------------------------
           research_costs                                                     Research Costs Included
@@ -1193,10 +1278,10 @@ Lily Alexander
           
                             type:  string (str8)
           
-                   unique values:  2                        missing "":  0/47
+                   unique values:  2                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      26  "."
+                                      18  "."
                                       21  "excluded"
           
           ------------------------------------------------------------------------------------------
@@ -1205,10 +1290,10 @@ Lily Alexander
           
                             type:  string (str1)
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "."
+                                      39  "."
           
           ------------------------------------------------------------------------------------------
           overhead                                                           Overhead Costs Included
@@ -1216,11 +1301,12 @@ Lily Alexander
           
                             type:  string (str3)
           
-                   unique values:  2                        missing "":  0/47
+                   unique values:  3                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      16  "Yes"
-                                      31  "no"
+                                       3  "."
+                                      17  "Yes"
+                                      19  "no"
           
           ------------------------------------------------------------------------------------------
           overhead_costs                                                         Overhead Costs List
@@ -1228,16 +1314,16 @@ Lily Alexander
           
                             type:  string (str347)
           
-                   unique values:  5                        missing "":  0/47
+                   unique values:  5                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                       3  "."
+                                       6  "."
+                                      16  "None"
                                        2  "Office equipment and furniture,
                                           vehicles, field equipment and equipment
                                           for PHCWs"
-                                      11  "buildings, capital equipment items and
+                                      12  "buildings, capital equipment items and
                                           vehicles"
-                                      28  "none"
                                        3  "outpatient and inpatient furniture,
                                           electrical fixtures, refrigerator,
                                           centrifuge, microscope, needle and
@@ -1252,19 +1338,31 @@ Lily Alexander
                          warning:  variable has embedded blanks
           
           ------------------------------------------------------------------------------------------
-          omitted_costs                                                Author-reported Omitted Costs
+          pot_distortions                                                      Potential distortions
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str147), but longest is str71
+                            type:  string (str548), but longest is str285
           
-                   unique values:  2                        missing "":  42/47
+                   unique values:  4                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      42  ""
-                                       3  "Costs of infrastructure, training and
-                                          supervision "
-                                       2  "health-unit staff, routine supervision,
-                                          and general capital investment "
+                                      34  "."
+                                       2  "All pilot costs were collected in 2010
+                                          Zambian Kwacah. "
+                                       2  "At urban sites, higher facili- ty-level
+                                          costs were mitigated by the economies of
+                                          scale afforded by high patient volumes.
+                                          Costs to implement QA/QC in facilities
+                                          in rural districts were elevated due to
+                                          long travel distances from Lusaka. "
+                                       1  "During the rollout, low RST coverage at
+                                          DH1 (24%) resulted in an elevated
+                                          screening unit cost ($11.16), which was
+                                          unexpected for a high volume ANC
+                                          setting. The low coverage meant the
+                                          average screening unit cost at DH1 was
+                                          comparable to the lower volume,
+                                          rural-based rollout facilities "
           
                          warning:  variable has embedded and trailing blanks
           
@@ -1272,12 +1370,15 @@ Lily Alexander
           volunteer_time                                                      Valuing Volunteer Time
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str1)
+                            type:  string (str17)
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  2                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "."
+                                      36  "."
+                                       3  "local full income"
+          
+                         warning:  variable has embedded blanks
           
           ------------------------------------------------------------------------------------------
           family_time                                                            Valuing Family Time
@@ -1285,10 +1386,36 @@ Lily Alexander
           
                             type:  string (str3), but longest is str1
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "."
+                                      39  "."
+          
+          ------------------------------------------------------------------------------------------
+          px_costs_measured                                          Patient-Incurred Costs Measured
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str22)
+          
+                   unique values:  2                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      36  "not included"
+                                       3  "not includedt included"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          cat_cost                                                      Catastrophic Cost Calculated
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2)
+          
+                   unique values:  2                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                      36  "."
+                                       3  "No"
           
           ------------------------------------------------------------------------------------------
           currency_yr                                                         Reported Currency Year
@@ -1296,13 +1423,13 @@ Lily Alexander
           
                             type:  numeric (int)
           
-                           range:  [1993,2012]                  units:  1
-                   unique values:  7                        missing .:  0/47
+                           range:  [1990,2012]                  units:  1
+                   unique values:  7                        missing .:  0/39
           
                       tabulation:  Freq.  Value
+                                       3  1990
                                        2  1993
-                                      12  1994
-                                      11  2002
+                                      12  2002
                                        3  2004
                                        3  2006
                                        8  2010
@@ -1314,10 +1441,26 @@ Lily Alexander
           
                             type:  string (str3)
           
-                   unique values:  1                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      47  "USD"
+                                      39  "USD"
+          
+          ------------------------------------------------------------------------------------------
+          currency_iso                                                   Currency of Data Collection
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  6                        missing "":  0/39
+          
+                      tabulation:  Freq.  Value
+                                       3  "."
+                                       3  "BRL"
+                                       3  "INR"
+                                      12  "KHR"
+                                       2  "TZS"
+                                      16  "ZMW"
           
           ------------------------------------------------------------------------------------------
           currency_x                                                        Currency Exchange Method
@@ -1325,11 +1468,10 @@ Lily Alexander
           
                             type:  string (str11)
           
-                   unique values:  2                        missing "":  0/47
+                   unique values:  1                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      12  "."
-                                      35  "market only"
+                                      39  "market only"
           
                          warning:  variable has embedded blanks
           
@@ -1337,19 +1479,18 @@ Lily Alexander
           current_x_rate                                                      Currency Exchange Rate
           ------------------------------------------------------------------------------------------
           
-                            type:  numeric (double)
+                            type:  string (str7)
           
-                           range:  [2.14,5219.83]               units:  .01
-                   unique values:  6                        missing .:  12/47
+                   unique values:  7                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                       3  2.14
-                                      11  36.5
-                                       3  45.95
-                                       2  479.87
-                                       8  4743.98
-                                       8  5219.83
-                                      12  .
+                                       3  "."
+                                       3  "2.14"
+                                      12  "36.5"
+                                       3  "45.95"
+                                       8  "4743.98"
+                                       2  "479.87"
+                                       8  "5219.83"
           
           ------------------------------------------------------------------------------------------
           discount_rate                                                                Discount Rate
@@ -1357,36 +1498,24 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [.03,.03]                    units:  1
-                   unique values:  1                        missing .:  18/47
+                           range:  [.03,.03]                    units:  .01
+                   unique values:  1                        missing .:  9/39
           
                       tabulation:  Freq.  Value
-                                      29  .03
-                                      18  .
+                                      30  .03
+                                       9  .
           
           ------------------------------------------------------------------------------------------
-          sensitivity_analysis                                                  Sensitivity Analysis
+          inflation                                                                   Inflation rate
           ------------------------------------------------------------------------------------------
           
-                            type:  string (str13)
+                            type:  string (str5)
           
-                   unique values:  3                        missing "":  0/47
+                   unique values:  2                        missing "":  0/39
           
                       tabulation:  Freq.  Value
-                                      21  "comprehensive"
-                                      11  "limited"
-                                      15  "none"
-          
-          ------------------------------------------------------------------------------------------
-          uncertainty_rmk                                                        Uncertainty Remarks
-          ------------------------------------------------------------------------------------------
-          
-                            type:  string (str4)
-          
-                   unique values:  1                        missing "":  0/47
-          
-                      tabulation:  Freq.  Value
-                                      47  "none"
+                                      23  "."
+                                      16  ".0529"
           
           ------------------------------------------------------------------------------------------
           mean_cost                                                                   Mean Unit Cost
@@ -1394,14 +1523,174 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [.64795708,183.65781]        units:  1.000e-08
-                   unique values:  45                       missing .:  0/47
+                           range:  [.60143173,185.6651]         units:  1.000e-08
+                   unique values:  37                       missing .:  0/39
           
-                            mean:   38.2974
-                        std. dev:    51.546
+                            mean:   47.8289
+                        std. dev:     54.25
           
                      percentiles:        10%       25%       50%       75%       90%
-                                     2.80123   5.63485   13.5961   57.0146   122.996
+                                     2.78482   11.8178   25.7018   61.9289   165.503
+          
+          ------------------------------------------------------------------------------------------
+          si_personnel                                                                Personnel (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [1.028614,30.520311]         units:  1.000e-07
+                   unique values:  8                        missing .:  31/39
+          
+                      tabulation:  Freq.  Value
+                                       1  1.028614
+                                       1  1.1896011
+                                       1  9.3425913
+                                       1  9.7517748
+                                       1  10.047141
+                                       1  18.359261
+                                       1  22.483965
+                                       1  30.520311
+                                      31  .
+          
+          ------------------------------------------------------------------------------------------
+          si_per_service_delivery                                   Personnel: Service Delivery (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  39/39
+          
+                      tabulation:  Freq.  Value
+                                      39  .
+          
+          ------------------------------------------------------------------------------------------
+          si_per_support                                                     Personnel: Support (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [1.1896011,1.1896011]        units:  1.000e-07
+                   unique values:  1                        missing .:  38/39
+          
+                      tabulation:  Freq.  Value
+                                       1  1.1896011
+                                      38  .
+          
+          ------------------------------------------------------------------------------------------
+          si_per_mixed_unspec                                      Personnel: Mixed Unspecified (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [1.028614,30.520311]         units:  1.000e-06
+                   unique values:  7                        missing .:  32/39
+          
+                      tabulation:  Freq.  Value
+                                       1  1.028614
+                                       1  9.3425913
+                                       1  9.7517748
+                                       1  10.047141
+                                       1  18.359261
+                                       1  22.483965
+                                       1  30.520311
+                                      32  .
+          
+          ------------------------------------------------------------------------------------------
+          si_recurrent                                                          Recurrent Goods (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [3.6251455,65.512634]        units:  1.000e-07
+                   unique values:  8                        missing .:  31/39
+          
+                      tabulation:  Freq.  Value
+                                       1  3.6251455
+                                       1  4.0620832
+                                       1  5.245503
+                                       1  6.5033679
+                                       1  10.628147
+                                       1  14.752626
+                                       1  17.576146
+                                       1  65.512634
+                                      31  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_key_drugs                                      Recurring: Supplies (key drugs) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  39/39
+          
+                      tabulation:  Freq.  Value
+                                      39  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_med_int_supplies                Recurring: Medical Supplies (excluding drugs) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [3.2557504,9.3908651]        units:  1.000e-07
+                   unique values:  2                        missing .:  37/39
+          
+                      tabulation:  Freq.  Value
+                                       1  3.2557504
+                                       1  9.3908651
+                                      37  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_nonmed_int_supplies                            Recurring: Non-medical Supplies (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.15652646,2.0304573]        units:  1.000e-08
+                   unique values:  2                        missing .:  37/39
+          
+                      tabulation:  Freq.  Value
+                                       1  .15652646
+                                       1  2.0304573
+                                      37  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_building_space                                       Recurring: Building Space (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.9898921,2.2683256]         units:  1.000e-07
+                   unique values:  4                        missing .:  35/39
+          
+                      tabulation:  Freq.  Value
+                                       1  .98989213
+                                       1  1.2690358
+                                       1  1.6829916
+                                       1  2.2683256
+                                      35  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_other                                                         Recurring: Other (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.3790916,65.512634]        units:  1.000e-08
+                   unique values:  8                        missing .:  31/39
+          
+                      tabulation:  Freq.  Value
+                                       1  2.3790916
+                                       1  2.6352534
+                                       1  2.9771774
+                                       1  4.8857877
+                                       1  6.5033679
+                                       1  7.21587
+                                       1  14.752626
+                                       1  65.512634
+                                      31  .
           
           ------------------------------------------------------------------------------------------
           si_capital                                                                    Capital (SI)
@@ -1409,13 +1698,87 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [4.1332435,14.087191]        units:  1.000e-07
-                   unique values:  2                        missing .:  45/47
+                           range:  [0,13.83249]                 units:  1.000e-08
+                   unique values:  5                        missing .:  34/39
           
                       tabulation:  Freq.  Value
-                                       1  4.1332435
-                                       1  14.087191
-                                      45  .
+                                       1  0
+                                       1  .40364727
+                                       1  3.8364635
+                                       1  4.375442
+                                       1  13.83249
+                                      34  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_medical_equip                                     Capital: Equipment (medical) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.36001086,.36001086]        units:  1.000e-08
+                   unique values:  1                        missing .:  38/39
+          
+                      tabulation:  Freq.  Value
+                                       1  .36001086
+                                      38  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_equip_non_medical_inter                       Capital: Equipment (non-medical) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.728427,2.728427]          units:  1.000e-06
+                   unique values:  1                        missing .:  38/39
+          
+                      tabulation:  Freq.  Value
+                                       1  2.7284269
+                                      38  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_building_space                                         Capital: Building/space (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.14087382,7.6776667]        units:  1.000e-08
+                   unique values:  2                        missing .:  37/39
+          
+                      tabulation:  Freq.  Value
+                                       1  .14087382
+                                       1  7.6776667
+                                      37  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_vehicles                                                     Capital: Vehicles (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.19035538,1.815707]         units:  1.000e-08
+                   unique values:  2                        missing .:  37/39
+          
+                      tabulation:  Freq.  Value
+                                       1  .19035538
+                                       1  1.815707
+                                      37  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_other                                                           Capital: Other (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [0,4.375442]                 units:  1.000e-09
+                   unique values:  5                        missing .:  34/39
+          
+                      tabulation:  Freq.  Value
+                                       1  0
+                                       1  .40364727
+                                       1  1.5198719
+                                       1  3.2360413
+                                       1  4.375442
+                                      34  .
           
           ------------------------------------------------------------------------------------------
           si_mixed                                                                        Mixed (SI)
@@ -1424,218 +1787,10 @@ Lily Alexander
                             type:  numeric (double)
           
                            range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                      47  .
-          
-          ------------------------------------------------------------------------------------------
-          si_personnel                                                                Personnel (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [1.2816259,31.082287]        units:  1.000e-07
-                   unique values:  5                        missing .:  42/47
-          
-                      tabulation:  Freq.  Value
-                                       1  1.2816259
-                                       1  9.4956684
-                                       1  9.9115562
-                                       1  18.660074
-                                       1  31.082287
-                                      42  .
-          
-          ------------------------------------------------------------------------------------------
-          si_recurrent                                                          Recurrent Goods (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [2.8012304,17.899778]        units:  1.000e-08
-                   unique values:  17                       missing .:  30/47
-          
-                            mean:   7.54972
-                        std. dev:   4.20387
-          
-                     percentiles:        10%       25%       50%       75%       90%
-                                     3.68454   5.27862   5.71581   8.29035   14.3462
-          
-          ------------------------------------------------------------------------------------------
-          si_cap_medical_equip                                     Capital: Equipment (medical) (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [.38786046,.38786046]        units:  1.000e-08
-                   unique values:  1                        missing .:  46/47
-          
-                      tabulation:  Freq.  Value
-                                       1  .38786046
-                                      46  .
-          
-          ------------------------------------------------------------------------------------------
-          si_cap_nonmed_equip                                  Capital: Equipment (non-medical) (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [2.778666,2.778666]          units:  1.000e-06
-                   unique values:  1                        missing .:  46/47
-          
-                      tabulation:  Freq.  Value
-                                       1  2.778666
-                                      46  .
-          
-          ------------------------------------------------------------------------------------------
-          si_cap_other                                                   Capital: Other capital (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [1.6374457,3.2956271]        units:  1.000e-07
-                   unique values:  2                        missing .:  45/47
-          
-                      tabulation:  Freq.  Value
-                                       1  1.6374457
-                                       1  3.2956271
-                                      45  .
-          
-          ------------------------------------------------------------------------------------------
-          si_mix_mixed                                                             Mixed: Mixed (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
-          
-                      tabulation:  Freq.  Value
-                                      47  .
-          
-          ------------------------------------------------------------------------------------------
-          si_per_mixed_unspec                                Personnel: Direct Service Delivery (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [9.495668,31.082287]         units:  1.000e-06
-                   unique values:  4                        missing .:  43/47
-          
-                      tabulation:  Freq.  Value
-                                       1  9.4956684
-                                       1  9.9115562
-                                       1  18.660074
-                                       1  31.082287
-                                      43  .
-          
-          ------------------------------------------------------------------------------------------
-          si_per_service_delivery                                            Personnel: Support (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (float)
-          
-                           range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
-          
-                      tabulation:  Freq.  Value
-                                      47  .
-          
-          ------------------------------------------------------------------------------------------
-          si_per_support                                           Personnel: Mixed Unspecified (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [1.2816259,1.2816259]        units:  1.000e-07
-                   unique values:  1                        missing .:  46/47
-          
-                      tabulation:  Freq.  Value
-                                       1  1.2816259
-                                      46  .
-          
-          ------------------------------------------------------------------------------------------
-          si_rec_building_space                                       Recurring: Building Space (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [1.0061114,2.3054919]        units:  1.000e-07
-                   unique values:  4                        missing .:  43/47
-          
-                      tabulation:  Freq.  Value
-                                       1  1.0061114
-                                       1  1.2924027
-                                       1  1.7105672
-                                       1  2.3054919
-                                      43  .
-          
-          ------------------------------------------------------------------------------------------
-          si_rec_med_int_supplies                Recurring: Medical Supplies (excluding drugs) (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [3.5076077,9.5637805]        units:  1.000e-07
-                   unique values:  2                        missing .:  45/47
-          
-                      tabulation:  Freq.  Value
-                                       1  3.5076077
-                                       1  9.5637805
-                                      45  .
-          
-          ------------------------------------------------------------------------------------------
-          si_rec_nonmed_int_supplies                            Recurring: Non-medical Supplies (SI)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [.16863498,2.0678444]        units:  1.000e-08
-                   unique values:  2                        missing .:  45/47
-          
-                      tabulation:  Freq.  Value
-                                       1  .16863498
-                                       1  2.0678444
-                                      45  .
-          
-          ------------------------------------------------------------------------------------------
-          a_ancillary                                                                  Ancillary (A)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (float)
-          
-                           range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
-          
-                      tabulation:  Freq.  Value
-                                      47  .
-          
-          ------------------------------------------------------------------------------------------
-          a_mixed                                                                          Mixed (A)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
-          
-                      tabulation:  Freq.  Value
-                                      47  .
-          
-          ------------------------------------------------------------------------------------------
-          a_operational                                                              Operational (A)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (double)
-          
-                           range:  [2.8012304,58.739707]        units:  1.000e-07
-                   unique values:  17                       missing .:  30/47
-          
-                            mean:   11.1524
-                        std. dev:   12.8982
-          
-                     percentiles:        10%       25%       50%       75%       90%
-                                     4.82524   5.63485   6.93258   9.91156   18.6601
+                                      39  .
           
           ------------------------------------------------------------------------------------------
           a_primary_sd                                                  Primary Service Delivery (A)
@@ -1643,12 +1798,44 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [4.8229606,4.8229606]        units:  1.000e-07
-                   unique values:  1                        missing .:  46/47
+                           range:  [1.7094954,4.4766568]        units:  1.000e-07
+                   unique values:  4                        missing .:  35/39
           
                       tabulation:  Freq.  Value
-                                       1  4.8229606
-                                      46  .
+                                       1  1.7094954
+                                       1  1.8861458
+                                       1  2.1501837
+                                       1  4.4766568
+                                      35  .
+          
+          ------------------------------------------------------------------------------------------
+          a_prisd_lab_services                                          Primary SD: Lab Services (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [1.0643799,1.0643799]        units:  1.000e-07
+                   unique values:  1                        missing .:  38/39
+          
+                      tabulation:  Freq.  Value
+                                       1  1.0643799
+                                      38  .
+          
+          ------------------------------------------------------------------------------------------
+          a_prisd_unspecified                                            Primary SD: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [1.7094954,3.4122769]        units:  1.000e-07
+                   unique values:  4                        missing .:  35/39
+          
+                      tabulation:  Freq.  Value
+                                       1  1.7094954
+                                       1  1.8861458
+                                       1  2.1501837
+                                       1  3.4122769
+                                      35  .
           
           ------------------------------------------------------------------------------------------
           a_secondary_sd                                              Secondary Service Delivery (A)
@@ -1657,10 +1844,22 @@ Lily Alexander
                             type:  numeric (float)
           
                            range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                      39  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ancillary                                                                  Ancillary (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  39/39
+          
+                      tabulation:  Freq.  Value
+                                      39  .
           
           ------------------------------------------------------------------------------------------
           a_anc_demand_generation                                   Ancillary: Demand Generation (A)
@@ -1669,22 +1868,34 @@ Lily Alexander
                             type:  numeric (float)
           
                            range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                      39  .
           
           ------------------------------------------------------------------------------------------
-          a_anc_lab_services                                             Anicllary: Lab Services (A)
+          a_anc_lab_services                                             Ancillary: Lab Services (A)
           ------------------------------------------------------------------------------------------
           
                             type:  numeric (float)
           
                            range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                      39  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_adhreten                                          Ancillary: Adherence/Retention (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  39/39
+          
+                      tabulation:  Freq.  Value
+                                      39  .
           
           ------------------------------------------------------------------------------------------
           a_anc_unspecified                                               Ancillary: Unspecified (A)
@@ -1693,22 +1904,27 @@ Lily Alexander
                             type:  numeric (float)
           
                            range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                      39  .
           
           ------------------------------------------------------------------------------------------
-          a_mix_mixed                                                           Ancillary: Mixed (A)
+          a_operational                                                              Operational (A)
           ------------------------------------------------------------------------------------------
           
                             type:  numeric (double)
           
-                           range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                           range:  [6.434803,57.677678]         units:  1.000e-06
+                   unique values:  5                        missing .:  34/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                       1  6.4348029
+                                       1  11.490774
+                                       1  11.695179
+                                       1  21.45458
+                                       1  57.677678
+                                      34  .
           
           ------------------------------------------------------------------------------------------
           a_ope_bldg_equip                                  Operational: Buildings and Equipment (A)
@@ -1716,13 +1932,13 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [.15177149,11.890106]        units:  1.000e-12
-                   unique values:  2                        missing .:  45/47
+                           range:  [.14087382,11.675129]        units:  1.000e-08
+                   unique values:  2                        missing .:  37/39
           
                       tabulation:  Freq.  Value
-                                       1  .15177149
-                                       1  11.890106
-                                      45  .
+                                       1  .14087382
+                                       1  11.675129
+                                      37  .
           
           ------------------------------------------------------------------------------------------
           a_ope_logistics                                                 Operational: Logistics (A)
@@ -1731,10 +1947,10 @@ Lily Alexander
                             type:  numeric (float)
           
                            range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                      39  .
           
           ------------------------------------------------------------------------------------------
           a_ope_program_mgmt                                     Operational: Program Management (A)
@@ -1743,10 +1959,10 @@ Lily Alexander
                             type:  numeric (float)
           
                            range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                   unique values:  0                        missing .:  39/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                      39  .
           
           ------------------------------------------------------------------------------------------
           a_ope_supervision                                             Operational: Supervision (A)
@@ -1754,12 +1970,12 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [.8600384,.8600384]          units:  1.000e-07
-                   unique values:  1                        missing .:  46/47
+                           range:  [.79828495,.79828495]        units:  1.000e-08
+                   unique values:  1                        missing .:  38/39
           
                       tabulation:  Freq.  Value
-                                       1  .8600384
-                                      46  .
+                                       1  .79828495
+                                      38  .
           
           ------------------------------------------------------------------------------------------
           a_ope_training                                                   Operational: Training (A)
@@ -1767,12 +1983,12 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [2.5143476,2.5143476]        units:  1.000e-07
-                   unique values:  1                        missing .:  46/47
+                           range:  [2.3338095,2.3338095]        units:  1.000e-07
+                   unique values:  1                        missing .:  38/39
           
                       tabulation:  Freq.  Value
-                                       1  2.5143476
-                                      46  .
+                                       1  2.3338095
+                                      38  .
           
           ------------------------------------------------------------------------------------------
           a_ope_transportation                                       Operational: Transportation (A)
@@ -1780,13 +1996,50 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [2.4555653,3.4064267]        units:  1.000e-10
-                   unique values:  2                        missing .:  45/47
+                           range:  [2.4111679,3.1618346]        units:  1.000e-07
+                   unique values:  2                        missing .:  37/39
           
                       tabulation:  Freq.  Value
-                                       1  2.4555653
-                                       1  3.4064267
-                                      45  .
+                                       1  2.4111679
+                                       1  3.1618346
+                                      37  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_massed                                               Operational: Mass Education (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [1.6497465,1.6497465]        units:  1.000e-07
+                   unique values:  1                        missing .:  38/39
+          
+                      tabulation:  Freq.  Value
+                                       1  1.6497465
+                                      38  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_hmis                                        Operational: HMIS and Record-Keeping (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  39/39
+          
+                      tabulation:  Freq.  Value
+                                      39  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_technology_development                       Operational: Technology development (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  39/39
+          
+                      tabulation:  Freq.  Value
+                                      39  .
           
           ------------------------------------------------------------------------------------------
           a_ope_unspecified                                             Operational: Unspecified (A)
@@ -1794,54 +2047,44 @@ Lily Alexander
           
                             type:  numeric (double)
           
-                           range:  [2.8012304,42.713912]        units:  1.000e-07
-                   unique values:  16                       missing .:  31/47
-          
-                            mean:   10.4145
-                        std. dev:   9.54594
-          
-                     percentiles:        10%       25%       50%       75%       90%
-                                     4.82524   5.56198   6.91402   11.6188   18.6601
-          
-          ------------------------------------------------------------------------------------------
-          a_prisd_circumcision_proced                         Primary SD: Circumcision Procedure (A)
-          ------------------------------------------------------------------------------------------
-          
-                            type:  numeric (float)
-          
-                           range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                           range:  [11.490774,41.941634]        units:  1.000e-06
+                   unique values:  4                        missing .:  35/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                       1  11.490774
+                                       1  11.695179
+                                       1  21.45458
+                                       1  41.941634
+                                      35  .
           
           ------------------------------------------------------------------------------------------
-          a_prisd_unspecified                                            Primary SD: Unspecified (A)
+          a_mixed                                                                          Mixed (A)
           ------------------------------------------------------------------------------------------
           
                             type:  numeric (double)
           
-                           range:  [1.7375053,3.6762427]        units:  1.000e-07
-                   unique values:  4                        missing .:  43/47
+                           range:  [15.78124,92.372041]         units:  1.000e-06
+                   unique values:  3                        missing .:  36/39
           
                       tabulation:  Freq.  Value
-                                       1  1.7375053
-                                       1  1.91705
-                                       1  2.1854141
-                                       1  3.6762427
-                                      43  .
+                                       1  15.78124
+                                       1  16.954156
+                                       1  92.372041
+                                      36  .
           
           ------------------------------------------------------------------------------------------
-          a_secsd_hct                                   Secondary SD: HIV Counseling and Testing (A)
+          a_unspecified                                                              Unspecified (A)
           ------------------------------------------------------------------------------------------
           
-                            type:  numeric (float)
+                            type:  numeric (double)
           
-                           range:  [.,.]                        units:  .
-                   unique values:  0                        missing .:  47/47
+                           range:  [4.25127,4.742752]           units:  1.000e-06
+                   unique values:  2                        missing .:  37/39
           
                       tabulation:  Freq.  Value
-                                      47  .
+                                       1  4.2512699
+                                       1  4.7427518
+                                      37  .
           
           
           
@@ -1850,4 +2093,7 @@ Lily Alexander
           
 \end{verbatim}
 
+
 \end{document}
+
+*/

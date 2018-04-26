@@ -1,0 +1,2297 @@
+
+\documentclass{article}
+
+\usepackage{graphicx}  % this is a package for inserting graphics
+\usepackage{hyperref}
+\hypersetup{
+colorlinks=true,
+linkcolor=blue,
+filecolor=blue,
+urlcolor=blue
+}
+
+\usepackage{geometry}   % useful package for formatting document
+\geometry{
+letterpaper,
+total={6.5in, 9in},
+left=1in,
+right=1in,
+top=1in,
+bottom=1in
+}
+
+\begin{document}
+
+\title{PMTCT Data Validation Exercise before Entry into UCSR}\author{
+Lily Alexander
+}
+
+\date{
+\bigskip
+\today
+}
+
+\maketitle
+
+\begin{abstract}
+\textbf{Summary}. This is a document to validate and check variables before they are inte
+grated into the UCSR.
+\end{abstract}
+
+\section{High-level codebook for all variables}
+
+\begin{verbatim}
+          
+          
+          
+          ------------------------------------------------------------------------------------------
+          disease                                                                            Disease
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "HIV"
+          
+          ------------------------------------------------------------------------------------------
+          collapsed                                                                        Collapsed
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str2
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "No"
+          
+          ------------------------------------------------------------------------------------------
+          lead_author                                                                    Lead Author
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str59)
+          
+                   unique values:  9                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      32  "Bautista-Arredondo, S"
+                                      10  "Bratt, JH"
+                                       4  "Dandona, L"
+                                       7  "Health Policy Project"
+                                       1  "Health Policy Project & Ministry of
+                                          Health of Cote d'Ivoire"
+                                       1  "Orlando, S"
+                                       4  "Scott, CA"
+                                       4  "Stringer, EM"
+                                       8  "Toure, H"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          ref_year                                                                    Reference Year
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (int)
+          
+                           range:  [2003,2016]                  units:  1
+                   unique values:  8                        missing .:  0/71
+          
+                      tabulation:  Freq.  Value
+                                       4  2003
+                                       4  2008
+                                       1  2010
+                                      10  2011
+                                       7  2012
+                                      12  2013
+                                       1  2015
+                                      32  2016
+          
+          ------------------------------------------------------------------------------------------
+          output_unit2                                                                   Output unit
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str27)
+          
+                   unique values:  5                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      54  "."
+                                       7  "Cost Per Mother-Infant Pair"
+                                       8  "Cost Per Mother-Infant Year"
+                                       1  "Cost Per Patient Year"
+                                       1  "Patient 10 Months"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          title                                                                                Title
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str155)
+          
+                   unique values:  9                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       1  "Cost-effectiveness of Using HAART in
+                                          Prevention of Mother-to-Child
+                                          Transmission in the DREAM-Project
+                                          Malawi"
+                                      32  "Costs along the HTC and PMTCT service
+                                          cascades: findings from Kenya, Rwanda,
+                                          South Africa, and Zambia"
+                                      10  "Costs of HIV⁄AIDS outpatient services
+                                          delivered through Zambian public health
+                                          facilities"
+                                       1  "Estimating the cost of HIV treatment
+                                          for adults, children, and pregnant women
+                                          in Cote d'Ivoire"
+                                       4  "Outputs, cost and efficiency of public
+                                          sector centres for prevention of mother
+                                          to child transmission of HIV in Andhra
+                                          Pradesh, India"
+                                       4  "Prevention of mother-to-child
+                                          transmission of HIV in Africa: Successes
+                                          and challenges in scaling-up a
+                                          nevirapine-based program in Lusaka,
+                                          Zambia"
+                                       8  "Public sector services for the
+                                          prevention of mother-to-child
+                                          transmission of HIV infection: a
+                                          micro-costing survey in Namibia and
+                                          Rwanda"
+                                       7  "Unit Cost of Providing Key Services at
+                                          the Facility Level to Prevent
+                                          Mother-to-Child Transmission of HIV:
+                                          Ghana "
+                                       4  "Uptake, Outcomes, and Costs of
+                                          Antenatal, Well-Baby, and Prevention of
+                                          Mother-to-Child Transmission of HIV
+                                          Services under Routine Care Conditions
+                                          in Zambia"
+          
+                         warning:  variable has embedded and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          journal_etc                                                                        Journal
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str52)
+          
+                   unique values:  8                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       4  "AIDS. 2003 Jun 13; 17(9): 1377–1382"
+                                      32  "AIDS. 2016 Oct 23;30(16):2495-2504"
+                                       4  "BMC Health Serv Res. 2008; 8: 26"
+                                       8  "Bull World Health Organ. 2013 Jun
+                                          1;91(6):407-15"
+                                       8  "Healthy Policy Project"
+                                       1  "J Acquir Immune Defic Syndr. 2010 Dec
+                                          15;55(5):631-4"
+                                       4  "PLoS One. 2013 Aug 28;8(8):e72444"
+                                      10  "Trop Med Int Health. 2011
+                                          Jan;16(1):110-8"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          url                                                                                    URL
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str77)
+          
+                   unique values:  9                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      10  "<http://onlinelibrary.wiley.com/doi/10.
+                                          1111/j.1365-3156.2010.02640.x/full>."
+                                       7  "<http://pdf.usaid.gov/pdf_docs/PA00JFQ3
+                                          .pdf>."
+                                       4  "<https://www.ncbi.nlm.nih.gov/pmc/artic
+                                          les/PMC2267788/>."
+                                       4  "<https://www.ncbi.nlm.nih.gov/pmc/artic
+                                          les/PMC2745990/>."
+                                       4  "<https://www.ncbi.nlm.nih.gov/pmc/artic
+                                          les/PMC3756060/>."
+                                      32  "<https://www.ncbi.nlm.nih.gov/pmc/artic
+                                          les/PMC5051528/>."
+                                       1  "<https://www.ncbi.nlm.nih.gov/pubmed/21
+                                          934555>."
+                                       8  "<https://www.ncbi.nlm.nih.gov/pubmed/24
+                                          052677>."
+                                       1  "<www.healthpolicyproject.com/pubs/779_F
+                                          INALFuturesHPPCIARTCostingReport.pdf>."
+          
+          ------------------------------------------------------------------------------------------
+          iso_name                                                                           Country
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str16)
+          
+                   unique values:  10                       missing "":  0/71
+          
+                        examples:  "Kenya"
+                                   "Namibia "
+                                   "South Africa"
+                                   "Zambia"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          location                                                                          Location
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str69)
+          
+                   unique values:  11                       missing "":  0/71
+          
+                        examples:  "10 out of 47 counties "
+                                   "Andhra Pradesh "
+                                   "Five out of nine provinces (purpo- sively); 21 out
+                                   of 72 districts "
+                                   "Three out of nine provinces (purpo- sively); six out
+                                   of 52 districts "
+          
+                         warning:  variable has embedded and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          no_sites                                                                             Sites
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [2,58]                       units:  1
+                   unique values:  12                       missing .:  0/71
+          
+                            mean:   28.9718
+                        std. dev:   22.4646
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                           6         8        14        53        58
+          
+          ------------------------------------------------------------------------------------------
+          pop_density                                                                     Urbanicity
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str7)
+          
+                   unique values:  3                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       8  "."
+                                      58  "Mixture"
+                                       5  "Urban"
+          
+          ------------------------------------------------------------------------------------------
+          ownership                                                                        Ownership
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str6)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      43  "Mixed"
+                                      28  "Public"
+          
+          ------------------------------------------------------------------------------------------
+          platform                                                                          Platform
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str15), but longest is str14
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "Fixed Facility"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          facility_cat                                                          Platform specificity
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str68)
+          
+                   unique values:  5                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       9  "Health Center (E.G. Community Health
+                                          Clinic - Sometimes W/ 1-2 Beds)"
+                                       5  "Hospital - Level Unspecified"
+                                       8  "Hospital - Tertiary (Teaching)"
+                                      48  "Mix Of Health Care Facility Types"
+                                       1  "Unspecified Health Care Facility Type"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          id_class                                                             Intervention Category
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str10)
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "Prevention"
+          
+          ------------------------------------------------------------------------------------------
+          id_int                                                                        Intervention
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str50)
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "Prevention Of Mother-To-Child
+                                          Transmission (Pmtct)"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          int_description_long                                       Intervention Description (Long)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1754)
+          
+                   unique values:  9                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       4  "The PMTCT centres provide nevirapine to
+                                          the HIV positive mothers and neonates to
+                                          prevent vertical transmission of HIV.
+                                          The mother was given one tablet of 200
+                                          mg at the onset of labour and the
+                                          neonate was given 2 mg/kg body weight
+                                          within 72 hours of birth. Of the 1,322
+                                          HIV positive deliveries, 1,212 (91.7%)
+                                          mother-neonate pairs received
+                                          nevirapine, varying from 2 to 224 at the
+                                          16 PMTCT cen- tres, representing 80.9%
+                                          to 100% of the HIV positive deliveries.
+                                          Nevirapine was not administered in 110.
+                                          (8.3%) deliveries because either the
+                                          mother arrived after onset of labour, or
+                                          the neonate was assessed not fit to be
+                                          administered nevirapine, or it was a
+                                          still birth, or the mother was infected
+                                          with HIV-2. The PMTCT centres also
+                                          provide the option of medical ter-
+                                          mination of pregnancy (MTP) to HIV
+                                          positive women during the first
+                                          trimester of pregnancy. In the 2005–2006
+                                          fiscal year, the number of women opting
+                                          for MTP was 200 at the 16 PMTCT centres
+                                          . The average ratio of the number of
+                                          MTPs to the number of HIV positive
+                                          deliveries was 0.15, varying from 0 to
+                                          0.52. The proportion of HIV positive
+                                          mother-neonate pairs who received
+                                          nevirapine and the ratio of MTPs to HIV
+                                          positive deliveries were similar in
+                                          PMTCT centres situated in hospitals
+                                          attached to a medical college and those
+                                          not attached to a medical col- lege.
+          The
+                                          PMTCT centres also provide counselling
+                                          and testing services to the spouse or
+                                          partner of HIV positive pregnant women.
+                                          Out of 2,060 HIV positive pregnant women
+                                          who received post-HIV-test counselling,
+                                          1,075 (52.2%) got their spouse/partner
+                                          tested of which 785 (73%) were HIV
+                                          positive. These proportions were similar
+                                          in PMTCT centres situated in hospitals
+                                          attached to a medical college and those
+                                          not attached to a medical college."
+                                       4  "An initial general pregnancy-oriented
+                                          health talk is given to all women
+                                          presenting for antenatal care, which
+                                          includes discussion of the high
+                                          prevalence of HIV among pregnant women
+                                          in Lusaka, the risk of perinatal
+                                          transmission, and the benefits of HIV
+                                          testing and NVP. Women are encouraged to
+                                          ask questions during the morning talks
+                                          and may even be shown a NVP tablet.
+                                          Women are then counseled individually in
+                                          private rooms by the midwives, after
+                                          which they are asked whether they would
+                                          like to be tested for HIV. Women who
+                                          express an interest at this point sign a
+                                          brief consent form and their blood is
+                                          drawn for HIV serology. The woman's
+                                          antenatal book is then coded to indicate
+                                          whether she refused or accepted testing.
+                                          Post-test counseling of HIV-infected
+                                          women who have completed 26 weeks of
+                                          gestation includes distribution of a 200
+                                          mg NVP tablet with instructions to
+                                          ingest at the onset of labor. Women who
+                                          have not completed 26 weeks of gestation
+                                          are given the tablet when they reach
+                                          that gestational age or upon
+                                          presentation in labor, whichever comes
+                                          first. Women are encouraged to bring
+                                          partners for voluntary counseling and
+                                          testing or for counseling alone."
+                                       7  "Clients identified as seropositive
+                                          during pregnancy receive follow-up
+                                          counselling and support services to
+                                          facilitate the acceptance of their
+                                          serostatus, as well as direct referral
+                                          to treatment and care services. All
+                                          clients receive counselling at regular
+                                          intervals; prophylaxis, diagnosis, and
+                                          treatment of opportunistic infections
+                                          (OIs); periodic laboratory testing; and
+                                          routine medical consultations throughout
+                                          pregnancy. All pregnant seropositive
+                                          women that have been identified receive
+                                          either ARV prophylaxis or treatment.
+                                          HIV-exposed infants receive the normal
+                                          standard care for a newborn, ARV
+                                          prophylaxis for the first six weeks of
+                                          life, and OI prophylaxis
+                                          (co-trimoxazole) for the duration of
+                                          breastfeeding. HIV-exposed infants are
+                                          assessed regularly for HIV
+                                          seroconversion using the dried blood
+                                          spot (DBS) method for early infant
+                                          diagnosis (EID) at six weeks, six
+                                          months, and 12 months. All HIV-exposed
+                                          infants confirmed as HIV positive
+                                          through DBS are referred to the ART
+                                          clinic for HIV care and follow-up. Some
+                                          facilities implement community-based
+                                          services to ensure the continuum of care
+                                          at the community level between regularly
+                                          scheduled facility visits."
+                                       8  "Costs were estimated for each of the
+                                          seven major components of the PMTCT
+                                          services provided in the study
+                                          countries: HIV testing and counselling
+                                          of pregnant women and, where applicable,
+                                          their male partners; CD4+ cell counts
+                                          (for treatment eligibility and treatment
+                                          monitoring); provision of antiretroviral
+                                          drugs to the mother–infant pairs (for
+                                          both prophylaxis and treatment);
+                                          community-based activities; provision of
+                                          oral contraception for 2 years
+                                          postpartum; prophylaxis with
+                                          co-trimoxazole (a combination of
+                                          sulfamethoxazole and trimethoprim) for
+                                          HIV-exposed infants aged 6 weeks to 2
+                                          years, and early infant diagnosis."
+                                       1  "On average, pregnant women were on
+                                          treatment for 168 days until  their due
+                                          date. This  means that pregnant women
+                                          typically  were identified  and put on
+                                          treatment at  around four months into
+                                          their pregnancy. In total,  these women
+                                          were usually  on treatment for 248 days,
+                                          signifying  that many received
+                                          post-delivery treatment while
+                                          breastfeeding.   "
+                                      10  "The Zambia Prevention, Care and
+                                          Treatment Partnership (ZPCT), funded by
+                                          PEPFAR through USAID, works with the
+                                          Ministry of Health and provincial and
+                                          district health offices to strengthen
+                                          and expand HIV ⁄ AIDS clinical services
+                                          in Central, Copperbelt, Luapula,
+                                          Northern and North Western Provinces.
+                                          ZPCT advances the Government of the
+                                          Republic of Zambia (GRZ) goals of
+                                          reducing prevalence rates and providing
+                                          ART by initiating, improving and scaling
+                                          up PMTCT, CT and clinical care services
+                                          for people living with HIV ⁄ AIDS,
+                                          including ART programs in all
+                                          ZPCT-supported districts in these five
+                                          provinces."
+                                      32  "The following PMTCT components were
+                                          assessed: HTC, routine clinical
+                                          monitoring, and provision of
+                                          antiretroviral and other drugs to
+                                          mothers and infants. The prophylactic
+                                          regimens considered were those
+                                          implemented at the time of the study. In
+                                          Kenya, South Africa, and Zambia Option A
+                                          was used, in Rwanda Options B and B+
+                                          were implemented"
+                                       1  "The intervention included voluntary
+                                          counselling and testing and adopted a
+                                          holistic approach combining HAART
+                                          (3TC-ZDV/D4TNVP), irrespectively of the
+                                          patients’ immunological status from the
+                                          25th week of pregnancy, with the
+                                          treatment of malnutrition, tuberculosis,
+                                          malaria, and sexually transmitted
+                                          diseases.2 HAART was also administered
+                                          during breastfeeding (BF) until 6 months
+                                          after delivery, if the women adequately
+                                          counselled chose to breastfeed. Whether
+                                          the baby was breastfed or not the
+                                          protocol is completed upon infant
+                                          weaning (6th month), which terminates
+                                          the risk of exposure to HIV
+                                          transmission."
+                                       4  "women receive ARV prophylaxis including
+                                          daily zidovudine from 14 weeks gestation
+                                          through one week postpartum, single-dose
+                                          nevirapine at delivery, and daily
+                                          lamivudine from delivery through one
+                                          week postpartum. Their babies receive
+                                          daily nevirapine from birth through one
+                                          week after the cessation of
+                                          breastfeeding."
+          
+                         warning:  variable has leading, embedded, and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          clinical_monitoring                                                    Clinical monitoring
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str27)
+          
+                   unique values:  5                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      17  "."
+                                       1  "Cd4, Complete Blood Count"
+                                       8  "Cd4, Early Infant Diagnosis"
+                                       2  "Cd4, Yes - Details Nr"
+                                      43  "Yes, Details - Nr"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          demand_generation                                                        Demand generation
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          counseling_content                                                      Counseling content
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str36)
+          
+                   unique values:  4                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      36  "."
+                                       4  "Post-Test Counseling"
+                                       8  "Vct, Family Planning, Social Support"
+                                      23  "Yes, Details - Nr"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          staff_type                                                             Staff type & number
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str207)
+          
+                   unique values:  6                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      13  "."
+                                      32  "Doctors (Nr), Nurses (Nr), Clinical
+                                          Officers (Nr), Counselors (Nr), Social
+                                          Workers (Nr), Community Health Workers
+                                          (Nr), Peer Educators (Nr), Laboratory
+                                          Technicians (Nr), Pharmacists (Nr), And
+                                          Volunteers (Nr)"
+                                       4  "Medical Officers (Nr), Counselor (Nr),
+                                          Laboratory Technician (Nr)"
+                                       4  "Midwives (Nr)"
+                                      10  "Physician (Nr), Medical Officer (Nr),
+                                          Nurse (Nr), Lay Provider (Nr)"
+                                       8  "Physician (Nr), Nurse (Nr), Midwife
+                                          (Nr), Lab Technician (Nr), Driver (Nr),
+                                          Social Worker (Nr)"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          supportive_care                                                            Supportive care
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str97)
+          
+                   unique values:  5                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      55  "."
+                                       1  "Nutritional Support"
+                                       7  "Oi Prophylaxis"
+                                       4  "Optional Termination Of Pregnancy To
+                                          Hiv+, If They Are Still In The First
+                                          Trimester Of Pregnancy "
+                                       4  "Sxt Prophylaxis"
+          
+                         warning:  variable has embedded and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          visits                                                                 Visit type & number
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str17)
+          
+                   unique values:  4                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      58  "."
+                                       1  "3/Yr"
+                                      10  "6/Yr"
+                                       2  "Yes, Details - Nr"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          referrals                                                                        Referrals
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str17)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      64  "."
+                                       7  "Yes, Details - Nr"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          method                                                                              Method
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str33)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      64  "."
+                                       7  "Rapid Test, Dried Blood Spot Test"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          id_tech                                                                         Technology
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str86)
+          
+                   unique values:  10                       missing "":  0/71
+          
+                        examples:  "."
+                                   "Option A"
+                                   "Option A"
+                                   "Option A, Option B, Nvp, Arvs For Prophlyaxis"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          treatment_phase                                                            Treatment phase
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          arv_regimen                                                                    ARV Regimen
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str86)
+          
+                   unique values:  9                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      12  "."
+                                       7  "AZT+3TC+NVP, AZT+3TC+EFV, TDF+3TC+NVP,
+                                          TDF+FTC+NVP, TDF+FTC+NVP, TDF+FTC+EFV,
+                                          AZT, NVP"
+                                       8  "NVP, prophylaxis, Option A, Option B"
+                                       8  "Nevirapine"
+                                      24  "Option A"
+                                       8  "Option B, Option B+"
+                                       1  "first line, second line"
+                                       1  "yes - not specified"
+                                       2  "zidovudine, Nevirapine"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          treatment                                                                        Treatment
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str27)
+          
+                   unique values:  3                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      15  "."
+                                      55  "ARV prophylaxis & treatment"
+                                       1  "STI treatment"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          screening_diagnoses                                                Screening and diagnosis
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          community_awareness                                                    Community awareness
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          id_activities                                                            Costed activities
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str94)
+          
+                   unique values:  10                       missing "":  0/71
+          
+                        examples:  "ARVs administration"
+                                   "ARVs administration"
+                                   "Testing, counselling, ARV prophylaxis, ARV
+                                   treatment"
+                                   "VCT, CD4 counts, ARVs, SXT prophylaxis, family
+                                   planning, early infant diagnosis"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          start_month                                                                    Start Month
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [1,4]                        units:  1
+                   unique values:  2                        missing .:  62/71
+          
+                      tabulation:  Freq.  Value
+                                       1  1
+                                       8  4
+                                      62  .
+          
+          ------------------------------------------------------------------------------------------
+          start_year                                                                      Start Year
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (int)
+          
+                           range:  [2005,2013]                  units:  1
+                   unique values:  5                        missing .:  8/71
+          
+                      tabulation:  Freq.  Value
+                                       4  2005
+                                      10  2008
+                                       8  2009
+                                      40  2011
+                                       1  2013
+                                       8  .
+          
+          ------------------------------------------------------------------------------------------
+          end_month                                                                        End Month
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [3,12]                       units:  1
+                   unique values:  3                        missing .:  62/71
+          
+                      tabulation:  Freq.  Value
+                                       4  3
+                                       4  9
+                                       1  12
+                                      62  .
+          
+          ------------------------------------------------------------------------------------------
+          end_year                                                                          End Year
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (int)
+          
+                           range:  [2006,2013]                  units:  1
+                   unique values:  6                        missing .:  8/71
+          
+                      tabulation:  Freq.  Value
+                                       4  2006
+                                      10  2008
+                                       8  2009
+                                       4  2011
+                                      36  2012
+                                       1  2013
+                                       8  .
+          
+          ------------------------------------------------------------------------------------------
+          period_portrayed                                                              Total Months
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str9)
+          
+                   unique values:  5                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       1  "10"
+                                      13  "12"
+                                      46  "12 months"
+                                       7  "21"
+                                       4  "6 months"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          year_intro                                                   Year introduced at study site
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (int)
+          
+                           range:  [2001,2005]                  units:  1
+                   unique values:  3                        missing .:  53/71
+          
+                      tabulation:  Freq.  Value
+                                       4  2001
+                                       4  2002
+                                      10  2005
+                                      53  .
+          
+          ------------------------------------------------------------------------------------------
+          coverage                                                                          Coverage
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          id_pop_dem_std                                                  Target group (demographic)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str19)
+          
+                   unique values:  4                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      10  "General Populations"
+                                      17  "Pregnant Women"
+                                      12  "Pregnant women"
+                                      32  "Women"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          id_pop_clin_std                                                    Target group (clinical)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str31)
+          
+                   unique values:  5                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      17  "HIV positive"
+                                       2  "HIV positive, HIV exposed"
+                                      46  "HIV positive, HIV status unkown"
+                                       4  "HIV status unkown"
+                                       2  "HIV-"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          pop_age                                                                        Average Age
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str4)
+          
+                   unique values:  4                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      66  "."
+                                       2  "24.2"
+                                       2  "27.6"
+                                       1  "30"
+          
+          ------------------------------------------------------------------------------------------
+          pop_sex                                                                             Gender
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str11)
+          
+                   unique values:  3                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      56  "."
+                                      14  "100% Female"
+                                       1  "Female"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          pop_ses                                                                                SES
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          pop_education                                                                    Education
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          hiv_prev                                                                    HIV Prevalence
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [1,1]                        units:  1
+                   unique values:  1                        missing .:  70/71
+          
+                      tabulation:  Freq.  Value
+                                       1  1
+                                      70  .
+          
+          ------------------------------------------------------------------------------------------
+          tb_prev                                                                      TB Prevalence
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          tb_rx_resistance                                                        TB Drug Resistance
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1)
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          costing_purpose                                                            Costing Purpose
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str335)
+          
+                   unique values:  10                       missing "":  0/71
+          
+                        examples:  "To assess the cost, cost structure, cost
+                                   variability, and efficiency determinants of HIV
+                                   prevention interventions "
+                                   "To assess the cost, cost structure, cost
+                                   variability, and efficiency determinants of HIV
+                                   prevention interventions "
+                                   "To describe the progress and challenges in
+                                   scaling-up a nevirapine-based program "
+                                   "To identify the cost of providing PMTCT services for
+                                   one woman and child from the period of pregnancy
+                                   through the recommended period of postpartum care
+                                   according to national guidelines"
+          
+                         warning:  variable has embedded and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          timing                                                                              Timing
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str15)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      67  "Cross-Sectional"
+                                       4  "Longitudinal"
+          
+          ------------------------------------------------------------------------------------------
+          country_sampling                                                          Country Sampling
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str9)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      25  "."
+                                      46  "Purposive"
+          
+          ------------------------------------------------------------------------------------------
+          geo_sampling_incountry                                 Geographic Area In Country Sampling
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str9)
+          
+                   unique values:  4                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      23  "."
+                                       4  "Cluster"
+                                      20  "Purposive"
+                                      24  "Random"
+          
+          ------------------------------------------------------------------------------------------
+          site_sampling                                                                Site Sampling
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str14)
+          
+                   unique values:  4                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      32  "Cluster"
+                                      18  "Entire Program"
+                                      14  "Random"
+                                       7  "Real World"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          px_sampling                                                               Patient Sampling
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str14)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      67  "Entire Program"
+                                       4  "Purposive"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          sample_size_derived                                           Sample size formally derived
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      53  "."
+                                      18  "No"
+          
+          ------------------------------------------------------------------------------------------
+          controls                                                                          Controls
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  3                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      45  "."
+                                      22  "No"
+                                       4  "Yes"
+          
+          ------------------------------------------------------------------------------------------
+          econ_perspective_actual                                                        Perspective
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str8)
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "Provider"
+          
+          ------------------------------------------------------------------------------------------
+          econ_costing                                                          Economic / Financial
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str14)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      67  "Economic"
+                                       4  "Financial Only"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          real_world                                                       Real World / Per Protocol
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str10)
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "Real World"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          asd_costs                                                     Above Service Costs Included
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str19)
+          
+                   unique values:  3                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      33  "."
+                                      19  "No Costs Included"
+                                      19  "Some Costs Included"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          list_asd_costs                                                     Above Service Cost List
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str151)
+          
+                   unique values:  5                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      51  "."
+                                       8  "Management, Supervision, And Training
+                                          At National Level"
+                                       1  "None"
+                                       7  "Planning And Program Management,
+                                          Centrally Managed Trainings And
+                                          Supervision, M&E, Communication
+                                          Materials"
+                                       4  "The Hiv Test Kits, Male Condoms And
+                                          Behavioural Change Communication
+                                          Materials Were Supplied By The Andhra
+                                          Pradesh State Aids Control Society
+                                          (Apsacs)."
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          omitted_costs                                                                Omitted Costs
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str42)
+          
+                   unique values:  4                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       1  "Building/space - recurring"
+                                      61  "Patient costs"
+                                       8  "Vehicles/transport, Patient costs"
+                                       1  "building/space - recurring,
+                                          Building/space"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          sensitivity_analysis                                                  Sensitivity Analysis
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str4)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       7  "."
+                                      64  "None"
+          
+          ------------------------------------------------------------------------------------------
+          scale                                                                   Economies of scale
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str9)
+          
+                   unique values:  3                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       4  "Analyzed"
+                                      53  "Discussed"
+                                      14  "Ignored"
+          
+          ------------------------------------------------------------------------------------------
+          research_costs                                                     Research Costs Included
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str8)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      16  "."
+                                      55  "Excluded"
+          
+          ------------------------------------------------------------------------------------------
+          unrelated_costs                                                   Unrelated Costs Included
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str1)
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          overhead                                                           Overhead Costs Included
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       8  "No"
+                                      63  "Yes"
+          
+          ------------------------------------------------------------------------------------------
+          overhead_costs                                                         Overhead Costs List
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str229)
+          
+                   unique values:  8                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       8  "Buildings, Equipment, And Support
+                                          Staff"
+                                      32  "Equipment,Vehicles, Training, And
+                                          Supervision"
+                                       1  "Facilities, Car, Furniture"
+                                       4  "Furniture, Electrical Fixtures, Air
+                                          Conditioner, Air Cooler, Refrigerator,
+                                          Centrifuge, Computer, Needle And Syringe
+                                          Destroyer, Hot Air Oven, Micropipette,
+                                          Weighing Machine, Infantometer And
+                                          Public Address System "
+                                       7  "Non-Client Staf Time, Office Equipment,
+                                          Physical Infrastructure, Transportation
+                                          Costs, Public Utilities And Running
+                                          Costs, Maintenance And Repair, Staff
+                                          Training And Volunteers, Local Medical
+                                          And Other Supply Costs, Vehicle Costs"
+                                      10  "Non-Clinical Labour, Office Supplies,
+                                          Physical Infrastructure (Clinic Rent,
+                                          Electricity, Water, Etc.), Equipment And
+                                          Furniture"
+                                       8  "None"
+                                       1  "Phone, Internet, Fuel, Insurance,
+                                          External Services (E.G. Cleaning,
+                                          Gardening), External Quality Assurance,
+                                          Buidling Maintenance, Equipment &
+                                          Maintenance, "
+          
+                         warning:  variable has embedded and trailing blanks
+          
+          ------------------------------------------------------------------------------------------
+          pot_distortions                                                      Potential distortions
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          volunteer_time                                                      Valuing Volunteer Time
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str18)
+          
+                   unique values:  3                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      22  "."
+                                      10  "Proxy"
+                                      39  "Valued - Method Nr"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          family_time                                                            Valuing Family Time
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          px_costs_measured                                          Patient-Incurred Costs Measured
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str12)
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "Not Included"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          cat_cost                                                      Catastrophic Cost Calculated
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3), but longest is str2
+          
+                   unique values:  2                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       9  "."
+                                      62  "No"
+          
+          ------------------------------------------------------------------------------------------
+          currency_yr                                                         Reported Currency Year
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (int)
+          
+                           range:  [2005,2013]                  units:  1
+                   unique values:  8                        missing .:  0/71
+          
+                      tabulation:  Freq.  Value
+                                       4  2005
+                                       1  2007
+                                      10  2008
+                                       8  2009
+                                       7  2010
+                                      24  2011
+                                      16  2012
+                                       1  2013
+          
+          ------------------------------------------------------------------------------------------
+          iso_code                                                                 Reported Currency
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  8                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       7  "GHS"
+                                       4  "INR"
+                                       8  "KES"
+                                       8  "RWF"
+                                      23  "USD"
+                                       1  "XAF"
+                                       8  "ZAR"
+                                      12  "ZMW"
+          
+          ------------------------------------------------------------------------------------------
+          currency_iso                                                   Currency of Data Collection
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str3)
+          
+                   unique values:  10                       missing "":  0/71
+          
+                        examples:  "KES"
+                                   "NAD"
+                                   "USD"
+                                   "ZMW"
+          
+          ------------------------------------------------------------------------------------------
+          currency_x                                                        Currency Exchange Method
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str29)
+          
+                   unique values:  3                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                       5  "."
+                                      34  "Market Only"
+                                      32  "Traded/Market, Non-Traded Ppp"
+          
+                         warning:  variable has embedded blanks
+          
+          ------------------------------------------------------------------------------------------
+          current_x_rate                                                      Currency Exchange Rate
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [1.4738,4861]                units:  .0001
+                   unique values:  10                       missing .:  15/71
+          
+                            mean:   1196.71
+                        std. dev:   1944.55
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                      1.4738      8.21     88.81     614.3    4860.7
+          
+          ------------------------------------------------------------------------------------------
+          discount_rate                                                                Discount Rate
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.12,3]                      units:  .01
+                   unique values:  2                        missing .:  60/71
+          
+                      tabulation:  Freq.  Value
+                                      10  .12
+                                       1  3
+                                      60  .
+          
+          ------------------------------------------------------------------------------------------
+          inflation                                                                   Inflation rate
+          ------------------------------------------------------------------------------------------
+          
+                            type:  string (str2), but longest is str1
+          
+                   unique values:  1                        missing "":  0/71
+          
+                      tabulation:  Freq.  Value
+                                      71  "."
+          
+          ------------------------------------------------------------------------------------------
+          mean_cost                                                                   Mean Unit Cost
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.6040832,74730.306]        units:  1.000e-08
+                   unique values:  69                       missing .:  0/71
+          
+                            mean:   1948.11
+                        std. dev:   8832.23
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     23.9905   59.4443   600.423   1366.04    2450.4
+          
+          ------------------------------------------------------------------------------------------
+          si_personnel                                                                Personnel (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.0768554,4122.6201]        units:  1.000e-07
+                   unique values:  16                       missing .:  52/71
+          
+                            mean:   342.486
+                        std. dev:   927.793
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     2.42487   4.12003   15.4922    321.84   332.296
+          
+          ------------------------------------------------------------------------------------------
+          si_per_service_delivery                            Personnel: Direct Service Delivery (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [73.25708,4122.6201]         units:  .00001
+                   unique values:  6                        missing .:  62/71
+          
+                      tabulation:  Freq.  Value
+                                       1  73.25708
+                                       3  181.76193
+                                       2  190.53467
+                                       1  199.46151
+                                       1  200.99151
+                                       1  4122.6201
+                                      62  .
+          
+          ------------------------------------------------------------------------------------------
+          si_per_support                                                     Personnel: Support (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [122.86239,122.86239]        units:  1
+                   unique values:  1                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       7  122.86239
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          si_per_mixed_unspec                                      Personnel: Mixed Unspecified (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.0768554,15.492219]        units:  1.000e-07
+                   unique values:  11                       missing .:  54/71
+          
+                            mean:   7.32429
+                        std. dev:   3.84697
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     2.42487   4.12003   8.44252   8.44252   14.7401
+          
+          ------------------------------------------------------------------------------------------
+          si_recurrent                                                          Recurrent Goods (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [4.4343672,56176.43]         units:  1.000e-08
+                   unique values:  16                       missing .:  52/71
+          
+                            mean:   3269.57
+                        std. dev:   12817.7
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     4.46805   9.12694   19.8256   830.559   836.294
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_key_drugs                                      Recurring: Supplies (key drugs) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [194.58911,56176.43]         units:  .00001
+                   unique values:  6                        missing .:  62/71
+          
+                      tabulation:  Freq.  Value
+                                       1  194.58911
+                                       1  542.82015
+                                       3  656.26038
+                                       2  661.32369
+                                       1  661.35671
+                                       1  56176.43
+                                      62  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_med_int_supplies                Recurring: Medical Supplies (excluding drugs) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.2892838,92.240351]        units:  1.000e-07
+                   unique values:  5                        missing .:  63/71
+          
+                      tabulation:  Freq.  Value
+                                       1  2.2892838
+                                       1  16.565838
+                                       3  91.601934
+                                       2  91.943157
+                                       1  92.240351
+                                      63  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_nonmed_int_supplies                            Recurring: Non-medical Supplies (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_building_space                                       Recurring: Building Space (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [12.030871,12.030871]        units:  1
+                   unique values:  1                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       7  12.030871
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          si_rec_other                                                         Recurring: Other (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [4.4343672,70.666236]        units:  1.000e-07
+                   unique values:  11                       missing .:  54/71
+          
+                            mean:   35.3647
+                        std. dev:   30.7606
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     4.46805   9.12694   17.3558   70.6662   70.6662
+          
+          ------------------------------------------------------------------------------------------
+          si_capital                                                                    Capital (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [3.1770275,148.80344]        units:  1.000e-12
+                   unique values:  10                       missing .:  53/71
+          
+                            mean:   42.0255
+                        std. dev:   44.5809
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     3.41278   5.04058   9.31778   78.4043   78.4043
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_medical_equip                                     Capital: Equipment (medical) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [64.6563,80.12493]           units:  .00001
+                   unique values:  2                        missing .:  63/71
+          
+                      tabulation:  Freq.  Value
+                                       7  64.656303
+                                       1  80.124931
+                                      63  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_nonmed_equip                                  Capital: Equipment (non-medical) (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [6.5162635,6.5162635]        units:  1
+                   unique values:  1                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       7  6.5162635
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_building_space                                         Capital: Building Space (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [4.5459743,45.785675]        units:  1.000e-07
+                   unique values:  2                        missing .:  63/71
+          
+                      tabulation:  Freq.  Value
+                                       7  4.5459743
+                                       1  45.785675
+                                      63  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_vehicles                                                     Capital: Vehicles (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.6857574,13.735703]        units:  1.000e-07
+                   unique values:  2                        missing .:  63/71
+          
+                      tabulation:  Freq.  Value
+                                       7  2.6857574
+                                       1  13.735703
+                                      63  .
+          
+          ------------------------------------------------------------------------------------------
+          si_cap_other                                                           Capital: Other (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [3.1770275,10.653707]        units:  1.000e-10
+                   unique values:  9                        missing .:  60/71
+          
+                      tabulation:  Freq.  Value
+                                       1  3.1770275
+                                       1  3.4127787
+                                       1  3.5025887
+                                       1  4.2659733
+                                       2  5.0405843
+                                       1  7.7685618
+                                       2  7.9818609
+                                       1  9.157135
+                                       1  10.653707
+                                      60  .
+          
+          ------------------------------------------------------------------------------------------
+          si_mixed                                                                        Mixed (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [56.079531,14946.061]        units:  1.000e-15
+                   unique values:  8                        missing .:  59/71
+          
+                      tabulation:  Freq.  Value
+                                       2  56.079531
+                                       1  92.746914
+                                       1  198.43525
+                                       1  256.93011
+                                       3  535.73152
+                                       2  555.30232
+                                       1  576.07291
+                                       1  14946.061
+                                      59  .
+          
+          ------------------------------------------------------------------------------------------
+          si_unspecified                                                            Unspecified (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [0,26.426582]                units:  1.000e-07
+                   unique values:  9                        missing .:  61/71
+          
+                      tabulation:  Freq.  Value
+                                       2  0
+                                       1  2.9075975
+                                       1  3.1321225
+                                       1  6.679616
+                                       1  6.7020688
+                                       1  24.461988
+                                       1  24.854908
+                                       1  25.842817
+                                       1  26.426582
+                                      61  .
+          
+          ------------------------------------------------------------------------------------------
+          si_uns_med_int_supplies                Unspecified: Medical supplies (excluding drugs)
+                                                 (SI)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [0,26.426582]                units:  1.000e-07
+                   unique values:  9                        missing .:  61/71
+          
+                      tabulation:  Freq.  Value
+                                       2  0
+                                       1  2.9075975
+                                       1  3.1321225
+                                       1  6.679616
+                                       1  6.7020688
+                                       1  24.461988
+                                       1  24.854908
+                                       1  25.842817
+                                       1  26.426582
+                                      61  .
+          
+          ------------------------------------------------------------------------------------------
+          a_primary_sd                                                  Primary Service Delivery (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [4.4343672,66998.829]        units:  1.000e-15
+                   unique values:  19                       missing .:  48/71
+          
+                            mean:   3354.34
+                        std. dev:   13887.3
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     5.13039   11.7427   56.0795   1373.75   1407.16
+          
+          ------------------------------------------------------------------------------------------
+          a_prisd_lab_monitoring                              Primary SD: Routine Lab Monitoring (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [256.93011,6699.7788]        units:  .00001
+                   unique values:  5                        missing .:  63/71
+          
+                      tabulation:  Freq.  Value
+                                       1  256.93011
+                                       3  535.73152
+                                       2  555.30232
+                                       1  576.07291
+                                       1  6699.7788
+                                      63  .
+          
+          ------------------------------------------------------------------------------------------
+          a_prisd_lab_services                                   Primary SD: Laboratory Services (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [4.4343672,19.82555]         units:  1.000e-07
+                   unique values:  10                       missing .:  61/71
+          
+                            mean:   10.6537
+                        std. dev:   5.86608
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     4.45121   5.13039   10.4348   17.1537   18.5907
+          
+          ------------------------------------------------------------------------------------------
+          a_prisd_arv_delivery                                          Primary SD: ARV Delivery (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [743.81166,60299.05]         units:  .00001
+                   unique values:  5                        missing .:  63/71
+          
+                      tabulation:  Freq.  Value
+                                       1  743.81166
+                                       3  838.0223
+                                       2  851.85836
+                                       1  860.81822
+                                       1  60299.05
+                                      63  .
+          
+          ------------------------------------------------------------------------------------------
+          a_prisd_unspecified                                            Primary SD: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [56.079531,267.84619]        units:  1.000e-15
+                   unique values:  4                        missing .:  66/71
+          
+                      tabulation:  Freq.  Value
+                                       2  56.079531
+                                       1  92.746914
+                                       1  198.43525
+                                       1  267.84619
+                                      66  .
+          
+          ------------------------------------------------------------------------------------------
+          a_secondary_sd                                              Secondary Service Delivery (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          a_secsd_unspecified                                          Secondary SD: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          unspecified_healthfac                  facility_cat==Unspecified health care facility type
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (byte)
+          
+                           range:  [0,1]                        units:  1
+                   unique values:  2                        missing .:  0/71
+          
+                      tabulation:  Freq.  Value
+                                      70  0
+                                       1  1
+          
+          ------------------------------------------------------------------------------------------
+          a_ancillary                                                                  Ancillary (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [82.414215,158.10745]        units:  1.000e-06
+                   unique values:  5                        missing .:  63/71
+          
+                      tabulation:  Freq.  Value
+                                       1  82.414215
+                                       1  82.432934
+                                       3  157.46903
+                                       2  157.81025
+                                       1  158.10745
+                                      63  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_demand_generation                                   Ancillary: Demand Generation (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_lab_services                                             Ancillary: Lab Services (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [82.414215,82.414215]        units:  1.000e-06
+                   unique values:  1                        missing .:  70/71
+          
+                      tabulation:  Freq.  Value
+                                       1  82.414215
+                                      70  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_adhreten                                          Ancillary: Adherence/Retention (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          a_anc_unspecified                                               Ancillary: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [82.432934,158.10745]        units:  1.000e-06
+                   unique values:  4                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       1  82.432934
+                                       3  157.46903
+                                       2  157.81025
+                                       1  158.10745
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          a_mix_mixed                                                           Ancillary: Mixed (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [0,26.426582]                units:  1.000e-07
+                   unique values:  9                        missing .:  61/71
+          
+                      tabulation:  Freq.  Value
+                                       2  0
+                                       1  2.9075975
+                                       1  3.1321225
+                                       1  6.679616
+                                       1  6.7020688
+                                       1  24.461988
+                                       1  24.854908
+                                       1  25.842817
+                                       1  26.426582
+                                      61  .
+          
+          ------------------------------------------------------------------------------------------
+          a_operational                                                              Operational (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.0768554,8246.2822]        units:  1.000e-07
+                   unique values:  13                       missing .:  52/71
+          
+                            mean:   524.534
+                        std. dev:   1872.88
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     2.42487   4.12003   15.4922   226.539   226.539
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_bldg_equip                                  Operational: Buildings and Equipment (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [68.67851,8246.2822]         units:  .00001
+                   unique values:  3                        missing .:  62/71
+          
+                      tabulation:  Freq.  Value
+                                       1  68.678513
+                                       7  72.38336
+                                       1  8246.2822
+                                      62  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_logistics                                                 Operational: Logistics (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_program_mgmt                                     Operational: Program Management (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [24.568075,24.568075]        units:  1
+                   unique values:  1                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       7  24.568075
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_supervision                                             Operational: Supervision (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [98.294312,98.294312]        units:  1
+                   unique values:  1                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       7  98.294312
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_training                                                   Operational: Training (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [.77050412,.77050412]        units:  1
+                   unique values:  1                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       7  .77050412
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_transportation                                       Operational: Transportation (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [12.030871,12.030871]        units:  1
+                   unique values:  1                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       7  12.030871
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_massed                                               Operational: Mass Education (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [6.4612274,6.4612274]        units:  1
+                   unique values:  1                        missing .:  64/71
+          
+                      tabulation:  Freq.  Value
+                                       7  6.4612274
+                                      64  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_hmis                                        Operational: HMIS and Record-Keeping (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          a_ope_unspecified                                             Operational: Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [2.0768554,15.492219]        units:  1.000e-07
+                   unique values:  11                       missing .:  54/71
+          
+                            mean:   8.80185
+                        std. dev:   4.65016
+          
+                     percentiles:        10%       25%       50%       75%       90%
+                                     2.42487   4.12003   12.0309   12.0309   14.7401
+          
+          ------------------------------------------------------------------------------------------
+          a_mixed                                                                          Mixed (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [0,26.426582]                units:  1.000e-07
+                   unique values:  9                        missing .:  61/71
+          
+                      tabulation:  Freq.  Value
+                                       2  0
+                                       1  2.9075975
+                                       1  3.1321225
+                                       1  6.679616
+                                       1  6.7020688
+                                       1  24.461988
+                                       1  24.854908
+                                       1  25.842817
+                                       1  26.426582
+                                      61  .
+          
+          ------------------------------------------------------------------------------------------
+          a_unspecified                                                              Unspecified (A)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (double)
+          
+                           range:  [3.1770275,10.653707]        units:  1.000e-10
+                   unique values:  8                        missing .:  61/71
+          
+                      tabulation:  Freq.  Value
+                                       1  3.1770275
+                                       1  3.4127787
+                                       1  3.5025887
+                                       1  4.2659733
+                                       2  5.0405843
+                                       1  7.7685618
+                                       2  7.9818609
+                                       1  10.653707
+                                      61  .
+          
+          ------------------------------------------------------------------------------------------
+          flag                                                                           (unlabeled)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          flag_1                                                                         (unlabeled)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [1,1]                        units:  1
+                   unique values:  1                        missing .:  61/71
+          
+                      tabulation:  Freq.  Value
+                                      10  1
+                                      61  .
+          
+          ------------------------------------------------------------------------------------------
+          flag_2                                                                         (unlabeled)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [1,1]                        units:  1
+                   unique values:  1                        missing .:  59/71
+          
+                      tabulation:  Freq.  Value
+                                      12  1
+                                      59  .
+          
+          ------------------------------------------------------------------------------------------
+          flag_3                                                                         (unlabeled)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [1,1]                        units:  1
+                   unique values:  1                        missing .:  69/71
+          
+                      tabulation:  Freq.  Value
+                                       2  1
+                                      69  .
+          
+          ------------------------------------------------------------------------------------------
+          flag_4                                                                         (unlabeled)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [1,1]                        units:  1
+                   unique values:  1                        missing .:  70/71
+          
+                      tabulation:  Freq.  Value
+                                       1  1
+                                      70  .
+          
+          ------------------------------------------------------------------------------------------
+          flag_5                                                                         (unlabeled)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          ------------------------------------------------------------------------------------------
+          flag_6                                                                         (unlabeled)
+          ------------------------------------------------------------------------------------------
+          
+                            type:  numeric (float)
+          
+                           range:  [.,.]                        units:  .
+                   unique values:  0                        missing .:  71/71
+          
+                      tabulation:  Freq.  Value
+                                      71  .
+          
+          
+          
+          
+          
+          
+\end{verbatim}
+
+\end{document}
+
+*/
