@@ -62,14 +62,15 @@
 ***********************
 	clear all
 
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	* cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT"
 	
 * 1: Load in both data files (change title of excel file as appropriate)
 ***********************
 
 * Costs data sheet
 
-	import excel using extraction_templates/GHCC_Extraction_HCT_MERGED_v08_20-Apr-18.xlsx, firstrow sh("Cost data") cellrange(A4) case(l) clear
+	import excel using extraction_templates/GHCC_Data_Extraction_HCT_20-Apr-2018.xlsx, firstrow sh("Cost data") cellrange(A4) case(l) clear
 		
 		*Drop blank rows 
 		drop if id == ""
@@ -79,7 +80,7 @@
 		clear
 		
 * Study Attributes data sheet	
-	import excel using extraction_templates/GHCC_Extraction_HCT_MERGED_v08_20-Apr-18.xlsx, firstrow sh("Study attributes") cellrange(A4) case(l)
+	import excel using extraction_templates/GHCC_Data_Extraction_HCT_20-Apr-2018.xlsx, firstrow sh("Study attributes") cellrange(A4) case(l)
 		
 		*Drop blank rows 
 		drop if id == ""
@@ -133,20 +134,20 @@
 		drop currency_yr_rs-_merge
 			* No need to destring numerics
 
-			*Include adjustments for Lori's data here: 
-			******************************************
-			
+		destring mean_cost, replace	
+		
 		*Save for working later
 		save temp_dta/costs.dta,replace	
 
 
 * First change directory to pull up generic inflation do file
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/"
-	
+	*cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/"
 	*GDP Deflator
 	 run do_files/inflation_methods/inflation_hct_gdp.do
 		
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	*cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT"
 	save temp_dta/costs.dta,replace	
 
 
@@ -164,7 +165,7 @@
 
 	}
 	* Get rid of any sub-category costs in the costing sheet (theyre screwing things up)
-		destring mean_cost, replace
+		
 		replace mean_cost=. if ar_narrow=="Subtotal" | ar_broad=="Subtotal" | ar_narrow == "subtotal" | ar_broad == "subtotal"
 	
 		replace ar_broad="Subtotal" if ar_narrow=="Subtotal" & ar_broad == ""
@@ -333,7 +334,7 @@
 			}
 *
 	
-	
+		drop _
 * Next, Encode Procedure for Standardized Inputs
 ************************************************
 
@@ -421,6 +422,7 @@ use temp_dta/costs.dta
 			
 			* Now create binaries for the reshape command (need to finalize)
 			*********************************************
+				
 				*create prefix
 				gen si_broad11=si_broad1
 				replace si_broad11=substr(si_broad1,1,3)
@@ -578,7 +580,7 @@ use temp_dta/costs.dta
 	* Now create binaries for the reshape command (need to finalize)
 			*********************************************
 				*create prefix
-				
+					drop _
 				split a_broad1, p(" " "_" "-")
 				replace a_broad11=substr(a_broad11,1,3)
 				gen _="_"
@@ -740,7 +742,7 @@ use temp_dta/costs.dta
 			* should try grabbing all variables that have the "RS" ending somehow, instead of managing individual vars
 			label define rs 1 "explicit" 2 "inferred" 3 "n/a"
 			*set trace on
-			foreach i of varlist costing_purpose_rs period_portrayed_rs research_costs_rs unrelated_costs_rs overhead_rs omitted_costs_rs geo_incountry_rs econ_costing_rs geo_sampling_incountry_rs country_sampling_rs site_sampling_rs px_sampling_rs timing_rs discount_rate_rs currency_yr_rs currency_x_rs currency_period_rs volunteer_time_rs family_time_rs px_time_rs aggregationrs management_rs ownership_rs pop_sex_rs pop_ses_rs pop_education_rs year_intro_rs coverage_rs qual_indicator_rs breakdown_input_rs breakdown_activity_rs breakdown_funder_rs px_costs_measured_rs cat_cost_rs asd_costs_rs real_world_rs personnel_dt_rs pop_age_rs {
+			foreach i of varlist costing_purpose_rs period_portrayed_rs research_costs_rs unrelated_costs_rs overhead_rs omitted_costs_rs geo_incountry_rs econ_costing_rs geo_sampling_incountry_rs country_sampling_rs site_sampling_rs px_sampling_rs timing_rs discount_rate_rs currency_yr_rs currency_x_rs currency_period_rs volunteer_time_rs family_time_rs px_time_rs aggregationrs management_rs ownership_rs pop_sex_rs pop_ses_rs pop_education_rs coverage_rs qual_indicator_rs breakdown_activity_rs breakdown_funder_rs px_costs_measured_rs cat_cost_rs asd_costs_rs real_world_rs personnel_dt_rs pop_age_rs year_intro_rs breakdown_input_rs {
 			replace `i' = lower(`i')
 			replace `i' = "1" if `i'== "explicit"
 			replace `i' = "2" if `i'== "inferred"
@@ -752,7 +754,7 @@ use temp_dta/costs.dta
 			}
 				
 			*consider changing label for NR to . 	
-
+			
 * And destring remaining numeric variables:
 			*Years
 
@@ -971,12 +973,11 @@ use temp_dta/costs.dta
 							drop if _merge!=3
 									* In this case, drops 6 that we dont want anyway
 							drop _merge
-							
+								drop _
 				* reorder for ease of finding 
-				* (This could be done in a better way, problem is the above procedure reverses the order)	
-				/*
-				order id unit_cost broad_asreported ar_broad ar_capital ar_overhead ar_personnel ar_recurring_goods ar_recurring_services ar_total ar_narrow narrow_asreported ar_cap_medical_equipment ar_cap_non_consumable_supplies ar_cap_non_medical_equipment ar_cap_unspecified ar_fac_building ar_fac_maint_and_util ar_fac_rental ar_fac_waste_management ar_ove_unspecified ar_per_admin_support ar_per_nurses ar_per_physicians ar_per_service_delivery ar_per_unspecified ar_recgoods_clinical_consumables ar_recgoods_consumables ar_recgoods_nclinical_consum ar_recservices_hct ar_recservices_adverse_events ar_recservices_consultancy ar_recservices_demand_generation ar_recservices_inpatient ar_recservices_lab_test ar_recservices_mgmt ar_recservices_sterilization ar_recservices_supply_chain ar_recservices_training ar_recservices_transport ar_sub_subtotal ar_tot_full_costing_total ar_tot_partial_costing ar_uns_unspecified broad_stdinput si_broad si_capital si_mixed si_personnel si_recurrent narrow_stdinput si_narrow si_cap_medical_equip si_cap_nonmed_equip si_cap_other si_mix_mixed si_per_mixed_unspec si_per_service_delivery si_per_support si_rec_building_space si_rec_med_int_supplies si_rec_nonmed_int_supplies broad_activity a_broad a_ancillary a_mixed a_operational a_primary_sd a_secondary_sd narrow_activity a_narrow a_anc_demand_generation a_anc_lab_services a_anc_unspecified a_mix_mixed a_ope_bldg_equip a_ope_logistics a_ope_program_mgmt a_ope_supervision a_ope_training a_ope_transportation a_ope_unspecified a_prisd_circumcision_proced a_prisd_unspecified a_secsd_hct output_pmonth output_pyear output_pyear2 output_pmonth2 output1k_mo output1k_yr output1k_yr2 output1k_mo2	
-				*/
+				order id unit_cost mean_cost broad_asreported ar_broad ar_capital ar_facility ar_overhead ar_patient_costs ar_personnel ar_recurring_goods ar_recurring_services ar_subtotal ar_total ar_narrow narrow_asreported ar_cap_non_medical_equipment ar_cap_unspecified ar_fac_building ar_ove_unspecified ar_per_admin_support ar_per_nurses ar_per_physicians ar_per_service_delivery ar_per_unspecified ar_recgoods_clinical_consumables ar_recservices_demand_generation ar_recservices_maint_and_util ar_recgoods_unspecified ar_recgoods_key_drugs ar_recgoods_consumables ar_per_mgmt ar_per_lab_personnel ar_per_counselors ar_patcosts_direct_medical ar_ove_utilities ar_ove_mgmt ar_ove_maintenance ar_ove_consumables ar_ove_admin_support ar_cap_training ar_cap_subtotal ar_cap_furnishings ar_cap_building ar_recservices_lab_test ar_recservices_training ar_recservices_transport ar_sub_subtotal ar_tot_full_costing_total broad_stdinput si_broad si_capital si_mixed si_personnel si_recurrent si_unspecified si_combined narrow_stdinput si_narrow si_cap_nonmed_equip si_cap_other si_cap_mixed si_cap_med_equip si_cap_building_space si_mix_mixed si_per_mixed_unspec si_per_service_delivery si_per_support si_rec_building_space si_rec_med_int_supplies si_rec_nonmed_int_supplies si_rec_other  si_n_a si_rec_key_drugs si_uns_unspecified si_n_a_n_a si_com_unit_cost_total broad_activity a_broad a_ancillary a_mixed a_operational a_primary_sd narrow_activity a_narrow a_anc_demand_generation a_anc_unspecified a_mix_mixed a_ope_bldg_equip a_ope_program_mgmt a_ope_training a_ope_transportation a_ope_unspecified a_prisd_unspecified a_uns_unspecified a_prisd_unspec_counseling a_prisd_post_test_counseling a_prisd_lab_services a_prisd_htc_service_delivery a_prisd_hiv_rapid_test a_prisd_arv_delivery a_mix_bldg_equip a_com_combo a_anc_bldg_equip a_unspecified a_combo
+				
+
 							
 				* First label organizational variables after resort
 				label variable broad_asreported "----------------------------------"
@@ -1003,7 +1004,7 @@ use temp_dta/costs.dta
 	
 			
 			* Save version before importing GDPPC data:
-			save final_dta/wide_file.dta, replace
+			save final_dta/wide_file_hct.dta, replace
 			
 			* Finally, import GDPPC data for each study.
 			********************************************
@@ -1015,8 +1016,12 @@ use temp_dta/costs.dta
 				* Presumably formatting for this file shouldnt change year-to-year, but possible 
 				* ...so check that import and file manipulation commands below work. 
 		
-			save "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT/wide_files/hct_wide_file_Apr2018.dta", replace
 			
+			** Save final version here
+			**************************
+			* save "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT/wide_files/hct_wide_file_Apr2018.dta", replace
+			
+			* save "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT/wide_files/hct_wide_file_Apr2018.dta"
 
 
 			/*

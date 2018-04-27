@@ -57,7 +57,9 @@
 	*********************************************************************
 
 	clear
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	*cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT"
+	
 			// Change path as applicable for different intervention categories.
 			// larger folder GHCC/ subfolder "VMMC/" or other
 
@@ -114,7 +116,8 @@
 		*Note, as above, country names must be strings, and in same format as WB naming conventions
 		
 		clear
-		cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/"
+		*cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/"
+		cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/"
 				// change for your file path to general GHCC/ folder
 		import excel "external_data/GHCC WB Inflation Data.xls", firstrow sheet("Step1 Exchange Rates") cellrange(A5)
 		reshape long y, i(CountryName) j(year_d)
@@ -125,7 +128,8 @@
 *!*			Need to replace VMMC with applicable folder name going forward		
 					
 		
-		cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+		* cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+		cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT"
 				// change to intervention specific subfolder
 		clear
 		
@@ -189,7 +193,8 @@
 	**********************************************************
 
 	clear
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/"
+	* cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/"
 			// change to your desired file directory for /GHCC folder
 	import excel "external_data/GHCC WB Inflation Data.xls", firstrow sheet("Step2 GDP Deflator") cellrange(A5)
 		keep if CountryName=="United States"
@@ -214,7 +219,8 @@
 	* Import year specific and current year inflation datasets
 	**********************************************************
 
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT/"
+	*cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT/"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT/"
 		// change to intervention specific subfolder within /GHCC/
 	clear
 	use temp_dta/costs.dta
