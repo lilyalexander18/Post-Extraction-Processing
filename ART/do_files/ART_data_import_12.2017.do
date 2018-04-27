@@ -137,7 +137,7 @@ import excel extraction_templates/GHCC_Data_Extraction_Compiled_ART_Pt1_v04_18-A
 		drop extractor_initials-discount_rate_rs
 		drop currency_yr_rs-_merge
 			* No need to destring numerics - will deal with rest of data later.
-			
+		
 		*Save for working later
 		save temp_dta/costs.dta,replace	
 
@@ -151,6 +151,9 @@ import excel extraction_templates/GHCC_Data_Extraction_Compiled_ART_Pt1_v04_18-A
 	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/ART"
 	save temp_dta/costs.dta,replace	
 
+	
+	replace country="Multiple" if temp_country==1
+	drop temp_country 
 		
 *
 *!******* THIS TO BE REMOVED AFTER BEN FIXES EVERYTHING  -not sure what to do about this yet... 

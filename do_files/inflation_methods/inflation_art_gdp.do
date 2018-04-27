@@ -135,13 +135,16 @@
 		replace country = "Multiple" if country == "multiple" 
 		
 		// In some cases, the "country" variable is labeled as "Multiple", in which case we will create a temp_country variable so that these data points are not erroneously dropped
-		// Check that are all in USD 
+		//Check that are all in USD 
 		count if country=="Multiple" & iso_code!="USD" 
 		
 		gen temp_country=.
 		replace temp_country=1 if country=="Multiple" 
 		replace country="United States" if country=="Multiple" 
-
+		
+		// Erase spaces
+		replace country = strtrim(country)
+		
 		merge m:1 country currency_yr using "temp_dta/exchange_rates.dta"
 		drop if _merge==2
 		drop if _merge==1

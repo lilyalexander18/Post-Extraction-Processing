@@ -94,6 +94,38 @@
 		}
 	}
 
+	
+// Some last changes 
+	
+	replace id_pop_dem_std = "Adults" if id_pop_dem_std == "Men; Women" 
+	replace id_pop_dem_std = "Adolescent Boys and Young Men" if id_pop_dem_std == "Adolescent Boys and Young Men, ages 15-29"
+	replace id_pop_dem_std = "Neonates" if id_pop_dem_std == "Neonates, ages birth - 1 month" 
+	replace id_pop_dem_std = "Women" if id_pop_dem_std == "Women, ages 18 and older"
+	replace id_pop_dem_std = "Infants" if id_pop_dem_std == "Infants, ages 1month - 2 yrs"
+	
+	replace id_pop_clin_std = subinstr(id_pop_clin_std, "Hiv", "HIV", .)
+	
+	replace hiv_prev = strproper(hiv_prev)
+	replace hiv_prev = subinstr(hiv_prev, "Fsw", "FSW", .)
+	replace hiv_prev = subinstr(hiv_prev, "Pwid", "PWID", .)
+	replace hiv_prev = subinstr(hiv_prev, "Msm", "MSM", .)
+
+	
+	gen byte notnumeric = real(hiv_prev)
+	gen hiv_prev_new = hiv_prev if notnumeric == 0 
+	destring hiv_prev_new, replace
+	replace hiv_prev_new = hiv_prev_new * 100 
+	tostring hiv_prev_new, replace force
+	
+	replace hiv_prev = hiv_prev_new if notnumeric == 0 
+	replace hiv_prev = "16.7" if hiv_prev == "16.66666667"
+	gen percent = "%" 
+	replace hiv_prev = hiv_prev + percent if notnumeric == 0 
+	replace hiv_prev = hiv_prev + percent if hiv_prev == "1"
+	
+	drop notnumeric hiv_prev_new 
+	
+	
 *************************************************************************
 * Part II: Run GDP deflator code 
 *************************************************************************
