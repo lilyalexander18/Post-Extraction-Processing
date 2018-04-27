@@ -62,14 +62,15 @@
 ***********************
 	clear all
 
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	* cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT"
 	
 * 1: Load in both data files (change title of excel file as appropriate)
 ***********************
 
 * Costs data sheet
 
-	import excel using extraction_templates/GHCC_Extraction_HCT_MERGED_v08_20-Apr-18.xlsx, firstrow sh("Cost data") cellrange(A4) case(l) clear
+	import excel using extraction_templates/GHCC_Data_Extraction_HCT_20-Apr-2018.xlsx, firstrow sh("Cost data") cellrange(A4) case(l) clear
 		
 		*Drop blank rows 
 		drop if id == ""
@@ -79,7 +80,7 @@
 		clear
 		
 * Study Attributes data sheet	
-	import excel using extraction_templates/GHCC_Extraction_HCT_MERGED_v08_20-Apr-18.xlsx, firstrow sh("Study attributes") cellrange(A4) case(l)
+	import excel using extraction_templates/GHCC_Data_Extraction_HCT_20-Apr-2018.xlsx, firstrow sh("Study attributes") cellrange(A4) case(l)
 		
 		*Drop blank rows 
 		drop if id == ""
@@ -133,20 +134,20 @@
 		drop currency_yr_rs-_merge
 			* No need to destring numerics
 
-			*Include adjustments for Lori's data here: 
-			******************************************
-			
+		destring mean_cost, replace	
+		
 		*Save for working later
 		save temp_dta/costs.dta,replace	
 
 
 * First change directory to pull up generic inflation do file
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/"
-	
+	*cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/"
 	*GDP Deflator
 	 run do_files/inflation_methods/inflation_hct_gdp.do
 		
-	cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	*cd "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT"
+	cd "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT"
 	save temp_dta/costs.dta,replace	
 
 
@@ -164,7 +165,7 @@
 
 	}
 	* Get rid of any sub-category costs in the costing sheet (theyre screwing things up)
-		destring mean_cost, replace
+		
 		replace mean_cost=. if ar_narrow=="Subtotal" | ar_broad=="Subtotal" | ar_narrow == "subtotal" | ar_broad == "subtotal"
 	
 		replace ar_broad="Subtotal" if ar_narrow=="Subtotal" & ar_broad == ""
@@ -333,7 +334,7 @@
 			}
 *
 	
-	
+		drop _
 * Next, Encode Procedure for Standardized Inputs
 ************************************************
 
@@ -421,6 +422,7 @@ use temp_dta/costs.dta
 			
 			* Now create binaries for the reshape command (need to finalize)
 			*********************************************
+				
 				*create prefix
 				gen si_broad11=si_broad1
 				replace si_broad11=substr(si_broad1,1,3)
@@ -578,7 +580,7 @@ use temp_dta/costs.dta
 	* Now create binaries for the reshape command (need to finalize)
 			*********************************************
 				*create prefix
-				
+					drop _
 				split a_broad1, p(" " "_" "-")
 				replace a_broad11=substr(a_broad11,1,3)
 				gen _="_"
@@ -740,7 +742,7 @@ use temp_dta/costs.dta
 			* should try grabbing all variables that have the "RS" ending somehow, instead of managing individual vars
 			label define rs 1 "explicit" 2 "inferred" 3 "n/a"
 			*set trace on
-			foreach i of varlist costing_purpose_rs period_portrayed_rs research_costs_rs unrelated_costs_rs overhead_rs omitted_costs_rs geo_incountry_rs econ_costing_rs geo_sampling_incountry_rs country_sampling_rs site_sampling_rs px_sampling_rs timing_rs discount_rate_rs currency_yr_rs currency_x_rs currency_period_rs volunteer_time_rs family_time_rs px_time_rs aggregationrs management_rs ownership_rs pop_sex_rs pop_ses_rs pop_education_rs year_intro_rs coverage_rs qual_indicator_rs breakdown_input_rs breakdown_activity_rs breakdown_funder_rs px_costs_measured_rs cat_cost_rs asd_costs_rs real_world_rs personnel_dt_rs pop_age_rs {
+			foreach i of varlist costing_purpose_rs period_portrayed_rs research_costs_rs unrelated_costs_rs overhead_rs omitted_costs_rs geo_incountry_rs econ_costing_rs geo_sampling_incountry_rs country_sampling_rs site_sampling_rs px_sampling_rs timing_rs discount_rate_rs currency_yr_rs currency_x_rs currency_period_rs volunteer_time_rs family_time_rs px_time_rs aggregationrs management_rs ownership_rs pop_sex_rs pop_ses_rs pop_education_rs coverage_rs qual_indicator_rs breakdown_activity_rs breakdown_funder_rs px_costs_measured_rs cat_cost_rs asd_costs_rs real_world_rs personnel_dt_rs pop_age_rs year_intro_rs breakdown_input_rs {
 			replace `i' = lower(`i')
 			replace `i' = "1" if `i'== "explicit"
 			replace `i' = "2" if `i'== "inferred"
@@ -752,7 +754,7 @@ use temp_dta/costs.dta
 			}
 				
 			*consider changing label for NR to . 	
-
+			
 * And destring remaining numeric variables:
 			*Years
 
@@ -1003,7 +1005,7 @@ use temp_dta/costs.dta
 	
 			
 			* Save version before importing GDPPC data:
-			save final_dta/wide_file.dta, replace
+			save final_dta/wide_file_hct.dta, replace
 			
 			* Finally, import GDPPC data for each study.
 			********************************************
@@ -1015,8 +1017,12 @@ use temp_dta/costs.dta
 				* Presumably formatting for this file shouldnt change year-to-year, but possible 
 				* ...so check that import and file manipulation commands below work. 
 		
-			save "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT/wide_files/hct_wide_file_Apr2018.dta", replace
 			
+			** Save final version here
+			**************************
+			* save "/Users/lilyalexander/Dropbox/ALL LIFE THINGS/INSP/Work with Sergio/GHCC/Post-Extraction-Processing/HCT/wide_files/hct_wide_file_Apr2018.dta", replace
+			
+			* save "/Users/dcameron03/Documents/GitHub/Post-Extraction-Processing/HCT/wide_files/hct_wide_file_Apr2018.dta"
 
 
 			/*
